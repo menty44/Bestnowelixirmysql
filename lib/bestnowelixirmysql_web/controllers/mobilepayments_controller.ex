@@ -33,8 +33,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     end
   end
 
-  def delete(conn, %{"transLoID" => transLoID}) do
-    mobilepayments = Payment.get_mobilepayments!(transLoID)
+  def delete(conn, %{"transLoID" => transLotransLoID}) do
+    mobilepayments = Payment.get_mobilepayments!(transLotransLoID)
 
     with {:ok, %Mobilepayments{}} <- Payment.delete_mobilepayments(mobilepayments) do
       send_resp(conn, :no_content, "")

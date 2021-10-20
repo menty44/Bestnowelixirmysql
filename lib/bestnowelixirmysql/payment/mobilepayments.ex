@@ -12,7 +12,7 @@ defmodule Bestnowelixirmysql.Payment.Mobilepayments do
     field :TransAmount, :string
     field :TransID, :string
     field :TransTime, :string
-    field "transLoID", :integer, primary_key: true
+    field :transLoID, :integer, primary: true
   end
 
   @doc false

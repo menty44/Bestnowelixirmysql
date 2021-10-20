@@ -13,15 +13,15 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsView do
   def render("mobilepayments.json", %{mobilepayments: mobilepayments}) do
     %{
       transLoID: mobilepayments.transLoID,
-      TransID: mobilepayments.TransID,
-      TransTime: mobilepayments.TransTime,
-      TransAmount: mobilepayments.TransAmount,
-      BusinessShortCode: mobilepayments.BusinessShortCode,
-      OrgAccountBalance: mobilepayments.OrgAccountBalance,
-      MSISDN: mobilepayments.MSISDN,
-      FirstName: mobilepayments.FirstName,
-      MiddleName: mobilepayments.MiddleName,
-      LastName: mobilepayments.LastName
+      TransID: mobilepayments."TransID",
+      TransTime: mobilepayments."TransTime",
+      TransAmount: mobilepayments."TransAmount",
+      BusinessShortCode: mobilepayments."BusinessShortCode",
+      OrgAccountBalance: mobilepayments."OrgAccountBalance",
+      MSISDN: mobilepayments."MSISDN",
+      FirstName: mobilepayments."FirstName",
+      MiddleName: mobilepayments."MiddleName",
+      LastName: mobilepayments."LastName"
     }
   end
 end
