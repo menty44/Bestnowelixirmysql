@@ -44,14 +44,6 @@ defmodule BestnowelixirmysqlWeb.PaybillController do
   def transactions(conn, %{"number" => number}) do
     {:ok, paybill} = Payment.paybill_by_phone!(number)
     {:ok, till} = Payment.till_by_phone!(number)
-    conn
-    |> json(
-         %{
-           "code" => 0,
-           "paybill" => paybill[:data],
-           "till" => [],
-           "success" => true
-         }
-       )
+    render(conn, "phone.json", %{paybill: paybill, till: till})
   end
 end

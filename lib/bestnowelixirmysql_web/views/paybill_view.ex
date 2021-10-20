@@ -32,10 +32,10 @@ defmodule BestnowelixirmysqlWeb.PaybillView do
   end
 
   def render("phone.json", %{paybill: paybill, till: till}) do
-    %{
-      paybill: paybill,
-      till: till
-    }
+    [
+      %{paybill: render_many(paybill, PaybillView, "paybill.json")},
+      %{till: render_many(till, BestnowelixirmysqlWeb.TillView, "till.json")}
+    ]
   end
 
   def render("error.json", %{message: reason}) do
