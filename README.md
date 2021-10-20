@@ -17,3 +17,22 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+### Migrations
+```
+20211020042530_create_info.exs
+
+defmodule Bestnowelixirmysql.Repo.Migrations.CreateInfo do
+use Ecto.Migration
+
+def change do
+create table(:info) do
+add :keyword, :string
+add :shortcode, :integer
+add :messages, :text
+add :date_added, :date
+
+      timestamps()
+    end
+end
+end
