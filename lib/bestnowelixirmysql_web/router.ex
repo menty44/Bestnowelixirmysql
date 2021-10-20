@@ -27,6 +27,7 @@ defmodule BestnowelixirmysqlWeb.Router do
      resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
      resources "/tills", TillController, except: [:new, :edit]
      resources "/paybill", PaybillController, except: [:new, :edit]
+     post "/paybill/phone/:number", PaybillController, :transactions
    end
 
   # Enables LiveDashboard only for development

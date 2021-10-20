@@ -30,4 +30,15 @@ defmodule BestnowelixirmysqlWeb.PaybillView do
       ThirdPartyTransID: paybill."ThirdPartyTransID"
     }
   end
+
+  def render("phone.json", %{paybill: paybill, till: till}) do
+    %{
+      paybill: paybill,
+      till: till
+    }
+  end
+
+  def render("error.json", %{message: reason}) do
+    %{data: reason}
+  end
 end

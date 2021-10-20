@@ -295,4 +295,17 @@ defmodule Bestnowelixirmysql.Payment do
   def change_paybill(%Paybill{} = paybill, attrs \\ %{}) do
     Paybill.changeset(paybill, attrs)
   end
+
+  def paybill_by_phone!(ohone) do
+    case Repo.all(from u in Paybill,
+                  where: u."MSISDN" ==  ^ohone,
+                  order_by: [desc: :transLoID],
+                  limit: 10) do
+
+      nil ->
+        {:error, :not_found}
+      paybill ->
+        {:ok, paybill}
+    end
+  end
 end
