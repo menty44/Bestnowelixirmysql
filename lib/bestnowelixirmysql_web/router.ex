@@ -24,6 +24,7 @@ defmodule BestnowelixirmysqlWeb.Router do
    scope "/api", BestnowelixirmysqlWeb do
      pipe_through :api
      resources "/info", InfosController, except: [:new, :edit]
+     resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
    end
 
   # Enables LiveDashboard only for development
