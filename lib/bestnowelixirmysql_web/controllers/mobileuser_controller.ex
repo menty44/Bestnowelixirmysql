@@ -42,14 +42,17 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   end
 
   def reset_password(conn, %{"phone" => phone}) do
-    charlist = :io_lib.format("~4..0B", [:rand.uniform(10_000) - 1])
-    IO.inspect charlist
+    _charlist = :io_lib.format("~6..0B", [:rand.uniform(10_000) - 1])
+    gen = gen_reference()
+    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone(phone)
+    IO.inspect gen
+    {:ok, %Mobileuser{} = mobileusers} = Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
     conn
     |> put_status(:ok)
     |> json(%{
           "code" => 0,
-#          "charlist" => charlist,
-          "gen" => gen_reference
+          "gen" => gen,
+          "message" => "password updated"
 }
       )
   end
