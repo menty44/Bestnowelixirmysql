@@ -25,13 +25,6 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   def signin(conn, %{"phone" => phone, "password" => password}) do
     IO.inspect(" --- login Payload ---")
     with {:ok, mobileuser, token} <- Guardian.authenticate(phone, password) do
-
-#      IO.inspect(token)
-#      IO.inspect(mobileuser)
-      test = mobileuser
-#      {%{mobileuser: mobileuser}} = mobileuser
-      IO.inspect(test)
-      IO.inspect(mobileuser)
       IO.inspect(mobileuser.firstname)
       conn
       |> put_status(:ok)
@@ -46,6 +39,30 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
       }
          )
     end
+  end
+
+  def reset_password(conn, %{"phone" => phone}) do
+    charlist = :io_lib.format("~4..0B", [:rand.uniform(10_000) - 1])
+    IO.inspect charlist
+    conn
+    |> put_status(:ok)
+    |> json(%{
+          "code" => 0,
+#          "charlist" => charlist,
+          "gen" => gen_reference
+}
+      )
+  end
+
+  defp gen_reference() do
+    min = String.to_integer("100000", 3)
+    max = String.to_integer("ZZZZZZ", 36)
+
+    max
+    |> Kernel.-(min)
+    |> :rand.uniform()
+    |> Kernel.+(min)
+    |> Integer.to_string(36)
   end
 
   def create(conn, %{"mobileuser" => mobileuser_params}) do
