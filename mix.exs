@@ -52,7 +52,9 @@ defmodule Bestnowelixirmysql.MixProject do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:guardian, "~> 1.0"},
-      {:poison, "~> 2.2.0"}
+      {:poison, "~> 2.2.0"},
+      {:at_ex, "~> 0.20.22"},
+      {:httpoison, "~> 1.6"},
     ]
   end
 

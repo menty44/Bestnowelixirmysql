@@ -44,9 +44,18 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   def reset_password(conn, %{"phone" => phone}) do
     _charlist = :io_lib.format("~6..0B", [:rand.uniform(10_000) - 1])
     gen = gen_reference()
+
+    url = "https://api.africastalking.com/restless/send"
+    username = "stimapap"
+    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone(phone)
     IO.inspect gen
     {:ok, %Mobileuser{} = mobileusers} = Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
+
+    myres = HTTPoison.get!(url <> "?username=" <> username <> "&Apikey=" <> apikey <> "&to="<> phone <> "&message=Your%20temporary%20password%20is%3A%20" <> gen)
+
+    IO.inspect myres
+
     conn
     |> put_status(:ok)
     |> json(%{

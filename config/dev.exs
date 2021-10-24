@@ -72,3 +72,15 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :at_ex,
+       api_key: "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd",
+         # When changed to "false" one will use the live endpoint url
+       sandbox: true,
+       username: "stimapap",
+       stk_product_name: "AtEx",
+       b2c_product_name: "AtEx",
+       b2b_product_name: "AtEx",
+       bank_checkout_product_name: "AtEx",
+       bank_transfer_product_name: "AtEx",
+       card_checkout_product_name: "AtEx"

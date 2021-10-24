@@ -33,4 +33,12 @@ defmodule Bestnowelixirmysql.Application do
     BestnowelixirmysqlWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  def get_url(live_url, sandbox_url) do
+    cond do
+      Application.get_env(:at_ex, :sandbox) === false -> live_url
+      Application.get_env(:at_ex, :sandbox) === true -> sandbox_url
+      true -> sandbox_url
+    end
+  end
 end
