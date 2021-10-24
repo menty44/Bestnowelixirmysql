@@ -55,6 +55,9 @@ defmodule Bestnowelixirmysql.MixProject do
       {:poison, "~> 2.2.0"},
       {:at_ex, "~> 0.20.22"},
       {:httpoison, "~> 1.6"},
+      {:saxy, "~> 1.3"},
+      {:xml_json, "~> 0.3.0"}
+
     ]
   end
 

@@ -98,6 +98,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/unicode_util_compat" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ssl_verify_fun" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/parse_trans" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/saxy" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/xml_json" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="phoenix" level="project" />
@@ -179,5 +181,8 @@
     <orderEntry type="library" name="fuse" level="project" />
     <orderEntry type="library" name="httparrot" level="project" />
     <orderEntry type="library" name="mix_test_watch" level="project" />
+    <orderEntry type="library" name="saxy" level="project" />
+    <orderEntry type="library" name="mimic" level="project" />
+    <orderEntry type="library" name="xml_json" level="project" />
   </component>
 </module>
