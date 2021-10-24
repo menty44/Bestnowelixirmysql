@@ -47,6 +47,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian config
+config :bestnowelixirmysql, BestnowelixirmysqlWeb.Auth.Guardian,
+       issuer: "bestnowelixirmysql",
+       secret_key: "xdV5TyibRS4PgSTe+fEu4XwatfEqZ3y1glywHsw9aivLCpehN9/5QCrXkpj+SISY"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

@@ -10,8 +10,7 @@ defmodule BestnowelixirmysqlWeb.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> put_view(BestnowelixirmysqlWeb.ChangesetView)
-    |> render("error.json", changeset: changeset)
+    |> render("error.json")
   end
 
   # This clause is an example of how to handle resources that cannot be found.

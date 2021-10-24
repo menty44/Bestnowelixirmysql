@@ -301,7 +301,6 @@ defmodule Bestnowelixirmysql.Payment do
                   where: u."MSISDN" ==  ^ohone,
                   order_by: [desc: :transLoID],
                   limit: 10) do
-
       nil ->
         {:error, :not_found}
       paybill ->
@@ -317,8 +316,8 @@ defmodule Bestnowelixirmysql.Payment do
 
       nil ->
         {:error, :not_found}
-      paybill ->
-        {:ok, paybill}
+      till ->
+        {:ok, till}
     end
   end
 end
