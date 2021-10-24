@@ -184,5 +184,8 @@
     <orderEntry type="library" name="saxy" level="project" />
     <orderEntry type="library" name="mimic" level="project" />
     <orderEntry type="library" name="xml_json" level="project" />
+    <orderEntry type="library" name="corsica" level="project" />
+    <orderEntry type="library" name="placebo" level="project" />
+    <orderEntry type="library" name="cors_plug" level="project" />
   </component>
 </module>

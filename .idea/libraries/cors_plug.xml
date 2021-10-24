@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cors_plug" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/cors_plug/lib" />
+    </SOURCES>
+  </library>
+</component>
