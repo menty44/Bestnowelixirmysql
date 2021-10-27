@@ -84,3 +84,7 @@ config :at_ex,
        bank_checkout_product_name: "AtEx",
        bank_transfer_product_name: "AtEx",
        card_checkout_product_name: "AtEx"
+
+config :corsica, Corsica,
+       log: [rejected: :warn, invalid: :debug, accepted: :debug],
+       origins: ["http://localhost:4200"]
