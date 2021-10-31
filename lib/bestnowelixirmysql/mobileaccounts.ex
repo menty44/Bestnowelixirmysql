@@ -102,7 +102,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
     Mobileuser.changeset(mobileuser, attrs)
   end
 
-  def get_by_phone(phone) do
+  def get_by_phone!(phone) do
     case Repo.get_by(Mobileuser, phone: phone) do
       nil ->
         {:error, :not_found}
