@@ -49,9 +49,16 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     url = "https://api.africastalking.com/restless/send"
     username = "stimapap"
     apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
-    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
-    IO.inspect gen
-    IO.inspect mobileuser
+#    {:ok, mobileuser} =
+
+    try do
+      {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
+      IO.inspect gen
+      IO.inspect mobileuser
+    rescue
+      Ecto.NoResultsError ->
+        {:error, :not_found, "No result found"}
+    end
 
     #    {:ok, %Mobileuser{} = _mobileusers} = Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
 #    complete = url <> "?username=" <> username <> "&Apikey=" <> apikey <> "&to="<> phone <> "&message=Your%20temporary%20password%20is%3A%20" <> gen
