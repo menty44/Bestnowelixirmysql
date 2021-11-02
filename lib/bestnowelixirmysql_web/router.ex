@@ -22,20 +22,20 @@ defmodule BestnowelixirmysqlWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-   scope "/api", BestnowelixirmysqlWeb do
-     pipe_through :api
-     resources "/info", InfosController, except: [:new, :edit]
-     resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
-     resources "/tills", TillController, except: [:new, :edit]
-     resources "/paybill", PaybillController, except: [:new, :edit]
-     post "/paybill/phone/:number", PaybillController, :transactions
+  scope "/api", BestnowelixirmysqlWeb do
+    pipe_through :api
+    resources "/info", InfosController, except: [:new, :edit]
+    resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
+    resources "/tills", TillController, except: [:new, :edit]
+    resources "/paybill", PaybillController, except: [:new, :edit]
+    post "/paybill/phone/:number", PaybillController, :transactions
   end
 
   scope "/api", BestnowelixirmysqlWeb do
     resources "/mobileusers", MobileuserController, except: [:new, :edit]
     post "/mobileusers/signin", MobileuserController, :signin
     post "/mobileusers/reset/:number", MobileuserController, :reset_password
-#    resources "/users", UserController, except: [:new, :edit]
+    #    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

@@ -4,7 +4,7 @@ defmodule BestnowelixirmysqlWeb.Auth.Guardian do
   #  alias FmcgBackendWeb.Accounts
 
 #  alias FmcgBackend.Account.User
-  alias Bestnowelixirmysql.Mobileaccounts
+  alias Bestnowelixirmysql.Mobileaccounts.Mobileuser
 
   def subject_for_token(user, _claims) do
     sub = to_string(user.id)
@@ -13,14 +13,14 @@ defmodule BestnowelixirmysqlWeb.Auth.Guardian do
 
   def resource_from_claims(claims) do
     id = claims["sub"]
-    resource = Mobileaccounts.get_mobileuser!(id)
+    resource = Bestnowelixirmysql.Mobileaccounts.get_mobileuser!(id)
     {:ok, resource}
   end
 
   def authenticate(phone, password) do
-    with {:ok, user} <- Mobileaccounts.get_by_phone(phone) do
-#      IO.inspect user
-#      IO.inspect user.password_hash
+    with {:ok, user} <- Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone) do
+      IO.inspect user, label: "user"
+      IO.inspect user.password_hash
       case validate_password(password, user.password_hash) do
         true ->
           create_token(user)

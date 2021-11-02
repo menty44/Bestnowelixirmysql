@@ -24,6 +24,8 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
 
   def signin(conn, %{"phone" => phone, "password" => password}) do
     IO.inspect(" --- login Payload ---")
+    IO.inspect(phone)
+    IO.inspect(password)
     with {:ok, mobileuser, token} <- Guardian.authenticate(phone, password) do
       IO.inspect(mobileuser.firstname)
       conn
@@ -49,12 +51,10 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     url = "https://api.africastalking.com/restless/send"
     username = "stimapap"
     apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
-#    {:ok, mobileuser} =
 
     try do
       {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
       IO.inspect gen
-#      IO.inspect mobileuser
       Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
       complete = url <> "?username=" <>
                         username <> "&Apikey=" <>
@@ -96,8 +96,6 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
         })
     end
 
-    #    {:ok, %Mobileuser{} = _mobileusers} = Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
-
   end
 
   defp gen_reference() do
@@ -126,9 +124,10 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   end
 
   def update(conn, %{"id" => id, "mobileuser" => mobileuser_params}) do
-    mobileuser = Mobileaccounts.get_mobileuser!(id)
+    mobileuser = Bestnowelixirmysql.Mobileaccounts.get_mobileuser!(id)
 
-    with {:ok, %Mobileuser{} = mobileuser} <- Mobileaccounts.update_mobileuser(mobileuser, mobileuser_params) do
+    IO.inspect mobileuser
+    with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, mobileuser_params) do
       render(conn, "show.json", mobileuser: mobileuser)
     end
   end
