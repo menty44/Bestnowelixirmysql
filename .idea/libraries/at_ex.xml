@@ -9,9 +9,12 @@
       <root url="file://$PROJECT_DIR$/_build/prod/lib/at_ex/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/lib/at_ex/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/lib/at_ex/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/at_ex/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/at_ex/ebin" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/at_ex/lib" />
       <root url="file://$PROJECT_DIR$/deps/at_ex/lib" />
       <root url="file://$PROJECT_DIR$/deps/at_ex/lib" />
       <root url="file://$PROJECT_DIR$/deps/at_ex/lib" />

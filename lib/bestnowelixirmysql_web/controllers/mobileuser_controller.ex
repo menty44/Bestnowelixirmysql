@@ -54,35 +54,50 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     try do
       {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
       IO.inspect gen
-      IO.inspect mobileuser
+#      IO.inspect mobileuser
+      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
+      complete = url <> "?username=" <>
+                        username <> "&Apikey=" <>
+                                    apikey <> "&to="<>
+                                              phone <> "&message=Your%20temporary%20password%20is%3A%20" <> gen
+
+      case HTTPoison.get(complete) do
+        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          IO.puts body
+          {:ok, xml}    = XmlJson.AwsApi.deserialize(body)
+          demo = xml
+          IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]
+          conn
+          |> put_status(:ok)
+          |> json(%{
+            "code" => 0,
+            "gen" => gen,
+            "message" => "password updated"
+          })
+#        {:ok, %HTTPoison.Response{status_code: 404}} ->
+#          IO.puts "Not found :("
+#        {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, _} ->
+          conn
+          |> put_status(:ok)
+          |> json(%{
+            "code" => 3,
+            "message" => "error occured"
+          })
+      end
     rescue
       Ecto.NoResultsError ->
         {:error, :not_found, "No result found"}
+        conn
+        |> put_status(:ok)
+        |> json(%{
+          "code" => 3,
+          "message" => "error occured"
+        })
     end
 
     #    {:ok, %Mobileuser{} = _mobileusers} = Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
-#    complete = url <> "?username=" <> username <> "&Apikey=" <> apikey <> "&to="<> phone <> "&message=Your%20temporary%20password%20is%3A%20" <> gen
-#
-#    case HTTPoison.get(complete) do
-#      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-#        IO.puts body
-#        {:ok, xml}    = XmlJson.AwsApi.deserialize(body)
-#        demo = xml
-#        IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]
-#      {:ok, %HTTPoison.Response{status_code: 404}} ->
-#        IO.puts "Not found :("
-#      {:error, %HTTPoison.Error{reason: reason}} ->
-#        IO.inspect reason
-#    end
 
-    conn
-    |> put_status(:ok)
-    |> json(%{
-          "code" => 0,
-          "gen" => gen,
-          "message" => "password updated"
-}
-      )
   end
 
   defp gen_reference() do
