@@ -38,8 +38,18 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
            "phone" => mobileuser.phone,
            "token" => token
         }
-      }
-         )
+      })
+      else
+      :error ->
+        {:error, :invalid_credentials}
+      IO.inspect(:error)
+      _ ->
+        conn
+        |> put_status(500)
+        |> json(%{
+          "code" => 3,
+          "message" => "error occured"
+        })
     end
   end
 
