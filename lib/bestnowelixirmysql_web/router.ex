@@ -29,6 +29,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     resources "/tills", TillController, except: [:new, :edit]
     resources "/paybill", PaybillController, except: [:new, :edit]
     resources "/keyword", KeywordController, except: [:new, :edit]
+    resources "/bookmakers", BookmakerController, except: [:new, :edit]
 
     post "/paybill/phone/:number", PaybillController, :transactions
   end
