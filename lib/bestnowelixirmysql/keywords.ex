@@ -35,7 +35,14 @@ defmodule Bestnowelixirmysql.Keywords do
       ** (Ecto.NoResultsError)
 
   """
-  def get_keyword!(id), do: Repo.get!(Keyword, id)
+  def get_keyword!(id) do
+#    Repo.get!(Keyword, id)
+    case Repo.get(Keyword, id) do
+      nil -> {:error, :not_found}
+      keyword -> {:ok, keyword}
+    end
+  end
+
 
   @doc """
   Creates a keyword.
@@ -85,9 +92,16 @@ defmodule Bestnowelixirmysql.Keywords do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_keyword(%Keyword{} = keyword) do
+  def delete_keyword!(%Keyword{} = keyword) do
     Repo.delete(keyword)
+#    with {:ok, keyword} <- Repo.delete(keyword) do
+#        IO.inspect :ok
+#      else
+#      nil -> {:error, :not_found, "supplied id not found"}
+#      _ -> {:error, :not_found, "supplied id not found"}
+#    end
   end
+
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking keyword changes.

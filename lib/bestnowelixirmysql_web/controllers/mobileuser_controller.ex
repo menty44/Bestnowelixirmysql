@@ -74,7 +74,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
       case HTTPoison.get(complete) do
         {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
           IO.puts body
-          {:ok, xml}    = XmlJson.AwsApi.deserialize(body)
+          {:ok, xml}  = XmlJson.AwsApi.deserialize(body)
           demo = xml
           IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]
           conn

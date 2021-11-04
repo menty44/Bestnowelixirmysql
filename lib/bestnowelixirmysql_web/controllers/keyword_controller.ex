@@ -22,22 +22,48 @@ defmodule BestnowelixirmysqlWeb.KeywordController do
 
   def show(conn, %{"id" => id}) do
     keyword = Keywords.get_keyword!(id)
-    render(conn, "show.json", keyword: keyword)
+    {a,b} = keyword
+    render(conn, "show.json", keyword: b)
   end
 
   def update(conn, %{"id" => id, "keyword" => keyword_params}) do
     keyword = Keywords.get_keyword!(id)
-
-    with {:ok, %Keyword{} = keyword} <- Keywords.update_keyword(keyword, keyword_params) do
+    {a,b} = keyword
+    with {:ok, %Keyword{} = keyword} <- Keywords.update_keyword(b, keyword_params) do
       render(conn, "show.json", keyword: keyword)
     end
+  end
+
+  defp gracefully_handle_get(nil) do
+    {:error, :not_found}
+  end
+
+  defp gracefully_handle_get(keyword) do
+    {:ok, keyword}
   end
 
   def delete(conn, %{"id" => id}) do
     keyword = Keywords.get_keyword!(id)
 
-    with {:ok, %Keyword{}} <- Keywords.delete_keyword(keyword) do
-      send_resp(conn, :no_content, "")
+    {a,b} = keyword
+    IO.inspect b, label: "keyword"
+
+     case keyword do
+      {:ok, _} -> Keywords.delete_keyword!(b)
+            conn
+            |> put_status(:ok)
+            |> json(%{
+              "message" => "record deleted"
+            })
+        _ ->
+          {:error, :not_found}
+          conn
+          |> put_status(500)
+          |> json(%{
+            "code" => 3,
+            "message" => "id not found"
+          })
     end
+
   end
 end
