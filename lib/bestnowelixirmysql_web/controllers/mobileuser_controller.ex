@@ -11,6 +11,14 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   alias Bestnowelixirmysql.Africastalkingtexts
   alias Bestnowelixirmysql.Africastalkingtexts.Africastalkingtext
 
+  alias Bestnowelixirmysql.Repo
+
+  alias Bestnowelixirmysql.Keywords
+
+
+  alias Bestnowelixirmysql.Africastalkingtexts
+  alias Bestnowelixirmysql.Africastalkingtexts.Africastalkingtext
+
   require Phoenix.Logger
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
@@ -199,4 +207,22 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def report(conn, _) do
+    IO.inspect "fala matako"
+    mobile_users = Bestnowelixirmysql.Mobileaccounts.count_by_id!()
+    book_makers = Bestnowelixirmysql.Bookmakers.count_by_id!()
+    kw = Keywords.count_by_id!()
+    reset_pass_sms = Africastalkingtexts.count_by_id!()
+
+    conn
+    |> put_status(:ok)
+    |> json(%{
+      mobile_users: mobile_users,
+      book_makers: book_makers,
+      kw: kw,
+      reset_pass_sms: reset_pass_sms
+    })
+  end
+
 end

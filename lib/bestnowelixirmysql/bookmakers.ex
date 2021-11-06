@@ -101,4 +101,10 @@ defmodule Bestnowelixirmysql.Bookmakers do
   def change_bookmaker(%Bookmaker{} = bookmaker, attrs \\ %{}) do
     Bookmaker.changeset(bookmaker, attrs)
   end
+
+  def count_by_id!() do
+    #    Repo.aggregate(from p in Mobileuser, :count, :id)
+    #    Repo.one(from m in Mobileuser, select: count(m.id))
+    Repo.one(from p in Bookmaker, select: fragment("count(*)"))
+  end
 end

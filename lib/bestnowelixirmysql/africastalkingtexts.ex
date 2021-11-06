@@ -101,4 +101,10 @@ defmodule Bestnowelixirmysql.Africastalkingtexts do
   def change_africastalkingtext(%Africastalkingtext{} = africastalkingtext, attrs \\ %{}) do
     Africastalkingtext.changeset(africastalkingtext, attrs)
   end
+
+  def count_by_id!() do
+    #    Repo.aggregate(from p in Mobileuser, :count, :id)
+    #    Repo.one(from m in Mobileuser, select: count(m.id))  q
+    Repo.one(from p in Africastalkingtext, select: fragment("count(*)"))
+  end
 end

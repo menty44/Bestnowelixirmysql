@@ -115,4 +115,10 @@ defmodule Bestnowelixirmysql.Keywords do
   def change_keyword(%Keyword{} = keyword, attrs \\ %{}) do
     Keyword.changeset(keyword, attrs)
   end
+
+  def count_by_id!() do
+    #    Repo.aggregate(from p in Mobileuser, :count, :id)
+    #    Repo.one(from m in Mobileuser, select: count(m.id))
+    Repo.one(from p in Keyword, select: fragment("count(*)"))
+  end
 end
