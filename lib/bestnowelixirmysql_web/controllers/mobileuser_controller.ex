@@ -57,6 +57,20 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     end
   end
 
+  def phone_number(conn, params) do
+    IO.inspect(" --- phone_number Payload ---")
+    IO.inspect(params)
+    IO.inspect(Map.get(params, "phone"))
+    #get data from phone number
+    with {:ok, mobileuser} <- Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(params, "phone")) do
+      IO.inspect(mobileuser.firstname)
+      IO.inspect(mobileuser.lastname)
+      IO.inspect(mobileuser.phone)
+      IO.inspect(mobileuser.id)
+      render(conn, "show.json", mobileuser: mobileuser)
+    end
+  end
+
   def reset_password(conn, %{"number" => phone}) do
     IO.inspect phone
 #    _charlist = :io_lib.format("~6..0B", [:rand.uniform(10_000) - 1])
@@ -89,9 +103,6 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
             "message" => "Your temporary password is: " <> gen
           })
 
-#        {:ok, %HTTPoison.Response{status_code: 404}} ->
-#          IO.puts "Not found :("
-#        {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, _} ->
           conn
           |> put_status(:ok)

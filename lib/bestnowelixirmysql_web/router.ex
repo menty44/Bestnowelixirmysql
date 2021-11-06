@@ -35,8 +35,10 @@ defmodule BestnowelixirmysqlWeb.Router do
   end
 
   scope "/api", BestnowelixirmysqlWeb do
+    pipe_through :api
     resources "/mobileusers", MobileuserController, except: [:new, :edit]
     post "/mobileusers/signin", MobileuserController, :signin
+    post "/mobileusers/phonenumber", MobileuserController, :phone_number
     post "/mobileusers/reset/:number", MobileuserController, :reset_password
     #    resources "/users", UserController, except: [:new, :edit]
   end
