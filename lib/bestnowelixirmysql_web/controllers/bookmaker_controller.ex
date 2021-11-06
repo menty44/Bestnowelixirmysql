@@ -28,7 +28,8 @@ defmodule BestnowelixirmysqlWeb.BookmakerController do
   def update(conn, %{"id" => id, "bookmaker" => bookmaker_params}) do
     bookmaker = Bookmakers.get_bookmaker!(id)
 
-    with {:ok, %Bookmaker{} = bookmaker} <- Bookmakers.update_bookmaker(bookmaker, bookmaker_params) do
+    with {:ok, %Bookmaker{} = bookmaker} <-
+           Bookmakers.update_bookmaker(bookmaker, bookmaker_params) do
       render(conn, "show.json", bookmaker: bookmaker)
     end
   end

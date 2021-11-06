@@ -3,7 +3,7 @@ defmodule BestnowelixirmysqlWeb.Auth.Guardian do
 
   #  alias FmcgBackendWeb.Accounts
 
-#  alias FmcgBackend.Account.User
+  #  alias FmcgBackend.Account.User
   alias Bestnowelixirmysql.Mobileaccounts.Mobileuser
 
   def subject_for_token(user, _claims) do
@@ -19,11 +19,13 @@ defmodule BestnowelixirmysqlWeb.Auth.Guardian do
 
   def authenticate(phone, password) do
     with {:ok, user} <- Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone) do
-      IO.inspect user, label: "user"
-      IO.inspect user.password_hash
+      IO.inspect(user, label: "user")
+      IO.inspect(user.password_hash)
+
       case validate_password(password, user.password_hash) do
         true ->
           create_token(user)
+
         false ->
           {:error, :unauthorized}
       end
@@ -32,12 +34,11 @@ defmodule BestnowelixirmysqlWeb.Auth.Guardian do
 
   def validate_password(password, encrypted_password) do
     check = Comeonin.Bcrypt.checkpw(password, encrypted_password)
-    IO.inspect check
+    IO.inspect(check)
   end
 
   def create_token(user) do
     {:ok, token, _} = encode_and_sign(user)
     {:ok, user, token}
   end
-
 end

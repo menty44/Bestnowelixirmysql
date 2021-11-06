@@ -21,7 +21,12 @@ defmodule Bestnowelixirmysql.KeywordsTest do
     end
 
     test "create_keyword/1 with valid data creates a keyword" do
-      valid_attrs = %{keyword: "some keyword", manager: "some manager", owner: "some owner", shortcode: "some shortcode"}
+      valid_attrs = %{
+        keyword: "some keyword",
+        manager: "some manager",
+        owner: "some owner",
+        shortcode: "some shortcode"
+      }
 
       assert {:ok, %Keyword{} = keyword} = Keywords.create_keyword(valid_attrs)
       assert keyword.keyword == "some keyword"
@@ -36,7 +41,13 @@ defmodule Bestnowelixirmysql.KeywordsTest do
 
     test "update_keyword/2 with valid data updates the keyword" do
       keyword = keyword_fixture()
-      update_attrs = %{keyword: "some updated keyword", manager: "some updated manager", owner: "some updated owner", shortcode: "some updated shortcode"}
+
+      update_attrs = %{
+        keyword: "some updated keyword",
+        manager: "some updated manager",
+        owner: "some updated owner",
+        shortcode: "some updated shortcode"
+      }
 
       assert {:ok, %Keyword{} = keyword} = Keywords.update_keyword(keyword, update_attrs)
       assert keyword.keyword == "some updated keyword"

@@ -55,8 +55,13 @@ defmodule BestnowelixirmysqlWeb.MobileuserControllerTest do
   describe "update mobileuser" do
     setup [:create_mobileuser]
 
-    test "renders mobileuser when data is valid", %{conn: conn, mobileuser: %Mobileuser{id: id} = mobileuser} do
-      conn = put(conn, Routes.mobileuser_path(conn, :update, mobileuser), mobileuser: @update_attrs)
+    test "renders mobileuser when data is valid", %{
+      conn: conn,
+      mobileuser: %Mobileuser{id: id} = mobileuser
+    } do
+      conn =
+        put(conn, Routes.mobileuser_path(conn, :update, mobileuser), mobileuser: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.mobileuser_path(conn, :show, id))
@@ -71,7 +76,9 @@ defmodule BestnowelixirmysqlWeb.MobileuserControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, mobileuser: mobileuser} do
-      conn = put(conn, Routes.mobileuser_path(conn, :update, mobileuser), mobileuser: @invalid_attrs)
+      conn =
+        put(conn, Routes.mobileuser_path(conn, :update, mobileuser), mobileuser: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

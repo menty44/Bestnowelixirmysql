@@ -22,17 +22,17 @@ defmodule Bestnowelixirmysql.Accounts.User do
     |> cast(attrs, [:password_hash, :phone, :firstname, :lastname])
     |> validate_required([:password_hash, :phone, :firstname, :lastname])
     |> unique_constraint(:phone)
-    |> put_password_hash # Add put_password_hash to changeset pipeline
+    # Add put_password_hash to changeset pipeline
+    |> put_password_hash
   end
 
   defp put_password_hash(changeset) do
     case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: pass}}
-      ->
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :password_hash, hashpwsalt(pass))
+
       _ ->
         changeset
     end
   end
-
 end

@@ -18,7 +18,27 @@ defmodule Bestnowelixirmysql.Payment.Mobilepayments do
   @doc false
   def changeset(mobilepayments, attrs) do
     mobilepayments
-    |> cast(attrs, [:TransID, :TransTime, :TransAmount, :BusinessShortCode, :OrgAccountBalance, :MSISDN, :FirstName, :MiddleName, :LastName])
-    |> validate_required([:TransID, :TransTime, :TransAmount, :BusinessShortCode, :OrgAccountBalance, :MSISDN, :FirstName, :MiddleName, :LastName])
+    |> cast(attrs, [
+      :TransID,
+      :TransTime,
+      :TransAmount,
+      :BusinessShortCode,
+      :OrgAccountBalance,
+      :MSISDN,
+      :FirstName,
+      :MiddleName,
+      :LastName
+    ])
+    |> validate_required([
+      :TransID,
+      :TransTime,
+      :TransAmount,
+      :BusinessShortCode,
+      :OrgAccountBalance,
+      :MSISDN,
+      :FirstName,
+      :MiddleName,
+      :LastName
+    ])
   end
 end

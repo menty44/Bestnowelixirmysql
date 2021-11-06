@@ -58,7 +58,10 @@ defmodule BestnowelixirmysqlWeb.BookmakerControllerTest do
   describe "update bookmaker" do
     setup [:create_bookmaker]
 
-    test "renders bookmaker when data is valid", %{conn: conn, bookmaker: %Bookmaker{id: id} = bookmaker} do
+    test "renders bookmaker when data is valid", %{
+      conn: conn,
+      bookmaker: %Bookmaker{id: id} = bookmaker
+    } do
       conn = put(conn, Routes.bookmaker_path(conn, :update, bookmaker), bookmaker: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

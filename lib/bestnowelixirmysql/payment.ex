@@ -297,25 +297,30 @@ defmodule Bestnowelixirmysql.Payment do
   end
 
   def paybill_by_phone!(ohone) do
-    case Repo.all(from u in Paybill,
-                  where: u."MSISDN" ==  ^ohone,
-                  order_by: [desc: :transLoID],
-                  limit: 10) do
+    case Repo.all(
+           from u in Paybill,
+             where: u."MSISDN" == ^ohone,
+             order_by: [desc: :transLoID],
+             limit: 10
+         ) do
       nil ->
         {:error, :not_found}
+
       paybill ->
         {:ok, paybill}
     end
   end
 
   def till_by_phone!(ohone) do
-    case Repo.all(from u in Till,
-                  where: u."MSISDN" ==  ^ohone,
-                  order_by: [desc: :transLoID],
-                  limit: 10) do
-
+    case Repo.all(
+           from u in Till,
+             where: u."MSISDN" == ^ohone,
+             order_by: [desc: :transLoID],
+             limit: 10
+         ) do
       nil ->
         {:error, :not_found}
+
       till ->
         {:ok, till}
     end

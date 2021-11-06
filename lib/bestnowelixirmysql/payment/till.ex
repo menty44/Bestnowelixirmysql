@@ -23,7 +23,39 @@ defmodule Bestnowelixirmysql.Payment.Till do
   @doc false
   def changeset(till, attrs) do
     till
-    |> cast(attrs, [:TransID, :TransTime, :TransAmount, :BusinessShortCode, :OrgAccountBalance, :MSISDN, :FirstName, :MiddleName, :LastName, :TransactionType, :TransDate, :InvoiceNumber, :BillRefNumber, :OrgAccountBalance, :ThirdPartyTransID])
-    |> validate_required([:TransID, :TransTime, :TransAmount, :BusinessShortCode, :OrgAccountBalance, :MSISDN, :FirstName, :MiddleName, :LastName, :TransactionType, :TransDate, :InvoiceNumber, :BillRefNumber, :OrgAccountBalance, :ThirdPartyTransID])
+    |> cast(attrs, [
+      :TransID,
+      :TransTime,
+      :TransAmount,
+      :BusinessShortCode,
+      :OrgAccountBalance,
+      :MSISDN,
+      :FirstName,
+      :MiddleName,
+      :LastName,
+      :TransactionType,
+      :TransDate,
+      :InvoiceNumber,
+      :BillRefNumber,
+      :OrgAccountBalance,
+      :ThirdPartyTransID
+    ])
+    |> validate_required([
+      :TransID,
+      :TransTime,
+      :TransAmount,
+      :BusinessShortCode,
+      :OrgAccountBalance,
+      :MSISDN,
+      :FirstName,
+      :MiddleName,
+      :LastName,
+      :TransactionType,
+      :TransDate,
+      :InvoiceNumber,
+      :BillRefNumber,
+      :OrgAccountBalance,
+      :ThirdPartyTransID
+    ])
   end
 end

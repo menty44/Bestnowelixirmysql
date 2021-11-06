@@ -12,7 +12,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def create(conn, %{"mobilepayments" => mobilepayments_params}) do
-    with {:ok, %Mobilepayments{} = mobilepayments} <- Payment.create_mobilepayments(mobilepayments_params) do
+    with {:ok, %Mobilepayments{} = mobilepayments} <-
+           Payment.create_mobilepayments(mobilepayments_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.mobilepayments_path(conn, :show, mobilepayments))
@@ -28,7 +29,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   def update(conn, %{"transLoID" => transLoID, "mobilepayments" => mobilepayments_params}) do
     mobilepayments = Payment.get_mobilepayments!(transLoID)
 
-    with {:ok, %Mobilepayments{} = mobilepayments} <- Payment.update_mobilepayments(mobilepayments, mobilepayments_params) do
+    with {:ok, %Mobilepayments{} = mobilepayments} <-
+           Payment.update_mobilepayments(mobilepayments, mobilepayments_params) do
       render(conn, "show.json", mobilepayments: mobilepayments)
     end
   end

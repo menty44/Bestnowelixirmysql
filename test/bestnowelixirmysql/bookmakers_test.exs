@@ -21,7 +21,13 @@ defmodule Bestnowelixirmysql.BookmakersTest do
     end
 
     test "create_bookmaker/1 with valid data creates a bookmaker" do
-      valid_attrs = %{games: "some games", keyword: "some keyword", loadingdate: "some loadingdate", owner: "some owner", shortcode: "some shortcode"}
+      valid_attrs = %{
+        games: "some games",
+        keyword: "some keyword",
+        loadingdate: "some loadingdate",
+        owner: "some owner",
+        shortcode: "some shortcode"
+      }
 
       assert {:ok, %Bookmaker{} = bookmaker} = Bookmakers.create_bookmaker(valid_attrs)
       assert bookmaker.games == "some games"
@@ -37,9 +43,18 @@ defmodule Bestnowelixirmysql.BookmakersTest do
 
     test "update_bookmaker/2 with valid data updates the bookmaker" do
       bookmaker = bookmaker_fixture()
-      update_attrs = %{games: "some updated games", keyword: "some updated keyword", loadingdate: "some updated loadingdate", owner: "some updated owner", shortcode: "some updated shortcode"}
 
-      assert {:ok, %Bookmaker{} = bookmaker} = Bookmakers.update_bookmaker(bookmaker, update_attrs)
+      update_attrs = %{
+        games: "some updated games",
+        keyword: "some updated keyword",
+        loadingdate: "some updated loadingdate",
+        owner: "some updated owner",
+        shortcode: "some updated shortcode"
+      }
+
+      assert {:ok, %Bookmaker{} = bookmaker} =
+               Bookmakers.update_bookmaker(bookmaker, update_attrs)
+
       assert bookmaker.games == "some updated games"
       assert bookmaker.keyword == "some updated keyword"
       assert bookmaker.loadingdate == "some updated loadingdate"

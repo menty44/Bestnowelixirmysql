@@ -28,9 +28,9 @@ defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
 
   defp put_password_hash(changeset) do
     case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: pass}}
-      ->
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :password_hash, hashpwsalt(pass))
+
       _ ->
         changeset
     end

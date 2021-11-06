@@ -21,7 +21,12 @@ defmodule Bestnowelixirmysql.BetTest do
     end
 
     test "create_infos/1 with valid data creates a infos" do
-      valid_attrs = %{date_added: ~D[2021-10-19], keyword: "some keyword", messages: "some messages", shortcode: 42}
+      valid_attrs = %{
+        date_added: ~D[2021-10-19],
+        keyword: "some keyword",
+        messages: "some messages",
+        shortcode: 42
+      }
 
       assert {:ok, %Infos{} = infos} = Bet.create_infos(valid_attrs)
       assert infos.date_added == ~D[2021-10-19]
@@ -36,7 +41,13 @@ defmodule Bestnowelixirmysql.BetTest do
 
     test "update_infos/2 with valid data updates the infos" do
       infos = infos_fixture()
-      update_attrs = %{date_added: ~D[2021-10-20], keyword: "some updated keyword", messages: "some updated messages", shortcode: 43}
+
+      update_attrs = %{
+        date_added: ~D[2021-10-20],
+        keyword: "some updated keyword",
+        messages: "some updated messages",
+        shortcode: 43
+      }
 
       assert {:ok, %Infos{} = infos} = Bet.update_infos(infos, update_attrs)
       assert infos.date_added == ~D[2021-10-20]

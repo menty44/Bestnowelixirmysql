@@ -55,7 +55,10 @@ defmodule BestnowelixirmysqlWeb.InfosControllerTest do
   describe "update infos" do
     setup [:create_infos]
 
-    test "renders infos when data is valid", %{conn: conn, infos: %Infos{info_id: info_id} = infos} do
+    test "renders infos when data is valid", %{
+      conn: conn,
+      infos: %Infos{info_id: info_id} = infos
+    } do
       conn = put(conn, Routes.infos_path(conn, :update, infos), infos: @update_attrs)
       assert %{"info_id" => ^info_id} = json_response(conn, 200)["data"]
 

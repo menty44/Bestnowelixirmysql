@@ -103,13 +103,15 @@ defmodule Bestnowelixirmysql.Bet do
   end
 
   def info_by_phone!(phone) do
-    case Repo.all(from u in Infos,
-                  where: u."MSISDN" ==  ^phone,
-                  order_by: [desc: :transLoID],
-                  limit: 10) do
-
+    case Repo.all(
+           from u in Infos,
+             where: u."MSISDN" == ^phone,
+             order_by: [desc: :transLoID],
+             limit: 10
+         ) do
       nil ->
         {:error, :not_found}
+
       paybill ->
         {:ok, paybill}
     end

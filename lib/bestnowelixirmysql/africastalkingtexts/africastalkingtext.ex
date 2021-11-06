@@ -18,6 +18,14 @@ defmodule Bestnowelixirmysql.Africastalkingtexts.Africastalkingtext do
   def changeset(africastalkingtext, attrs) do
     africastalkingtext
     |> cast(attrs, [:cost, :messageId, :messageParts, :number, :status, :statusCode, :sentmessage])
-    |> validate_required([:cost, :messageId, :messageParts, :number, :status, :statusCode, :sentmessage])
+    |> validate_required([
+      :cost,
+      :messageId,
+      :messageParts,
+      :number,
+      :status,
+      :statusCode,
+      :sentmessage
+    ])
   end
 end

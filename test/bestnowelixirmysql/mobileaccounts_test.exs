@@ -21,7 +21,12 @@ defmodule Bestnowelixirmysql.MobileaccountsTest do
     end
 
     test "create_mobileuser/1 with valid data creates a mobileuser" do
-      valid_attrs = %{firstname: "some firstname", lastname: "some lastname", password_hash: "some password_hash", phone: "some phone"}
+      valid_attrs = %{
+        firstname: "some firstname",
+        lastname: "some lastname",
+        password_hash: "some password_hash",
+        phone: "some phone"
+      }
 
       assert {:ok, %Mobileuser{} = mobileuser} = Mobileaccounts.create_mobileuser(valid_attrs)
       assert mobileuser.firstname == "some firstname"
@@ -36,9 +41,17 @@ defmodule Bestnowelixirmysql.MobileaccountsTest do
 
     test "update_mobileuser/2 with valid data updates the mobileuser" do
       mobileuser = mobileuser_fixture()
-      update_attrs = %{firstname: "some updated firstname", lastname: "some updated lastname", password_hash: "some updated password_hash", phone: "some updated phone"}
 
-      assert {:ok, %Mobileuser{} = mobileuser} = Mobileaccounts.update_mobileuser(mobileuser, update_attrs)
+      update_attrs = %{
+        firstname: "some updated firstname",
+        lastname: "some updated lastname",
+        password_hash: "some updated password_hash",
+        phone: "some updated phone"
+      }
+
+      assert {:ok, %Mobileuser{} = mobileuser} =
+               Mobileaccounts.update_mobileuser(mobileuser, update_attrs)
+
       assert mobileuser.firstname == "some updated firstname"
       assert mobileuser.lastname == "some updated lastname"
       assert mobileuser.password_hash == "some updated password_hash"
@@ -47,7 +60,10 @@ defmodule Bestnowelixirmysql.MobileaccountsTest do
 
     test "update_mobileuser/2 with invalid data returns error changeset" do
       mobileuser = mobileuser_fixture()
-      assert {:error, %Ecto.Changeset{}} = Mobileaccounts.update_mobileuser(mobileuser, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Mobileaccounts.update_mobileuser(mobileuser, @invalid_attrs)
+
       assert mobileuser == Mobileaccounts.get_mobileuser!(mobileuser.id)
     end
 

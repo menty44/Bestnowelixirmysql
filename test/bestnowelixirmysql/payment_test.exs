@@ -8,7 +8,18 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     import Bestnowelixirmysql.PaymentFixtures
 
-    @invalid_attrs %{BusinessShortCode: nil, FirstName: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, TransAmount: nil, TransID: nil, TransTime: nil, transLoID: nil}
+    @invalid_attrs %{
+      BusinessShortCode: nil,
+      FirstName: nil,
+      LastName: nil,
+      MSISDN: nil,
+      MiddleName: nil,
+      OrgAccountBalance: nil,
+      TransAmount: nil,
+      TransID: nil,
+      TransTime: nil,
+      transLoID: nil
+    }
 
     test "list_mobile_payments/0 returns all mobile_payments" do
       mobilepayments = mobilepayments_fixture()
@@ -21,9 +32,22 @@ defmodule Bestnowelixirmysql.PaymentTest do
     end
 
     test "create_mobilepayments/1 with valid data creates a mobilepayments" do
-      valid_attrs = %{BusinessShortCode: "some BusinessShortCode", FirstName: "some FirstName", LastName: "some LastName", MSISDN: "some MSISDN", MiddleName: "some MiddleName", OrgAccountBalance: "some OrgAccountBalance", TransAmount: "some TransAmount", TransID: "some TransID", TransTime: "some TransTime", transLoID: 42}
+      valid_attrs = %{
+        BusinessShortCode: "some BusinessShortCode",
+        FirstName: "some FirstName",
+        LastName: "some LastName",
+        MSISDN: "some MSISDN",
+        MiddleName: "some MiddleName",
+        OrgAccountBalance: "some OrgAccountBalance",
+        TransAmount: "some TransAmount",
+        TransID: "some TransID",
+        TransTime: "some TransTime",
+        transLoID: 42
+      }
 
-      assert {:ok, %Mobilepayments{} = mobilepayments} = Payment.create_mobilepayments(valid_attrs)
+      assert {:ok, %Mobilepayments{} = mobilepayments} =
+               Payment.create_mobilepayments(valid_attrs)
+
       assert mobilepayments.BusinessShortCode == "some BusinessShortCode"
       assert mobilepayments.FirstName == "some FirstName"
       assert mobilepayments.LastName == "some LastName"
@@ -42,9 +66,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_mobilepayments/2 with valid data updates the mobilepayments" do
       mobilepayments = mobilepayments_fixture()
-      update_attrs = %{BusinessShortCode: "some updated BusinessShortCode", FirstName: "some updated FirstName", LastName: "some updated LastName", MSISDN: "some updated MSISDN", MiddleName: "some updated MiddleName", OrgAccountBalance: "some updated OrgAccountBalance", TransAmount: "some updated TransAmount", TransID: "some updated TransID", TransTime: "some updated TransTime", transLoID: 43}
 
-      assert {:ok, %Mobilepayments{} = mobilepayments} = Payment.update_mobilepayments(mobilepayments, update_attrs)
+      update_attrs = %{
+        BusinessShortCode: "some updated BusinessShortCode",
+        FirstName: "some updated FirstName",
+        LastName: "some updated LastName",
+        MSISDN: "some updated MSISDN",
+        MiddleName: "some updated MiddleName",
+        OrgAccountBalance: "some updated OrgAccountBalance",
+        TransAmount: "some updated TransAmount",
+        TransID: "some updated TransID",
+        TransTime: "some updated TransTime",
+        transLoID: 43
+      }
+
+      assert {:ok, %Mobilepayments{} = mobilepayments} =
+               Payment.update_mobilepayments(mobilepayments, update_attrs)
+
       assert mobilepayments.BusinessShortCode == "some updated BusinessShortCode"
       assert mobilepayments.FirstName == "some updated FirstName"
       assert mobilepayments.LastName == "some updated LastName"
@@ -59,7 +97,10 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_mobilepayments/2 with invalid data returns error changeset" do
       mobilepayments = mobilepayments_fixture()
-      assert {:error, %Ecto.Changeset{}} = Payment.update_mobilepayments(mobilepayments, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Payment.update_mobilepayments(mobilepayments, @invalid_attrs)
+
       assert mobilepayments == Payment.get_mobilepayments!(mobilepayments.id)
     end
 
@@ -80,7 +121,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     import Bestnowelixirmysql.PaymentFixtures
 
-    @invalid_attrs %{BillRefNumber: nil, BusinessShortCode: nil, FirstName: nil, InvoiceNumber: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, ThirdPartyTransID: nil, TransAmount: nil, TransDate: nil, TransID: nil, TransTime: nil, TransactionType: nil, transLoID: nil}
+    @invalid_attrs %{
+      BillRefNumber: nil,
+      BusinessShortCode: nil,
+      FirstName: nil,
+      InvoiceNumber: nil,
+      LastName: nil,
+      MSISDN: nil,
+      MiddleName: nil,
+      OrgAccountBalance: nil,
+      ThirdPartyTransID: nil,
+      TransAmount: nil,
+      TransDate: nil,
+      TransID: nil,
+      TransTime: nil,
+      TransactionType: nil,
+      transLoID: nil
+    }
 
     test "list_tills/0 returns all tills" do
       mobilepayments = mobilepayments_fixture()
@@ -93,9 +150,27 @@ defmodule Bestnowelixirmysql.PaymentTest do
     end
 
     test "create_mobilepayments/1 with valid data creates a mobilepayments" do
-      valid_attrs = %{BillRefNumber: "some BillRefNumber", BusinessShortCode: "some BusinessShortCode", FirstName: "some FirstName", InvoiceNumber: "some InvoiceNumber", LastName: "some LastName", MSISDN: "some MSISDN", MiddleName: "some MiddleName", OrgAccountBalance: "some OrgAccountBalance", ThirdPartyTransID: "some ThirdPartyTransID", TransAmount: "some TransAmount", TransDate: "some TransDate", TransID: "some TransID", TransTime: "some TransTime", TransactionType: "some TransactionType", transLoID: 42}
+      valid_attrs = %{
+        BillRefNumber: "some BillRefNumber",
+        BusinessShortCode: "some BusinessShortCode",
+        FirstName: "some FirstName",
+        InvoiceNumber: "some InvoiceNumber",
+        LastName: "some LastName",
+        MSISDN: "some MSISDN",
+        MiddleName: "some MiddleName",
+        OrgAccountBalance: "some OrgAccountBalance",
+        ThirdPartyTransID: "some ThirdPartyTransID",
+        TransAmount: "some TransAmount",
+        TransDate: "some TransDate",
+        TransID: "some TransID",
+        TransTime: "some TransTime",
+        TransactionType: "some TransactionType",
+        transLoID: 42
+      }
 
-      assert {:ok, %Mobilepayments{} = mobilepayments} = Payment.create_mobilepayments(valid_attrs)
+      assert {:ok, %Mobilepayments{} = mobilepayments} =
+               Payment.create_mobilepayments(valid_attrs)
+
       assert mobilepayments.BillRefNumber == "some BillRefNumber"
       assert mobilepayments.BusinessShortCode == "some BusinessShortCode"
       assert mobilepayments.FirstName == "some FirstName"
@@ -119,9 +194,28 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_mobilepayments/2 with valid data updates the mobilepayments" do
       mobilepayments = mobilepayments_fixture()
-      update_attrs = %{BillRefNumber: "some updated BillRefNumber", BusinessShortCode: "some updated BusinessShortCode", FirstName: "some updated FirstName", InvoiceNumber: "some updated InvoiceNumber", LastName: "some updated LastName", MSISDN: "some updated MSISDN", MiddleName: "some updated MiddleName", OrgAccountBalance: "some updated OrgAccountBalance", ThirdPartyTransID: "some updated ThirdPartyTransID", TransAmount: "some updated TransAmount", TransDate: "some updated TransDate", TransID: "some updated TransID", TransTime: "some updated TransTime", TransactionType: "some updated TransactionType", transLoID: 43}
 
-      assert {:ok, %Mobilepayments{} = mobilepayments} = Payment.update_mobilepayments(mobilepayments, update_attrs)
+      update_attrs = %{
+        BillRefNumber: "some updated BillRefNumber",
+        BusinessShortCode: "some updated BusinessShortCode",
+        FirstName: "some updated FirstName",
+        InvoiceNumber: "some updated InvoiceNumber",
+        LastName: "some updated LastName",
+        MSISDN: "some updated MSISDN",
+        MiddleName: "some updated MiddleName",
+        OrgAccountBalance: "some updated OrgAccountBalance",
+        ThirdPartyTransID: "some updated ThirdPartyTransID",
+        TransAmount: "some updated TransAmount",
+        TransDate: "some updated TransDate",
+        TransID: "some updated TransID",
+        TransTime: "some updated TransTime",
+        TransactionType: "some updated TransactionType",
+        transLoID: 43
+      }
+
+      assert {:ok, %Mobilepayments{} = mobilepayments} =
+               Payment.update_mobilepayments(mobilepayments, update_attrs)
+
       assert mobilepayments.BillRefNumber == "some updated BillRefNumber"
       assert mobilepayments.BusinessShortCode == "some updated BusinessShortCode"
       assert mobilepayments.FirstName == "some updated FirstName"
@@ -141,7 +235,10 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_mobilepayments/2 with invalid data returns error changeset" do
       mobilepayments = mobilepayments_fixture()
-      assert {:error, %Ecto.Changeset{}} = Payment.update_mobilepayments(mobilepayments, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Payment.update_mobilepayments(mobilepayments, @invalid_attrs)
+
       assert mobilepayments == Payment.get_mobilepayments!(mobilepayments.id)
     end
 
@@ -162,7 +259,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     import Bestnowelixirmysql.PaymentFixtures
 
-    @invalid_attrs %{BillRefNumber: nil, BusinessShortCode: nil, FirstName: nil, InvoiceNumber: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, ThirdPartyTransID: nil, TransAmount: nil, TransDate: nil, TransID: nil, TransTime: nil, TransactionType: nil, transLoID: nil}
+    @invalid_attrs %{
+      BillRefNumber: nil,
+      BusinessShortCode: nil,
+      FirstName: nil,
+      InvoiceNumber: nil,
+      LastName: nil,
+      MSISDN: nil,
+      MiddleName: nil,
+      OrgAccountBalance: nil,
+      ThirdPartyTransID: nil,
+      TransAmount: nil,
+      TransDate: nil,
+      TransID: nil,
+      TransTime: nil,
+      TransactionType: nil,
+      transLoID: nil
+    }
 
     test "list_tills/0 returns all tills" do
       till = till_fixture()
@@ -175,7 +288,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
     end
 
     test "create_till/1 with valid data creates a till" do
-      valid_attrs = %{BillRefNumber: "some BillRefNumber", BusinessShortCode: "some BusinessShortCode", FirstName: "some FirstName", InvoiceNumber: "some InvoiceNumber", LastName: "some LastName", MSISDN: "some MSISDN", MiddleName: "some MiddleName", OrgAccountBalance: "some OrgAccountBalance", ThirdPartyTransID: "some ThirdPartyTransID", TransAmount: "some TransAmount", TransDate: "some TransDate", TransID: "some TransID", TransTime: "some TransTime", TransactionType: "some TransactionType", transLoID: 42}
+      valid_attrs = %{
+        BillRefNumber: "some BillRefNumber",
+        BusinessShortCode: "some BusinessShortCode",
+        FirstName: "some FirstName",
+        InvoiceNumber: "some InvoiceNumber",
+        LastName: "some LastName",
+        MSISDN: "some MSISDN",
+        MiddleName: "some MiddleName",
+        OrgAccountBalance: "some OrgAccountBalance",
+        ThirdPartyTransID: "some ThirdPartyTransID",
+        TransAmount: "some TransAmount",
+        TransDate: "some TransDate",
+        TransID: "some TransID",
+        TransTime: "some TransTime",
+        TransactionType: "some TransactionType",
+        transLoID: 42
+      }
 
       assert {:ok, %Till{} = till} = Payment.create_till(valid_attrs)
       assert till.BillRefNumber == "some BillRefNumber"
@@ -201,7 +330,24 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_till/2 with valid data updates the till" do
       till = till_fixture()
-      update_attrs = %{BillRefNumber: "some updated BillRefNumber", BusinessShortCode: "some updated BusinessShortCode", FirstName: "some updated FirstName", InvoiceNumber: "some updated InvoiceNumber", LastName: "some updated LastName", MSISDN: "some updated MSISDN", MiddleName: "some updated MiddleName", OrgAccountBalance: "some updated OrgAccountBalance", ThirdPartyTransID: "some updated ThirdPartyTransID", TransAmount: "some updated TransAmount", TransDate: "some updated TransDate", TransID: "some updated TransID", TransTime: "some updated TransTime", TransactionType: "some updated TransactionType", transLoID: 43}
+
+      update_attrs = %{
+        BillRefNumber: "some updated BillRefNumber",
+        BusinessShortCode: "some updated BusinessShortCode",
+        FirstName: "some updated FirstName",
+        InvoiceNumber: "some updated InvoiceNumber",
+        LastName: "some updated LastName",
+        MSISDN: "some updated MSISDN",
+        MiddleName: "some updated MiddleName",
+        OrgAccountBalance: "some updated OrgAccountBalance",
+        ThirdPartyTransID: "some updated ThirdPartyTransID",
+        TransAmount: "some updated TransAmount",
+        TransDate: "some updated TransDate",
+        TransID: "some updated TransID",
+        TransTime: "some updated TransTime",
+        TransactionType: "some updated TransactionType",
+        transLoID: 43
+      }
 
       assert {:ok, %Till{} = till} = Payment.update_till(till, update_attrs)
       assert till.BillRefNumber == "some updated BillRefNumber"
@@ -244,7 +390,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     import Bestnowelixirmysql.PaymentFixtures
 
-    @invalid_attrs %{BillRefNumber: nil, BusinessShortCode: nil, FirstName: nil, InvoiceNumber: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, ThirdPartyTransID: nil, TransAmount: nil, TransDate: nil, TransID: nil, TransTime: nil, TransactionType: nil, transLoID: nil}
+    @invalid_attrs %{
+      BillRefNumber: nil,
+      BusinessShortCode: nil,
+      FirstName: nil,
+      InvoiceNumber: nil,
+      LastName: nil,
+      MSISDN: nil,
+      MiddleName: nil,
+      OrgAccountBalance: nil,
+      ThirdPartyTransID: nil,
+      TransAmount: nil,
+      TransDate: nil,
+      TransID: nil,
+      TransTime: nil,
+      TransactionType: nil,
+      transLoID: nil
+    }
 
     test "list_paybill/0 returns all paybill" do
       paybill = paybill_fixture()
@@ -257,7 +419,23 @@ defmodule Bestnowelixirmysql.PaymentTest do
     end
 
     test "create_paybill/1 with valid data creates a paybill" do
-      valid_attrs = %{BillRefNumber: "some BillRefNumber", BusinessShortCode: "some BusinessShortCode", FirstName: "some FirstName", InvoiceNumber: "some InvoiceNumber", LastName: "some LastName", MSISDN: "some MSISDN", MiddleName: "some MiddleName", OrgAccountBalance: "some OrgAccountBalance", ThirdPartyTransID: "some ThirdPartyTransID", TransAmount: "some TransAmount", TransDate: "some TransDate", TransID: "some TransID", TransTime: "some TransTime", TransactionType: "some TransactionType", transLoID: 42}
+      valid_attrs = %{
+        BillRefNumber: "some BillRefNumber",
+        BusinessShortCode: "some BusinessShortCode",
+        FirstName: "some FirstName",
+        InvoiceNumber: "some InvoiceNumber",
+        LastName: "some LastName",
+        MSISDN: "some MSISDN",
+        MiddleName: "some MiddleName",
+        OrgAccountBalance: "some OrgAccountBalance",
+        ThirdPartyTransID: "some ThirdPartyTransID",
+        TransAmount: "some TransAmount",
+        TransDate: "some TransDate",
+        TransID: "some TransID",
+        TransTime: "some TransTime",
+        TransactionType: "some TransactionType",
+        transLoID: 42
+      }
 
       assert {:ok, %Paybill{} = paybill} = Payment.create_paybill(valid_attrs)
       assert paybill.BillRefNumber == "some BillRefNumber"
@@ -283,7 +461,24 @@ defmodule Bestnowelixirmysql.PaymentTest do
 
     test "update_paybill/2 with valid data updates the paybill" do
       paybill = paybill_fixture()
-      update_attrs = %{BillRefNumber: "some updated BillRefNumber", BusinessShortCode: "some updated BusinessShortCode", FirstName: "some updated FirstName", InvoiceNumber: "some updated InvoiceNumber", LastName: "some updated LastName", MSISDN: "some updated MSISDN", MiddleName: "some updated MiddleName", OrgAccountBalance: "some updated OrgAccountBalance", ThirdPartyTransID: "some updated ThirdPartyTransID", TransAmount: "some updated TransAmount", TransDate: "some updated TransDate", TransID: "some updated TransID", TransTime: "some updated TransTime", TransactionType: "some updated TransactionType", transLoID: 43}
+
+      update_attrs = %{
+        BillRefNumber: "some updated BillRefNumber",
+        BusinessShortCode: "some updated BusinessShortCode",
+        FirstName: "some updated FirstName",
+        InvoiceNumber: "some updated InvoiceNumber",
+        LastName: "some updated LastName",
+        MSISDN: "some updated MSISDN",
+        MiddleName: "some updated MiddleName",
+        OrgAccountBalance: "some updated OrgAccountBalance",
+        ThirdPartyTransID: "some updated ThirdPartyTransID",
+        TransAmount: "some updated TransAmount",
+        TransDate: "some updated TransDate",
+        TransID: "some updated TransID",
+        TransTime: "some updated TransTime",
+        TransactionType: "some updated TransactionType",
+        transLoID: 43
+      }
 
       assert {:ok, %Paybill{} = paybill} = Payment.update_paybill(paybill, update_attrs)
       assert paybill.BillRefNumber == "some updated BillRefNumber"

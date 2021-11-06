@@ -39,7 +39,23 @@ defmodule BestnowelixirmysqlWeb.TillControllerTest do
     TransactionType: "some updated TransactionType",
     transLoID: 43
   }
-  @invalid_attrs %{BillRefNumber: nil, BusinessShortCode: nil, FirstName: nil, InvoiceNumber: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, ThirdPartyTransID: nil, TransAmount: nil, TransDate: nil, TransID: nil, TransTime: nil, TransactionType: nil, transLoID: nil}
+  @invalid_attrs %{
+    BillRefNumber: nil,
+    BusinessShortCode: nil,
+    FirstName: nil,
+    InvoiceNumber: nil,
+    LastName: nil,
+    MSISDN: nil,
+    MiddleName: nil,
+    OrgAccountBalance: nil,
+    ThirdPartyTransID: nil,
+    TransAmount: nil,
+    TransDate: nil,
+    TransID: nil,
+    TransTime: nil,
+    TransactionType: nil,
+    transLoID: nil
+  }
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

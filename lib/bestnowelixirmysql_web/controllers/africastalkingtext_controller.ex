@@ -12,10 +12,14 @@ defmodule BestnowelixirmysqlWeb.AfricastalkingtextController do
   end
 
   def create(conn, %{"africastalkingtext" => africastalkingtext_params}) do
-    with {:ok, %Africastalkingtext{} = africastalkingtext} <- Africastalkingtexts.create_africastalkingtext(africastalkingtext_params) do
+    with {:ok, %Africastalkingtext{} = africastalkingtext} <-
+           Africastalkingtexts.create_africastalkingtext(africastalkingtext_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.africastalkingtext_path(conn, :show, africastalkingtext))
+      |> put_resp_header(
+        "location",
+        Routes.africastalkingtext_path(conn, :show, africastalkingtext)
+      )
       |> render("show.json", africastalkingtext: africastalkingtext)
     end
   end
@@ -28,7 +32,11 @@ defmodule BestnowelixirmysqlWeb.AfricastalkingtextController do
   def update(conn, %{"id" => id, "africastalkingtext" => africastalkingtext_params}) do
     africastalkingtext = Africastalkingtexts.get_africastalkingtext!(id)
 
-    with {:ok, %Africastalkingtext{} = africastalkingtext} <- Africastalkingtexts.update_africastalkingtext(africastalkingtext, africastalkingtext_params) do
+    with {:ok, %Africastalkingtext{} = africastalkingtext} <-
+           Africastalkingtexts.update_africastalkingtext(
+             africastalkingtext,
+             africastalkingtext_params
+           ) do
       render(conn, "show.json", africastalkingtext: africastalkingtext)
     end
   end
@@ -36,7 +44,8 @@ defmodule BestnowelixirmysqlWeb.AfricastalkingtextController do
   def delete(conn, %{"id" => id}) do
     africastalkingtext = Africastalkingtexts.get_africastalkingtext!(id)
 
-    with {:ok, %Africastalkingtext{}} <- Africastalkingtexts.delete_africastalkingtext(africastalkingtext) do
+    with {:ok, %Africastalkingtext{}} <-
+           Africastalkingtexts.delete_africastalkingtext(africastalkingtext) do
       send_resp(conn, :no_content, "")
     end
   end

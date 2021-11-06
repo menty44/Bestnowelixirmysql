@@ -29,7 +29,18 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsControllerTest do
     TransTime: "some updated TransTime",
     transLoID: 43
   }
-  @invalid_attrs %{BusinessShortCode: nil, FirstName: nil, LastName: nil, MSISDN: nil, MiddleName: nil, OrgAccountBalance: nil, TransAmount: nil, TransID: nil, TransTime: nil, transLoID: nil}
+  @invalid_attrs %{
+    BusinessShortCode: nil,
+    FirstName: nil,
+    LastName: nil,
+    MSISDN: nil,
+    MiddleName: nil,
+    OrgAccountBalance: nil,
+    TransAmount: nil,
+    TransID: nil,
+    TransTime: nil,
+    transLoID: nil
+  }
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -73,8 +84,15 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsControllerTest do
   describe "update mobilepayments" do
     setup [:create_mobilepayments]
 
-    test "renders mobilepayments when data is valid", %{conn: conn, mobilepayments: %Mobilepayments{id: id} = mobilepayments} do
-      conn = put(conn, Routes.mobilepayments_path(conn, :update, mobilepayments), mobilepayments: @update_attrs)
+    test "renders mobilepayments when data is valid", %{
+      conn: conn,
+      mobilepayments: %Mobilepayments{id: id} = mobilepayments
+    } do
+      conn =
+        put(conn, Routes.mobilepayments_path(conn, :update, mobilepayments),
+          mobilepayments: @update_attrs
+        )
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.mobilepayments_path(conn, :show, id))
@@ -95,7 +113,11 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, mobilepayments: mobilepayments} do
-      conn = put(conn, Routes.mobilepayments_path(conn, :update, mobilepayments), mobilepayments: @invalid_attrs)
+      conn =
+        put(conn, Routes.mobilepayments_path(conn, :update, mobilepayments),
+          mobilepayments: @invalid_attrs
+        )
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

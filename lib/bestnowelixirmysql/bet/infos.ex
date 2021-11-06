@@ -3,7 +3,7 @@ defmodule Bestnowelixirmysql.Bet.Infos do
   import Ecto.Changeset
 
   schema "info" do
-#    field :id, :integer, virtual: true
+    #    field :id, :integer, virtual: true
     field :info_id, :integer, primary_key: true
     field :date_added, :date
     field :keyword, :string

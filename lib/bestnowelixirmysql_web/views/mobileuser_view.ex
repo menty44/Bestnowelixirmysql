@@ -25,9 +25,9 @@ defmodule BestnowelixirmysqlWeb.MobileuserView do
   def render("sign.json", %{mobileuser: mobileuser}) do
     %{data: render_one(mobileuser, MobileuserView, "login.json")}
   end
-#  def render("login.json", %{mobileuser: mobileuser, token: token}) do
-  def render("login.json", %{mobileuser: mobileuser, token: token}) do
 
+  #  def render("login.json", %{mobileuser: mobileuser, token: token}) do
+  def render("login.json", %{mobileuser: mobileuser, token: token}) do
     %{
       id: mobileuser.id,
       password_hash: mobileuser.password_hash,

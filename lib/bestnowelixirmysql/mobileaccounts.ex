@@ -69,6 +69,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
   """
   def update_mobileuser(%Mobileuser{} = mobileuser, attrs) do
     IO.inspect(attrs)
+
     mobileuser
     |> Mobileuser.changeset(attrs)
     |> Repo.update()
@@ -107,20 +108,20 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
     case Repo.get_by(Mobileuser, phone: phone) do
       nil ->
         {:error, :not_found}
+
       mobileuser ->
         {:ok, mobileuser}
     end
   end
 
   def count_by_id!() do
-#    Repo.aggregate(from p in Mobileuser, :count, :id)
-#    Repo.one(from m in Mobileuser, select: count(m.id))  q
+    #    Repo.aggregate(from p in Mobileuser, :count, :id)
+    #    Repo.one(from m in Mobileuser, select: count(m.id))  q
     Repo.one(from p in Mobileuser, select: fragment("count(*)"))
   end
 
-#  def account_type_query(queryable \\ __MODULE__, account_type) do
-#    account_type = account_type |> String.trim() |> String.downcase()
-#    from(u in queryable, where: u.account_type == ^account_type)
-#  end
-
+  #  def account_type_query(queryable \\ __MODULE__, account_type) do
+  #    account_type = account_type |> String.trim() |> String.downcase()
+  #    from(u in queryable, where: u.account_type == ^account_type)
+  #  end
 end
