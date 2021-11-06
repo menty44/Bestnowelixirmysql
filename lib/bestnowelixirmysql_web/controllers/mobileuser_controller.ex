@@ -15,7 +15,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
-    mobileusers = Mobileaccounts.list_mobileusers()
+    mobileusers = Bestnowelixirmysql.Mobileaccounts.list_mobileusers()
     render(conn, "index.json", mobileusers: mobileusers)
   end
 

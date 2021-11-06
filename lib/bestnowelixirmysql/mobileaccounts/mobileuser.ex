@@ -8,6 +8,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
     field :lastname, :string
     field :password_hash, :string
     field :phone, :string
+    field :mode, :string
 
     # Virtual fields:
     field :password, :string, virtual: true

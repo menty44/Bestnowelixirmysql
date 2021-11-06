@@ -16,7 +16,8 @@ defmodule BestnowelixirmysqlWeb.MobileuserView do
       password_hash: mobileuser.password_hash,
       phone: mobileuser.phone,
       firstname: mobileuser.firstname,
-      lastname: mobileuser.lastname
+      lastname: mobileuser.lastname,
+      mode: mobileuser.mode
     }
   end
 
