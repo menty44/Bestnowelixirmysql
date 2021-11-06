@@ -33,6 +33,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserView do
       phone: mobileuser.phone,
       firstname: mobileuser.firstname,
       lastname: mobileuser.lastname,
+      mode: mobileuser.mode,
       token: token
     }
   end

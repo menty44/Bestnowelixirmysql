@@ -176,7 +176,15 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
 
   def update(conn, %{"id" => id, "mobileuser" => mobileuser_params}) do
     mobileuser = Bestnowelixirmysql.Mobileaccounts.get_mobileuser!(id)
+    IO.inspect mobileuser
+    with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, mobileuser_params) do
+      render(conn, "show.json", mobileuser: mobileuser)
+    end
+  end
 
+  def update(conn, %{"id" => id, "deactivate" => mobileuser_params}) do
+    IO.inspect mobileuser_params,label: "deactivate"
+    mobileuser = Bestnowelixirmysql.Mobileaccounts.get_mobileuser!(id)
     IO.inspect mobileuser
     with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, mobileuser_params) do
       render(conn, "show.json", mobileuser: mobileuser)
