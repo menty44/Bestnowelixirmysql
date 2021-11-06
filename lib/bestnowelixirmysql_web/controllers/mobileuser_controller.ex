@@ -8,6 +8,10 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   alias BestnowelixirmysqlWeb.Auth.Guardian
 #  use Guardian, otp_app: :myApi
 
+  alias Bestnowelixirmysql.Africastalkingtexts
+  alias Bestnowelixirmysql.Africastalkingtexts.Africastalkingtext
+
+  require Phoenix.Logger
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
@@ -76,14 +80,15 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
           IO.puts body
           {:ok, xml}  = XmlJson.AwsApi.deserialize(body)
           demo = xml
-          IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]
+          africastalkingtext_saved = save_africastalkingtext demo, gen
+          IO.inspect africastalkingtext_saved
           conn
           |> put_status(:ok)
           |> json(%{
             "code" => 0,
-            "gen" => gen,
-            "message" => "password updated"
+            "message" => "Your temporary password is: " <> gen
           })
+
 #        {:ok, %HTTPoison.Response{status_code: 404}} ->
 #          IO.puts "Not found :("
 #        {:error, %HTTPoison.Error{reason: reason}} ->
@@ -106,6 +111,31 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
         })
     end
 
+  end
+
+  defp save_africastalkingtext(demo, gen) do
+    IO.inspect demo
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"], label: "checki parent"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["cost"], label: "cost"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["messageId"], label: "messageId"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["messageParts"], label: "messageParts"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["number"], label: "number"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["status"], label: "status"
+    IO.inspect demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["statusCode"], label: "statusCode"
+
+    africastalkingtext_params = %{
+      sentmessage: "Your temporary password is: " <> gen,
+      messageId: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["messageId"],
+      cost: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["cost"],
+      messageParts: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["messageParts"],
+      number: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["number"],
+      status: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["status"],
+      statusCode: demo["AfricasTalkingResponse"]["SMSMessageData"]["Recipients"]["Recipient"]["statusCode"]
+    }
+    with {:ok, %Africastalkingtext{} = africastalkingtext} <- Africastalkingtexts.create_africastalkingtext(africastalkingtext_params) do
+      IO.inspect africastalkingtext
+      {:ok, africastalkingtext}
+    end
   end
 
   defp gen_reference() do
