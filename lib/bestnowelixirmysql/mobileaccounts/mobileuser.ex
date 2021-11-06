@@ -19,7 +19,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
   @doc false
   def changeset(mobileuser, attrs) do
     mobileuser
-    |> cast(attrs, [:password, :phone, :firstname, :lastname])
+    |> cast(attrs, [:password, :phone, :firstname, :lastname, :mode])
     |> validate_required([:password, :phone, :firstname, :lastname])
     |> unique_constraint(:phone)
     |> put_password_hash

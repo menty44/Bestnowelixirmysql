@@ -186,7 +186,8 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     IO.inspect mobileuser_params,label: "deactivate"
     mobileuser = Bestnowelixirmysql.Mobileaccounts.get_mobileuser!(id)
     IO.inspect mobileuser
-    with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, mobileuser_params) do
+    IO.inspect mobileuser_params
+    with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{mode: Map.get(mobileuser_params, "mode")}) do
       render(conn, "show.json", mobileuser: mobileuser)
     end
   end

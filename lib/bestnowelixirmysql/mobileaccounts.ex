@@ -68,6 +68,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
 
   """
   def update_mobileuser(%Mobileuser{} = mobileuser, attrs) do
+    IO.inspect(attrs)
     mobileuser
     |> Mobileuser.changeset(attrs)
     |> Repo.update()
