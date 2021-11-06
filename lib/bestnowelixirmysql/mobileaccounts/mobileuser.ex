@@ -9,6 +9,7 @@ defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
     field :password_hash, :string
     field :phone, :string
     field :mode, :string
+    field :role, :string
 
     # Virtual fields:
     field :password, :string, virtual: true
@@ -19,8 +20,8 @@ defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
   @doc false
   def changeset(mobileuser, attrs) do
     mobileuser
-    |> cast(attrs, [:password, :phone, :firstname, :lastname, :mode])
-    |> validate_required([:password, :phone, :firstname, :lastname])
+    |> cast(attrs, [:password, :phone, :firstname, :lastname, :mode, :role])
+    |> validate_required([:phone, :firstname, :lastname])
     |> unique_constraint(:phone)
     |> put_password_hash
   end
