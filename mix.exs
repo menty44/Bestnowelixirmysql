@@ -58,7 +58,10 @@ defmodule Bestnowelixirmysql.MixProject do
       {:saxy, "~> 1.3"},
       {:xml_json, "~> 0.3.0"},
       {:corsica, "~> 1.1"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+#      {:mpesa_elixir, "~> 0.1.0"}
+
+      #      {:mpesa, "~> 0.1.2"}
     ]
   end
 

@@ -26,12 +26,14 @@ defmodule BestnowelixirmysqlWeb.Router do
     pipe_through :api
     resources "/info", InfosController, except: [:new, :edit]
     resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
+#    resources "/mobile_payments/stk", MobilepaymentsController, :stk
     resources "/tills", TillController, except: [:new, :edit]
     resources "/paybill", PaybillController, except: [:new, :edit]
     resources "/keyword", KeywordController, except: [:new, :edit]
     resources "/bookmakers", BookmakerController, except: [:new, :edit]
     resources "/africastalkingtexts", AfricastalkingtextController, except: [:new, :edit]
     resources "/packages", PackageController, except: [:new, :edit]
+    resources "/games", GameController, except: [:new, :edit]
     post "/paybill/phone/:number", PaybillController, :transactions
   end
 

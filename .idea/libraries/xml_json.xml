@@ -9,9 +9,12 @@
       <root url="file://$PROJECT_DIR$/_build/dev/lib/xml_json/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/lib/xml_json/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/lib/xml_json/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/xml_json/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/xml_json/ebin" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/xml_json/lib" />
       <root url="file://$PROJECT_DIR$/deps/xml_json/lib" />
       <root url="file://$PROJECT_DIR$/deps/xml_json/lib" />
       <root url="file://$PROJECT_DIR$/deps/xml_json/lib" />

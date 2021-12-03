@@ -189,5 +189,7 @@
     <orderEntry type="library" name="corsica" level="project" />
     <orderEntry type="library" name="placebo" level="project" />
     <orderEntry type="library" name="cors_plug" level="project" />
+    <orderEntry type="library" name="mpesa" level="project" />
+    <orderEntry type="library" name="mpesa_elixir" level="project" />
   </component>
 </module>

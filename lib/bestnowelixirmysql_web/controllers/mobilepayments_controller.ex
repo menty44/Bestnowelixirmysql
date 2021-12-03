@@ -11,6 +11,14 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     render(conn, "index.json", mobile_payments: mobile_payments)
   end
 
+  def stk conn, params do
+    conn
+    |> put_status(:ok)
+    |> json(%{
+      data: "noma"
+    })
+  end
+
   def create(conn, %{"mobilepayments" => mobilepayments_params}) do
     with {:ok, %Mobilepayments{} = mobilepayments} <-
            Payment.create_mobilepayments(mobilepayments_params) do
