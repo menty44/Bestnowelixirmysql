@@ -24,23 +24,23 @@ defmodule BestnowelixirmysqlWeb.BookmakerController do
     IO.inspect(Map.get(bookmaker_params, "owner"))
     IO.inspect(Map.get(bookmaker_params, "shortcode"))
 
-    g = %{
-           time: "7.30",
-           league: "La liga",
-           match: "Westbrom X Juventus",
-           tip: "1",
-           results: "1"
-         }
-#
-#    save_game = %Game{}
-#    |> Game.changeset(g)
-#    |> Repo.insert!()
+    Enum.each(Map.get(bookmaker_params, "games"), fn g ->
+      IO.inspect(g)
 
-    save_book_marker = %Bookmaker{}
-    |> Bookmaker.changeset(bookmaker_params)
-    |> Repo.insert!()
-#    |> IO.inspect
-    s_game = Ecto.build_assoc(save_book_marker, :games, g) |> IO.inspect
+
+      save_book_marker = %Bookmaker{}
+                         |> Bookmaker.changeset(bookmaker_params)
+                         |> Repo.insert!()
+      Ecto.build_assoc(save_book_marker, :games, %{
+        league: Map.get(g, "league"),
+        match: Map.get(g, "match"),
+        results: Map.get(g, "results"),
+        time: Map.get(g, "time"),
+        tip: Map.get(g, "tip")
+      })
+      |> Repo.insert!
+      |> IO.inspect
+    end)
 
     conn
     |> put_status(:created)

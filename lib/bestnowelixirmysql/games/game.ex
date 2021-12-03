@@ -8,7 +8,7 @@ defmodule Bestnowelixirmysql.Games.Game do
     field :results, :string
     field :time, :string
     field :tip, :string
-    belongs_to :bookmakers, Bestnowelixirmysql.Bookmakers.Bookmaker
+    belongs_to :bookmaker, Bestnowelixirmysql.Bookmakers.Bookmaker
 
     timestamps()
   end
