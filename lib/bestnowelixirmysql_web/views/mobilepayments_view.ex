@@ -1,6 +1,7 @@
 defmodule BestnowelixirmysqlWeb.MobilepaymentsView do
   use BestnowelixirmysqlWeb, :view
   alias BestnowelixirmysqlWeb.MobilepaymentsView
+  alias BestnowelixirmysqlWeb.PaymentView
 
   def render("index.json", %{mobile_payments: mobile_payments}) do
     %{data: render_many(mobile_payments, MobilepaymentsView, "mobilepayments.json")}
@@ -8,6 +9,10 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsView do
 
   def render("show.json", %{mobilepayments: mobilepayments}) do
     %{data: render_one(mobilepayments, MobilepaymentsView, "mobilepayments.json")}
+  end
+
+  def render("show.json", %{payment: payment}) do
+    %{data: render_one(payment, PaymentView, "payment.json")}
   end
 
   def render("mobilepayments.json", %{mobilepayments: mobilepayments}) do
