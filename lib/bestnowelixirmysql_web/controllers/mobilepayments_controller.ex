@@ -11,7 +11,41 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     render(conn, "index.json", mobile_payments: mobile_payments)
   end
 
-  def stk conn, params do
+  defp process_lipanampesa(data) do
+     Enum.each(data, fn x ->
+
+       if x["Name"] == "PhoneNumber" do
+         IO.inspect(x)
+         IO.inspect(x["Value"])
+       end
+
+       if x["Name"] == "Amount" do
+         IO.inspect(x)
+         IO.inspect(x["Value"])
+       end
+
+       if x["Name"] == "MpesaReceiptNumber" do
+         IO.inspect(x)
+         IO.inspect(x["Value"])
+       end
+
+       if x["Name"] == "TransactionDate" do
+         IO.inspect(x)
+         IO.inspect(x["Value"])
+       end
+#         Payment.process_mobile_payment(x)
+     end)
+  end
+
+  def lipanampesa(conn, params) do
+    params
+    |> Map.get("Body")
+    |> Map.get("stkCallback")
+    |> Map.get("CallbackMetadata")
+    |> Map.get("Item")
+    |> process_lipanampesa
+    |> IO.inspect
+
     conn
     |> put_status(:ok)
     |> json(%{

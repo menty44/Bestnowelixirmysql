@@ -108,7 +108,6 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
     case Repo.get_by(Mobileuser, phone: phone) do
       nil ->
         {:error, :not_found}
-
       mobileuser ->
         {:ok, mobileuser}
     end

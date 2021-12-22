@@ -26,7 +26,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     pipe_through :api
     resources "/info", InfosController, except: [:new, :edit]
     resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
-#    resources "/mobile_payments/stk", MobilepaymentsController, :stk
+    post      "/mobile_payments/lipanampesa", MobilepaymentsController, :lipanampesa
     resources "/tills", TillController, except: [:new, :edit]
     resources "/paybill", PaybillController, except: [:new, :edit]
     resources "/keyword", KeywordController, except: [:new, :edit]
