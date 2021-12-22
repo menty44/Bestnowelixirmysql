@@ -37,13 +37,29 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
      end)
   end
 
-  def lipanampesa(conn, params) do
+  def validation(conn, params) do
     params
-    |> Map.get("Body")
-    |> Map.get("stkCallback")
-    |> Map.get("CallbackMetadata")
-    |> Map.get("Item")
-    |> process_lipanampesa
+#    |> Map.get("Body")
+#    |> Map.get("stkCallback")
+#    |> Map.get("CallbackMetadata")
+#    |> Map.get("Item")
+#    |> process_lipanampesa
+    |> IO.inspect
+
+    conn
+    |> put_status(:ok)
+    |> json(%{
+      data: "noma"
+    })
+  end
+
+  def confirmation(conn, params) do
+    params
+#    |> Map.get("Body")
+#    |> Map.get("stkCallback")
+#    |> Map.get("CallbackMetadata")
+#    |> Map.get("Item")
+#    |> process_lipanampesa
     |> IO.inspect
 
     conn
