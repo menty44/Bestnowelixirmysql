@@ -18,11 +18,11 @@ defmodule Bestnowelixirmysql.Payments do
 
   """
   def list_payments(page \\ 1, size \\ 3) do
-    Payment |> order_by( [{:desc, :updated_at}])
+    Payment
+    |> order_by( [{:desc, :updated_at}])
     |> paginate(page, size)
     |> Repo.all()
   end
-
 
   def paginate(query, page, size) do
     from query,

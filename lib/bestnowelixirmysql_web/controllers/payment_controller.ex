@@ -6,9 +6,13 @@ defmodule BestnowelixirmysqlWeb.PaymentController do
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
-  def index(conn, _params) do
-    payments = Payments.list_payments()
+  def index(conn, params) do
+    payments = Payments.list_payments(convert_to_int(Map.get(params, "page")), convert_to_int(Map.get(params, "size")))
     render(conn, "index.json", payments: payments)
+  end
+
+  def convert_to_int(x) do
+    String.to_integer(x)
   end
 
   def create(conn, %{"payment" => payment_params}) do
