@@ -14,7 +14,8 @@ defmodule BestnowelixirmysqlWeb.PackageView do
     %{
       id: package.id,
       name: package.name,
-      price: package.price
+      price: package.price,
+      duration: package.duration
     }
   end
 end

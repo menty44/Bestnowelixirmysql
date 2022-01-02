@@ -5,6 +5,7 @@ defmodule Bestnowelixirmysql.Packages.Package do
   schema "packages" do
     field :name, :string
     field :price, :integer
+    field :duration, :integer
 
     timestamps()
   end
@@ -12,7 +13,7 @@ defmodule Bestnowelixirmysql.Packages.Package do
   @doc false
   def changeset(package, attrs) do
     package
-    |> cast(attrs, [:name, :price])
-    |> validate_required([:name, :price])
+    |> cast(attrs, [:name, :price, :duration])
+    |> validate_required([:name, :price, :duration])
   end
 end
