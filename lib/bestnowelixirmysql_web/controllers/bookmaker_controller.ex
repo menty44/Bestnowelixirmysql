@@ -14,7 +14,8 @@ defmodule BestnowelixirmysqlWeb.BookmakerController do
 
   def index(conn, _params) do
     bookmakers = Bookmakers.list_bookmakers()
-    render(conn, "index.json", bookmakers: bookmakers)
+    IO.inspect(bookmakers)
+#    render(conn, "index.json", bookmakers: bookmakers)
   end
 
   def create(conn, %{"bookmaker" => bookmaker_params}) do

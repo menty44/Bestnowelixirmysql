@@ -18,7 +18,10 @@ defmodule Bestnowelixirmysql.Bookmakers do
 
   """
   def list_bookmakers do
-    Repo.all(Bookmaker)
+#    Repo.preload Bookmaker, :games
+    Bookmaker
+    |> Repo.all() |> Repo.preload(:games)
+#    Repo.preload Bookmaker, [games: from(c in Bestnowelixirmysql.Games.Game, order_by: c.updated_at)]
   end
 
   @doc """
