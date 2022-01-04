@@ -102,4 +102,18 @@ defmodule Bestnowelixirmysql.Games do
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
   end
+
+  def archive_by_date!(phone) do
+    case Repo.all(archive_by_date_query) do
+      nil ->
+        {:error, :not_found}
+      payment ->
+        {:ok, payment}
+    end
+  end
+
+  def archive_by_date_query do
+    query = from g in Game,
+                 where: g.inserted_at < Timex.now
+  end
 end

@@ -103,6 +103,9 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cors_plug" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/corsica" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/json_view" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/combine" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/timex" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tzdata" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="phoenix" level="project" />
@@ -193,5 +196,8 @@
     <orderEntry type="library" name="mpesa" level="project" />
     <orderEntry type="library" name="mpesa_elixir" level="project" />
     <orderEntry type="library" name="json_view" level="project" />
+    <orderEntry type="library" name="timex" level="project" />
+    <orderEntry type="library" name="tzdata" level="project" />
+    <orderEntry type="library" name="combine" level="project" />
   </component>
 </module>
