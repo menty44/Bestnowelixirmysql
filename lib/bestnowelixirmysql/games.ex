@@ -103,7 +103,7 @@ defmodule Bestnowelixirmysql.Games do
     Game.changeset(game, attrs)
   end
 
-  def archive_by_date!(phone) do
+  def games_archive_by_date!() do
     case Repo.all(archive_by_date_query) do
       nil ->
         {:error, :not_found}
@@ -113,7 +113,11 @@ defmodule Bestnowelixirmysql.Games do
   end
 
   def archive_by_date_query do
-    query = from g in Game,
-                 where: g.inserted_at < Timex.now
+    d = convert_to_string(DateTime.utc_now)
+    from g in Game, where: g.inserted_at < ^d, limit: 100
+  end
+
+  def convert_to_string(param) do
+    DateTime.to_string(param)
   end
 end

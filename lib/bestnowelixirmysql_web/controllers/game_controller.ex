@@ -11,6 +11,11 @@ defmodule BestnowelixirmysqlWeb.GameController do
     render(conn, "index.json", games: games)
   end
 
+  def archive(conn, _params) do
+    {:ok, games} = Bestnowelixirmysql.Games.games_archive_by_date!()
+    render(conn, "index.json", games: games)
+  end
+
   def create(conn, %{"game" => game_params}) do
     with {:ok, %Game{} = game} <- Games.create_game(game_params) do
       conn
