@@ -102,6 +102,7 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/xml_json" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cors_plug" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/corsica" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/json_view" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="phoenix" level="project" />
@@ -191,5 +192,6 @@
     <orderEntry type="library" name="cors_plug" level="project" />
     <orderEntry type="library" name="mpesa" level="project" />
     <orderEntry type="library" name="mpesa_elixir" level="project" />
+    <orderEntry type="library" name="json_view" level="project" />
   </component>
 </module>

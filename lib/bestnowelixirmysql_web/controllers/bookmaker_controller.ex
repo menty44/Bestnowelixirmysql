@@ -13,9 +13,16 @@ defmodule BestnowelixirmysqlWeb.BookmakerController do
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
-    bookmakers = Bookmakers.list_bookmakers()
-    IO.inspect(bookmakers)
-#    render(conn, "index.json", bookmakers: bookmakers)
+    bookmaker = Bookmakers.list_bookmakers()
+#    IO.inspect(bookmaker)
+#    render(conn, "index.json", %{bookmaker: bookmaker})
+    render(conn, "show_all.json", bookmaker: bookmaker)
+#    conn
+#    |> put_status(:ok)
+#    |> json(%{
+#      "code" => 0,
+#      "message" => Poison.decode(bookmaker)
+#    })
   end
 
   def create(conn, %{"bookmaker" => bookmaker_params}) do

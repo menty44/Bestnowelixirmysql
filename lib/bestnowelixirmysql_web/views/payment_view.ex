@@ -25,7 +25,8 @@ defmodule BestnowelixirmysqlWeb.PaymentView do
       transamount: payment.transamount,
       transid: payment.transid,
       transtime: payment.transtime,
-      transactiontype: payment.transactiontype
+      transactiontype: payment.transactiontype,
+      inserted_at: payment.inserted_at
     }
   end
 end

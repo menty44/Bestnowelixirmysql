@@ -18,7 +18,8 @@ defmodule Bestnowelixirmysql.Games do
 
   """
   def list_games do
-    Repo.all(Game)
+    query = from(m in Game, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
   end
 
   @doc """

@@ -101,4 +101,10 @@ defmodule Bestnowelixirmysql.Packages do
   def change_package(%Package{} = package, attrs \\ %{}) do
     Package.changeset(package, attrs)
   end
+
+  def count_by_id!() do
+    #    Repo.aggregate(from p in Mobileuser, :count, :id)
+    #    Repo.one(from m in Mobileuser, select: count(m.id))
+    Repo.one(from p in Package, select: fragment("count(*)"))
+  end
 end

@@ -31,6 +31,7 @@ defmodule Bestnowelixirmysql.Payments do
   end
 
 
+
   @doc """
   Gets a single payment.
 
@@ -110,5 +111,14 @@ defmodule Bestnowelixirmysql.Payments do
   """
   def change_payment(%Payment{} = payment, attrs \\ %{}) do
     Payment.changeset(payment, attrs)
+  end
+
+  def archive_by_date!(phone) do
+    case Repo.all(Payment, msisdn: phone) do
+      nil ->
+        {:error, :not_found}
+      payment ->
+        {:ok, payment}
+    end
   end
 end

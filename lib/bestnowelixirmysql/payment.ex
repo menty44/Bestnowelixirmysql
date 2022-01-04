@@ -325,4 +325,13 @@ defmodule Bestnowelixirmysql.Payment do
         {:ok, till}
     end
   end
+
+  def archive_by_date!(phone) do
+    case Repo.all(Bestnowelixirmysql.Payment, msisdn: phone) do
+      nil ->
+        {:error, :not_found}
+      payment ->
+        {:ok, payment}
+    end
+  end
 end

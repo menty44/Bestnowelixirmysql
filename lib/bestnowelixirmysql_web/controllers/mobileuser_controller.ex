@@ -21,6 +21,9 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   require Phoenix.Logger
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
+  alias Bestnowelixirmysql.Packages
+  alias Bestnowelixirmysql.Packages.Package
+
   def index(conn, _params) do
     mobileusers = Bestnowelixirmysql.Mobileaccounts.list_mobileusers()
     render(conn, "index.json", mobileusers: mobileusers)
@@ -266,6 +269,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     IO.inspect("fala matako")
     mobile_users = Bestnowelixirmysql.Mobileaccounts.count_by_id!()
     book_makers = Bestnowelixirmysql.Bookmakers.count_by_id!()
+    packages = Bestnowelixirmysql.Packages.count_by_id!()
     kw = Keywords.count_by_id!()
     reset_pass_sms = Africastalkingtexts.count_by_id!()
 
@@ -275,6 +279,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
       mobile_users: mobile_users,
       book_makers: book_makers,
       kw: kw,
+      packages: packages,
       reset_pass_sms: reset_pass_sms
     })
   end

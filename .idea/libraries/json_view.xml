@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="json_view" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/json_view/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/json_view/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/json_view/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/json_view/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/json_view/lib" />
+      <root url="file://$PROJECT_DIR$/deps/json_view/lib" />
+    </SOURCES>
+  </library>
+</component>
