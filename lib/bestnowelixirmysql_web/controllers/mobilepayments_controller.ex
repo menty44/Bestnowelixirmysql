@@ -7,6 +7,13 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   alias Bestnowelixirmysql.Payments
   alias Bestnowelixirmysql.Payments.Payment
 
+  alias Bestnowelixirmysql.Accounts
+  alias Bestnowelixirmysql.Accounts.User
+
+  alias Bestnowelixirmysql
+  alias Bestnowelixirmysql.Mobileaccounts
+  alias Bestnowelixirmysql.Mobileaccounts.Mobileuser
+
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
@@ -58,6 +65,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   def confirmation(conn, params) do
     IO.inspect params
+
     new_struct = %{
       "billrefnumber" => params["BillRefNumber"],
       "businessshortcode" => params["BusinessShortCode"],
@@ -74,6 +82,23 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transactiontype" => params["TransactionType"]
     }
                  |> IO.inspect
+
+    {:ok, data} = Bestnowelixirmysql.Mobileaccounts.get_by_phone! new_struct["msisdn"]
+    IO.inspect data, label: "data"
+
+#    subscription = Subscriptions.get_subscription!(id)
+#    with {:ok, %Subscription{} = subscription} <- Subscriptions.update_subscription(subscription, subscription_params) do
+#      render(conn, "show.json", subscription: subscription)
+#    end
+
+#    update_subscription(subscription, %{field: new_value})
+#    with {:ok, %Subscription{} = subscription} <- Subscriptions.create_subscription(subscription_params) do
+#      conn
+#      |> put_status(:created)
+#      |> put_resp_header("location", Routes.subscription_path(conn, :show, subscription))
+#      |> render("show.json", subscription: subscription)
+#    end
+
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
       conn
       |> put_status(:created)
