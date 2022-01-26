@@ -107,14 +107,28 @@ defmodule Bestnowelixirmysql.Games do
     case Repo.all(archive_by_date_query) do
       nil ->
         {:error, :not_found}
-      payment ->
-        {:ok, payment}
+      games ->
+        {:ok, games}
     end
   end
 
+  def games_active_by_date!() do
+    case Repo.all(games_active_date_query) do
+      nil ->
+        {:error, :not_found}
+      games ->
+        {:ok, games}
+    end
+  end
+
+  def games_active_date_query do
+    d = convert_to_string(Timex.beginning_of_day(Timex.now))
+    from g in Game, where: g.inserted_at > ^d, order_by: [desc: g.id], limit: 100
+  end
+
   def archive_by_date_query do
-    d = convert_to_string(DateTime.utc_now)
-    from g in Game, where: g.inserted_at < ^d, limit: 100
+    d = convert_to_string(Timex.beginning_of_day(Timex.now))
+    from g in Game, where: g.inserted_at < ^d, order_by: [desc: g.id], limit: 100
   end
 
   def convert_to_string(param) do
