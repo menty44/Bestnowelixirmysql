@@ -95,8 +95,12 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     IO.inspect sub_id.id, label: "sub_id"
 
 #    {:ok, sub} = Bestnowelixirmysql.Subscriptions.get_by_id!(sub_id.id)
+    days_add = sub_id.days + 35
+    IO.inspect days_add, label: "days_add"
+
+#    {:ok, sub} = Bestnowelixirmysql.Subscriptions.update_days!(sub_id.id, days_add)
     case uid do
-      {:ok, subscription} -> update_existing_sub(sub_id.id, %{"days" => 30, "active" => true})
+      {:ok, subscription} -> update_existing_sub(sub_id.id, %{"days" => days_add, "active" => true})
       {:error, error} -> IO.inspect error, label: "error"
       {:error, _} -> create_new_sub(%{"uid" => data.id, "days" => 2})
     end
