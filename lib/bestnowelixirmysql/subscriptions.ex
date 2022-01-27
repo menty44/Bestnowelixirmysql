@@ -113,23 +113,17 @@ defmodule Bestnowelixirmysql.Subscriptions do
   end
 
   def bulk_update_subscriptions() do
-#    query = from(s in Subscription, where: s.active == true and s.active == true)
-#
-#    query |> IO.inspect
-#    Repo.update_all(query,
-#      set: [
-#        days: s.days - 1
-#      ]
-#    )
-
     query = """
-
     update subscriptions set days = days - 1 where active = true and days > 0
-
     """
-
     Ecto.Adapters.SQL.query!(Repo, query)
+  end
 
+  def bulk_deactivate_low_fund_subscriptions() do
+    query = """
+    update subscriptions set active = false where days = 0
+    """
+    Ecto.Adapters.SQL.query!(Repo, query)
   end
 
 
