@@ -7,6 +7,8 @@ defmodule Bestnowelixirmysql.Application do
 
   @impl true
   def start(_type, _args) do
+    import Supervisor.Spec
+
     children = [
       # Start the Ecto repository
       Bestnowelixirmysql.Repo,
@@ -15,9 +17,11 @@ defmodule Bestnowelixirmysql.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Bestnowelixirmysql.PubSub},
       # Start the Endpoint (http/https)
-      BestnowelixirmysqlWeb.Endpoint
+      BestnowelixirmysqlWeb.Endpoint,
       # Start a worker by calling: Bestnowelixirmysql.Worker.start_link(arg)
       # {Bestnowelixirmysql.Worker, arg}
+
+      worker(Bestnowelixirmysql.Scheduler, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

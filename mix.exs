@@ -60,7 +60,8 @@ defmodule Bestnowelixirmysql.MixProject do
       {:corsica, "~> 1.1"},
       {:cors_plug, "~> 2.0"},
       {:json_view, "~> 0.2.0"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:quantum, "~> 2.2"}
 
       #      {:mpesa_elixir, "~> 0.1.0"}
 

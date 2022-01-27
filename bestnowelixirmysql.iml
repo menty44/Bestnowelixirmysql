@@ -106,6 +106,12 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/combine" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/timex" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tzdata" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/crontab" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_stage" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/quantum" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/libring" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_state_machine" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/swarm" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="phoenix" level="project" />
@@ -199,5 +205,13 @@
     <orderEntry type="library" name="timex" level="project" />
     <orderEntry type="library" name="tzdata" level="project" />
     <orderEntry type="library" name="combine" level="project" />
+    <orderEntry type="library" name="quantum" level="project" />
+    <orderEntry type="library" name="calendar" level="project" />
+    <orderEntry type="library" name="crontab" level="project" />
+    <orderEntry type="library" name="gen_stage" level="project" />
+    <orderEntry type="library" name="swarm" level="project" />
+    <orderEntry type="library" name="porcelain" level="project" />
+    <orderEntry type="library" name="libring" level="project" />
+    <orderEntry type="library" name="gen_state_machine" level="project" />
   </component>
 </module>

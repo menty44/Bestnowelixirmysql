@@ -88,3 +88,11 @@ config :at_ex,
 config :corsica, Corsica,
   log: [rejected: :warn, invalid: :debug, accepted: :debug],
   origins: ["http://localhost:4200"]
+
+config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
+       jobs: [
+         phoenix_job: [
+           schedule: "*/2 * * * *",
+           task: {Bestnowelixirmysql.Task, :work, []},
+         ]
+       ]
