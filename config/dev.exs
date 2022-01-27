@@ -92,8 +92,8 @@ config :corsica, Corsica,
 config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
        jobs: [
          phoenix_job: [
-#           schedule: "midnight",
-           schedule: "@minutely",
+           schedule: "@midnight",
+#           schedule: "@minutely",
            task: {Bestnowelixirmysql.Task, :work, []},
          ]
        ]

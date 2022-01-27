@@ -6,7 +6,7 @@ defmodule Bestnowelixirmysql.Task do
 
   def work do
     # File.write("/tmp/quantum_phoenix.txt", "#{Timex.now}", [:append])
-    subscriptions = Subscriptions.l
+#    subscriptions = Subscriptions.l
     IO.inspect "Elixir.Quantum.ExecutionBroadcaster #{Timex.now()} "
   end
 end
