@@ -107,4 +107,13 @@ defmodule Bestnowelixirmysql.Packages do
     #    Repo.one(from m in Mobileuser, select: count(m.id))
     Repo.one(from p in Package, select: fragment("count(*)"))
   end
+
+  def get_by_price!(price) do
+    case Repo.get_by(Package, price: price) do
+      nil ->
+        {:error, :not_found}
+      package ->
+        {:ok, package}
+    end
+  end
 end

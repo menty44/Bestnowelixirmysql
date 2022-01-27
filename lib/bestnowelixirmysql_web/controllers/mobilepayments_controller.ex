@@ -17,6 +17,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   alias Bestnowelixirmysql.Subscriptions
   alias Bestnowelixirmysql.Subscriptions.Subscription
 
+  alias Bestnowelixirmysql.Packages
+  alias Bestnowelixirmysql.Packages.Package
+
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
@@ -94,7 +97,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     {:ok, sub_id} = uid
     IO.inspect sub_id.id, label: "sub_id"
 
-    days_add = sub_id.days + 35
+    days_add = sub_id.days + get_package_days(new_struct["transamount"])
     IO.inspect days_add, label: "days_add"
 
     case uid do
@@ -109,6 +112,12 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       |> put_resp_header("location", Routes.payment_path(conn, :show, payment))
       |> render("show.json", payment: payment)
     end
+  end
+
+  def get_package_days(mpesa_price) do
+    {parsed_price, _} = Integer.parse(mpesa_price)
+    {:ok, package} = Packages.get_by_price!(parsed_price)
+    package.duration
   end
 
   def update_existing_sub(id, subscription_params) do
