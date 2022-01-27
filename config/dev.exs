@@ -91,14 +91,14 @@ config :corsica, Corsica,
 
 config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
        jobs: [
-         phoenix_job: [
-#           schedule: "@midnight",
-           schedule: "@minutely",
+         subscriber_deduction_job: [
+           schedule: "@midnight",
+#           schedule: "@minutely",
            task: {Bestnowelixirmysql.Task, :work, []},
          ],
          deactivate_subscriber: [
-#           schedule: "@midnight",
-           schedule: "@minutely",
+           schedule: "@midnight",
+#           schedule: "@minutely",
            task: {Bestnowelixirmysql.Task, :deactivate_subscriber, []},
          ],
        ]
