@@ -5,8 +5,12 @@ defmodule Bestnowelixirmysql.Task do
   alias Bestnowelixirmysql.Subscriptions.Subscription
 
   def work do
-    # File.write("/tmp/quantum_phoenix.txt", "#{Timex.now}", [:append])
-#    subscriptions = Subscriptions.l
-    IO.inspect "Elixir.Quantum.ExecutionBroadcaster #{Timex.now()} "
+    Subscriptions.bulk_update_subscriptions()
+    IO.inspect "Quantum.ExecutionBroadcaster #{Timex.now()} <> DEDUCT DAYS "
+  end
+
+  def deactivate_subscriber do
+    Subscriptions.bulk_deactivate_low_fund_subscriptions()
+    IO.inspect "Quantum.ExecutionBroadcaster #{Timex.now()} <> DEACTIVATE ACCOUNT"
   end
 end
