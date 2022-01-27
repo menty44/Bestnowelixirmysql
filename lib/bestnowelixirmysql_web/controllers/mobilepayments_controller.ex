@@ -94,11 +94,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     {:ok, sub_id} = uid
     IO.inspect sub_id.id, label: "sub_id"
 
-#    {:ok, sub} = Bestnowelixirmysql.Subscriptions.get_by_id!(sub_id.id)
     days_add = sub_id.days + 35
     IO.inspect days_add, label: "days_add"
 
-#    {:ok, sub} = Bestnowelixirmysql.Subscriptions.update_days!(sub_id.id, days_add)
     case uid do
       {:ok, subscription} -> update_existing_sub(sub_id.id, %{"days" => days_add, "active" => true})
       {:error, error} -> IO.inspect error, label: "error"
@@ -110,7 +108,6 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       |> put_status(:created)
       |> put_resp_header("location", Routes.payment_path(conn, :show, payment))
       |> render("show.json", payment: payment)
-
     end
   end
 

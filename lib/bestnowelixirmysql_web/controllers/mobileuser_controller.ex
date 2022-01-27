@@ -266,7 +266,6 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   end
 
   def report(conn, _) do
-    IO.inspect("fala matako")
     mobile_users = Bestnowelixirmysql.Mobileaccounts.count_by_id!()
     book_makers = Bestnowelixirmysql.Bookmakers.count_by_id!()
     packages = Bestnowelixirmysql.Packages.count_by_id!()
