@@ -87,8 +87,8 @@ config :at_ex,
 
 config :corsica, Corsica,
   log: [rejected: :warn, invalid: :debug, accepted: :debug],
-#  origins: ["http://localhost:4200"]
-  origins: ["api.forbetweb.com"]
+  origins: ["http://localhost:4200"]
+#  origins: ["api.forbetweb.com"]
 
 config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
        jobs: [
