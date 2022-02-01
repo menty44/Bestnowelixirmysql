@@ -12,7 +12,7 @@ config :bestnowelixirmysql,
 
 # Configures the endpoint
 config :bestnowelixirmysql, BestnowelixirmysqlWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "0.0.0.0"],
   render_errors: [view: BestnowelixirmysqlWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Bestnowelixirmysql.PubSub,
   live_view: [signing_salt: "QVkAZopR"]

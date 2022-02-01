@@ -64,7 +64,6 @@ defmodule Bestnowelixirmysql.MixProject do
       {:quantum, "~> 2.2"}
 
       #      {:mpesa_elixir, "~> 0.1.0"}
-
       #      {:mpesa, "~> 0.1.2"}
     ]
   end
