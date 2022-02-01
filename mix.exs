@@ -57,8 +57,9 @@ defmodule Bestnowelixirmysql.MixProject do
       {:httpoison, "~> 1.6"},
       {:saxy, "~> 1.3"},
       {:xml_json, "~> 0.3.0"},
-      {:corsica, "~> 1.1"},
-#      {:cors_plug, "~> 2.0"},
+#      {:corsica, "~> 1.1"},
+      {:cors_plug, "~> 2.0"},
+
       {:json_view, "~> 0.2.0"},
       {:timex, "~> 3.0"},
       {:quantum, "~> 2.2"}

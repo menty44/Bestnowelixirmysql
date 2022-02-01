@@ -45,8 +45,8 @@ defmodule BestnowelixirmysqlWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Plug.Session, @session_options
-  plug Corsica, origins: ["http://localhost:4200"], allow_headers: :all
+#  plug Plug.Session, @session_options
+#  plug Corsica, origins: "*"
+  plug CORSPlug
   plug BestnowelixirmysqlWeb.Router
-  plug CORSPlug, origin: "*"
 end

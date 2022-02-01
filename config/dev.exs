@@ -85,9 +85,9 @@ config :at_ex,
   bank_transfer_product_name: "AtEx",
   card_checkout_product_name: "AtEx"
 
-config :corsica, Corsica,
-  log: [rejected: :warn, invalid: :debug, accepted: :debug],
-  origins: ["http://localhost:4200"]
+#config :corsica, Corsica,
+#  log: [rejected: :warn, invalid: :debug, accepted: :debug],
+#  origins: ["http://localhost:4200"]
 #  origins: ["api.forbetweb.com"]
 
 config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
