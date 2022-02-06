@@ -40,7 +40,8 @@ defmodule BestnowelixirmysqlWeb.Endpoint do
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
+#    pass: ["*/*"],
+    pass: ["application/json", "application/x-www-form-urlencoded", "multipart/form-data"],
     json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
