@@ -87,19 +87,21 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transtime" => params["TransTime"],
       "transactiontype" => params["TransactionType"]
     }
-                 |> IO.inspect
 
-    {:ok, data} = Bestnowelixirmysql.Mobileaccounts.get_by_phone! new_struct["msisdn"]
-    IO.inspect data, label: "data"
+    Map.get(new_struct, "msisdn")
+    |> IO.inspect
+
+    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+    IO.inspect mobileuser, label: "data"
 
 #    {:ok, sub} = Bestnowelixirmysql.Subscriptions.find_by_uid!(data.id) |> IO.inspect
 #    IO.inspect sub.id, label: "uid"
 #    IO.inspect sub.days, label: "uid days"
 
-    case Bestnowelixirmysql.Subscriptions.find_by_uid!(data.id) do
+    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
       {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true})
-      {:error, :not_found} -> create_new_sub(%{"uid" => data.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
-      {:error, _} -> create_new_sub(%{"uid" => data.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
+      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
+      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
     end
 
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
