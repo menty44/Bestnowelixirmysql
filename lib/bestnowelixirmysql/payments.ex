@@ -24,6 +24,19 @@ defmodule Bestnowelixirmysql.Payments do
     |> Repo.all()
   end
 
+  def phone_list_payments(phone, page \\ 1, size \\ 3) do
+    Payment
+    |> order_by( [{:desc, :updated_at}])
+    |> paginate(page, size)
+    |> by_msisdn(phone)
+    |> Repo.all()
+  end
+
+  def by_msisdn(query, phone) do
+    from p in query,
+         where: p.msisdn == ^phone
+  end
+
   def paginate(query, page, size) do
     from query,
          limit: ^size,

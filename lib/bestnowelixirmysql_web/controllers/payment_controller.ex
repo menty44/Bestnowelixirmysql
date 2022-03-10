@@ -11,6 +11,11 @@ defmodule BestnowelixirmysqlWeb.PaymentController do
     render(conn, "index.json", payments: payments)
   end
 
+  def by_msisdn(conn, params) do
+    payments = Payments.phone_list_payments(Map.get(params, "msisdn"), convert_to_int(Map.get(params, "page")), convert_to_int(Map.get(params, "size")))
+    render(conn, "index.json", payments: payments)
+  end
+
   def convert_to_int(x) do
     String.to_integer(x)
   end
