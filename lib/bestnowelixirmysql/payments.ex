@@ -26,9 +26,9 @@ defmodule Bestnowelixirmysql.Payments do
 
   def phone_list_payments(phone, page \\ 1, size \\ 3) do
     Payment
+    |> by_msisdn(phone)
     |> order_by( [{:desc, :updated_at}])
     |> paginate(page, size)
-    |> by_msisdn(phone)
     |> Repo.all()
   end
 
