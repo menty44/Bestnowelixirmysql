@@ -33,7 +33,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     resources "/bookmakers", BookmakerController, except: [:new, :edit]
     resources "/africastalkingtexts", AfricastalkingtextController, except: [:new, :edit]
     resources "/packages", PackageController, except: [:new, :edit]
-    resources "/games", GameController, except: [:new, :edit]
+    resources "/games", GameController, except: [:new]
     get "/game/archive", GameController, :archive
     get "/game/active", GameController, :active
     post "/paybill/phone/:number", PaybillController, :transactions
