@@ -93,7 +93,9 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     #    _charlist = :io_lib.format("~6..0B", [:rand.uniform(10_000) - 1])
     gen = gen_reference()
     url = "https://api.africastalking.com/restless/send"
-    username = "BesnaBest"
+    username = "B_Best"
+    s_code = "B_U"
+
 #    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
     apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
 
@@ -109,7 +111,12 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
           "&Apikey=" <>
           apikey <>
           "&to=" <>
-          phone <> "&message=Your%20temporary%20password%20is%3A%20" <> gen
+          phone <>
+          "&message=Your%20temporary%20password%20is%3A%20" <>
+          gen <>
+          "&from=" <>
+          s_code
+
 
       case HTTPoison.get(complete) do
         {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
