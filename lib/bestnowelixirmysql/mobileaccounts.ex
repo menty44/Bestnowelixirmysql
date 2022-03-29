@@ -123,4 +123,11 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
   #    account_type = account_type |> String.trim() |> String.downcase()
   #    from(u in queryable, where: u.account_type == ^account_type)
   #  end
+
+  def update_user_payment(struct) do
+#    Mobileuser.update_mobileuser(struct, %{"mode" => "activated"})
+    struct
+    |> Mobileuser.changeset(%{"mode" => "activated"})
+    |> Repo.update()
+  end
 end

@@ -20,6 +20,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   alias Bestnowelixirmysql.Packages
   alias Bestnowelixirmysql.Packages.Package
 
+
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
@@ -27,31 +28,31 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     render(conn, "index.json", mobile_payments: mobile_payments)
   end
 
-  defp process_lipanampesa(data) do
-     Enum.each(data, fn x ->
-
-       if x["Name"] == "PhoneNumber" do
-         IO.inspect(x)
-         IO.inspect(x["Value"])
-       end
-
-       if x["Name"] == "Amount" do
-         IO.inspect(x)
-         IO.inspect(x["Value"])
-       end
-
-       if x["Name"] == "MpesaReceiptNumber" do
-         IO.inspect(x)
-         IO.inspect(x["Value"])
-       end
-
-       if x["Name"] == "TransactionDate" do
-         IO.inspect(x)
-         IO.inspect(x["Value"])
-       end
-#         Payment.process_mobile_payment(x)
-     end)
-  end
+#  defp process_lipanampesa(data) do
+#     Enum.each(data, fn x ->
+#
+#       if x["Name"] == "PhoneNumber" do
+#         IO.inspect(x)
+#         IO.inspect(x["Value"])
+#       end
+#
+#       if x["Name"] == "Amount" do
+#         IO.inspect(x)
+#         IO.inspect(x["Value"])
+#       end
+#
+#       if x["Name"] == "MpesaReceiptNumber" do
+#         IO.inspect(x)
+#         IO.inspect(x["Value"])
+#       end
+#
+#       if x["Name"] == "TransactionDate" do
+#         IO.inspect(x)
+#         IO.inspect(x["Value"])
+#       end
+##         Payment.process_mobile_payment(x)
+#     end)
+#  end
 
   def validation(conn, params) do
     params
@@ -92,16 +93,19 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     |> IO.inspect
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
-    IO.inspect mobileuser, label: "data"
+#    IO.inspect mobileuser, label: "data"
+    Mobileaccounts.update_user_payment(mobileuser)
 
 #    {:ok, sub} = Bestnowelixirmysql.Subscriptions.find_by_uid!(data.id) |> IO.inspect
 #    IO.inspect sub.id, label: "uid"
 #    IO.inspect sub.days, label: "uid days"
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
-      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true})
-      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
-      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true})
+      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+#      {:error, _} -> create_new_sub(mobileuser.id, get_package_struct(new_struct["transamount"]))
+#      {:error, _} -> create_new_sub(new_struct, mobileuser)
+      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
     end
 
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
@@ -112,20 +116,77 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     end
   end
 
+  def send_sms(phone, name, days) do
+    IO.inspect phone, label: "WW phone"
+    IO.inspect name, label: "WW sub_struct"
+    IO.inspect days, label: "WW days"
+
+    url = "https://api.africastalking.com/restless/send"
+    username = "B_Best"
+    s_code = "B_U"
+
+    #    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
+    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+
+    try do
+#      {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
+#      IO.inspect(gen)
+#      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
+
+      complete =
+        url <>
+        "?username=" <>
+        username <>
+        "&Apikey=" <>
+        apikey <>
+        "&to=" <>
+        phone <>
+#        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
+        "&message="<>
+        String.upcase("You%20have%20purchased%20" <> name <> "%20Package.%20" <> "%20Available%20days%20:%20#{days}")<>
+        "&from=" <>
+        s_code
+
+
+      case HTTPoison.get(complete) do
+        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          IO.puts(body)
+            {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
+             {:error, _} -> IO.puts("error")
+
+      end
+    rescue
+      Ecto.NoResultsError ->
+        {:error, :not_found, "No result found"}
+    end
+
+  end
+
   def get_package_days(mpesa_price) do
     {parsed_price, _} = Integer.parse(mpesa_price)
     {:ok, package} = Packages.get_by_price!(parsed_price)
     package.duration
   end
 
-  def update_existing_sub(id, subscription_params) do
-    subscription = Subscriptions.get_subscription!(id)
-    Subscriptions.update_subscription(subscription, subscription_params)
+  def get_package_struct(mpesa_price) do
+    {parsed_price, _} = Integer.parse(mpesa_price)
+    {:ok, package} = Packages.get_by_price!(parsed_price)
+    package.name
   end
 
-  def create_new_sub(subscription_params) do
+  def update_existing_sub(id, subscription_params, phone, new_struct) do
+    IO.inspect subscription_params, label: "subscription_params"
+    IO.inspect phone, label: "phone"
+    IO.inspect new_struct, label: "new_struct"
+    send_sms(phone, new_struct, subscription_params["days"])
+    subscription = Subscriptions.get_subscription!(id)
+    Subscriptions.update_subscription(subscription, subscription_params)
+
+  end
+
+  def create_new_sub(subscription_params,phone, new_struct) do
     case Subscriptions.create_subscription(subscription_params) do
-      {:ok, data} -> IO.inspect data, label: "data"
+      {:ok, data} -> send_sms(phone, new_struct, subscription_params["days"])
       {:error, _} -> IO.inspect "not created"
     end
   end
