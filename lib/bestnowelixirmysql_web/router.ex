@@ -46,6 +46,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     resources "/mobileusers", MobileuserController, except: [:new, :edit]
     post "/mobileusers/signin", MobileuserController, :signin
     post "/mobileusers/phonenumber", MobileuserController, :phone_number
+    # post "/mobileusers/phonenumber/activate", MobileuserController, :phone_number
     post "/mobileusers/reset/:number", MobileuserController, :reset_password
     get "/admin/report", MobileuserController, :report
     resources "/subscriptions", SubscriptionController, except: [:new, :edit]
