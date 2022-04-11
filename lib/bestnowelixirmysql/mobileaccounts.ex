@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
 
   """
   def list_mobileusers do
-    Repo.all(Mobileuser)
+    query = from(m in Mobileuser, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Mobileuser)
   end
 
   @doc """

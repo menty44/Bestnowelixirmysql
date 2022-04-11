@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Keywords do
 
   """
   def list_keyword do
-    Repo.all(Keyword)
+    query = from(m in Keyword, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Keyword)
   end
 
   @doc """

@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Packages do
 
   """
   def list_packages do
-    Repo.all(Package)
+    query = from(m in Package, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Package)
   end
 
   @doc """

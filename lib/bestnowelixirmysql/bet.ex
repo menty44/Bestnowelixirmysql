@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Bet do
 
   """
   def list_info do
-    Repo.all(Infos)
+    query = from(m in Infos, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Infos)
   end
 
   @doc """

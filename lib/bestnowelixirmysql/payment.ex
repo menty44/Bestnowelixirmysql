@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Payment do
 
   """
   def list_mobile_payments do
-    Repo.all(Mobilepayments)
+    query = from(m in Mobilepayments, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Mobilepayments)
   end
 
   @doc """
@@ -116,7 +118,9 @@ defmodule Bestnowelixirmysql.Payment do
 
   """
   def list_tills do
-    Repo.all(Till)
+    query = from(m in Till, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Till)
   end
 
   @doc """
@@ -212,7 +216,9 @@ defmodule Bestnowelixirmysql.Payment do
 
   """
   def list_paybill do
-    Repo.all(Paybill)
+    query = from(m in Paybill, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Paybill)
   end
 
   @doc """

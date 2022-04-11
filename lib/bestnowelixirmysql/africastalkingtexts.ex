@@ -18,7 +18,9 @@ defmodule Bestnowelixirmysql.Africastalkingtexts do
 
   """
   def list_africastalkingtexts do
-    Repo.all(Africastalkingtext)
+    query = from(m in Africastalkingtext, order_by: [desc: m.id], limit: 100)
+            |> Repo.all
+#    Repo.all(Africastalkingtext)
   end
 
   @doc """
