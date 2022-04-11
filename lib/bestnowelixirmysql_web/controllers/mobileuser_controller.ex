@@ -304,4 +304,56 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
       reset_pass_sms: reset_pass_sms
     })
   end
+
+  def manual(conn, params) do
+
+    {:ok, mobile_user} =
+      Bestnowelixirmysql.Mobileaccounts.create_mobileuser(params["mobileuser"])
+      |> IO.inspect(label: "data")
+
+    mobile_user.id |> IO.inspect(label: "data.id")
+
+    with {:ok, %Mobileuser{} = mobileuser} <- Bestnowelixirmysql.Mobileaccounts.update_mobileuser(params, %{
+             mode: "activated"
+           }) do IO.inspect(mobileuser)  end
+
+    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
+      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+    end
+
+    conn
+    |> json(params)
+  end
+
+
+  def get_package_days(mpesa_price) do
+    {parsed_price, _} = Integer.parse(mpesa_price)
+    {:ok, package} = Packages.get_by_price!(parsed_price)
+    package.duration
+  end
+
+  def get_package_struct(mpesa_price) do
+    {parsed_price, _} = Integer.parse(mpesa_price)
+    {:ok, package} = Packages.get_by_price!(parsed_price)
+    package.name
+  end
+
+  def update_existing_sub(id, subscription_params, phone, new_struct) do
+    IO.inspect subscription_params, label: "subscription_params"
+    IO.inspect phone, label: "phone"
+    IO.inspect new_struct, label: "new_struct"
+    send_sms(phone, new_struct, subscription_params["days"])
+    subscription = Subscriptions.get_subscription!(id)
+    Subscriptions.update_subscription(subscription, subscription_params)
+
+  end
+
+  def create_new_sub(subscription_params,phone, new_struct) do
+    case Subscriptions.create_subscription(subscription_params) do
+      {:ok, data} -> send_sms(phone, new_struct, subscription_params["days"])
+      {:error, _} -> IO.inspect "not created"
+    end
+  end
 end
