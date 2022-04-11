@@ -112,6 +112,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/libring" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_state_machine" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/swarm" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/decorator" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/appsignal" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="phoenix" level="project" />
@@ -213,5 +215,6 @@
     <orderEntry type="library" name="porcelain" level="project" />
     <orderEntry type="library" name="libring" level="project" />
     <orderEntry type="library" name="gen_state_machine" level="project" />
+    <orderEntry type="library" name="appsignal" level="project" />
   </component>
 </module>

@@ -62,7 +62,8 @@ defmodule Bestnowelixirmysql.MixProject do
 
       {:json_view, "~> 0.2.0"},
       {:timex, "~> 3.0"},
-      {:quantum, "~> 2.2"}
+      {:quantum, "~> 2.2"},
+      {:appsignal, "~> 1.0"}
 
       #      {:mpesa_elixir, "~> 0.1.0"}
       #      {:mpesa, "~> 0.1.2"}

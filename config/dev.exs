@@ -103,3 +103,4 @@ config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
            task: {Bestnowelixirmysql.Task, :deactivate_subscriber, []},
          ],
        ]
+config :appsignal, :config, active: true
