@@ -18,7 +18,7 @@ defmodule Bestnowelixirmysql.Accounts do
 
   """
   def list_users do
-    query = from(m in User, order_by: [desc: m.id], limit: 100)
+    query = from(m in User, order_by: [desc: m.id], limit: 200)
             |> Repo.all
 #    Repo.all(User)
   end

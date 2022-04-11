@@ -18,7 +18,7 @@ defmodule Bestnowelixirmysql.Subscriptions do
 
   """
   def list_subscriptions do
-    query = from(m in Subscription, order_by: [desc: m.id], limit: 100)
+    query = from(m in Subscription, order_by: [desc: m.id], limit: 200)
             |> Repo.all
 #    Repo.all(Subscription)
   end

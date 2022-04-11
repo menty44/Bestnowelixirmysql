@@ -18,7 +18,7 @@ defmodule Bestnowelixirmysql.Games do
 
   """
   def list_games do
-    query = from(m in Game, order_by: [desc: m.id], limit: 100)
+    query = from(m in Game, order_by: [desc: m.id], limit: 200)
             |> Repo.all
   end
 
@@ -123,12 +123,12 @@ defmodule Bestnowelixirmysql.Games do
 
   def games_active_date_query do
     d = convert_to_string(Timex.beginning_of_day(Timex.now))
-    from g in Game, where: g.inserted_at > ^d, order_by: [desc: g.id], limit: 100
+    from g in Game, where: g.inserted_at > ^d, order_by: [desc: g.id], limit: 200
   end
 
   def archive_by_date_query do
     d = convert_to_string(Timex.beginning_of_day(Timex.now))
-    from g in Game, where: (g.results == g.tip) and g.inserted_at < ^d, order_by: [desc: g.id], limit: 100
+    from g in Game, where: (g.results == g.tip) and g.inserted_at < ^d, order_by: [desc: g.id], limit: 200
   end
 
   def convert_to_string(param) do
