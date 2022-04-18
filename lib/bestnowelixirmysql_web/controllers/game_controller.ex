@@ -50,4 +50,14 @@ defmodule BestnowelixirmysqlWeb.GameController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def filter_by_date_query(conn, %{"date" => date}) do
+    IO.inspect(date["from"])
+    IO.inspect(date["to"])
+    games = Games.filter_by_date_query(date["from"], date["to"])
+    render(conn, "index.json", games: games)
+    # json(conn, %{users: "kaka"})
+    # conn
+    # |> json(%{"date" => date})
+  end
 end

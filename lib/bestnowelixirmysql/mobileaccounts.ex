@@ -132,4 +132,12 @@ defmodule Bestnowelixirmysql.Mobileaccounts do
     |> Mobileuser.changeset(%{"mode" => "activated"})
     |> Repo.update()
   end
+
+  def list_mobileusers_filter(to, from) do
+    query = from(m in Mobileuser, order_by: [desc: m.id], limit: 200)
+
+    query
+    |> Repo.all
+
+  end
 end

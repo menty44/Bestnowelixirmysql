@@ -3,7 +3,7 @@ defmodule Bestnowelixirmysql.Games do
   The Games context.
   """
 
-  import Ecto.Query, warn: false
+  import Ecto.Query, warn: true
   alias Bestnowelixirmysql.Repo
 
   alias Bestnowelixirmysql.Games.Game
@@ -129,6 +129,18 @@ defmodule Bestnowelixirmysql.Games do
   def archive_by_date_query do
     d = convert_to_string(Timex.beginning_of_day(Timex.now))
     from g in Game, where: (g.results == g.tip) and g.inserted_at < ^d, order_by: [desc: g.id], limit: 200
+  end
+
+  def filter_by_date_query(from, to) do
+    new_from = from <> " 00:00:00.000000Z"
+    new_to = to <> " 00:00:00.000000Z"
+    mq = from g in Game,
+    where: g.inserted_at >= ^new_from and g.inserted_at <= ^new_to,
+    order_by: [desc: g.id],
+    limit: 200
+
+    mq
+    |> Repo.all
   end
 
   def convert_to_string(param) do

@@ -36,6 +36,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     resources "/games", GameController, except: [:new]
     get "/game/archive", GameController, :archive
     get "/game/active", GameController, :active
+    post "/game/filter_by_date_query", GameController, :filter_by_date_query
     post "/paybill/phone/:number", PaybillController, :transactions
     resources "/payments", PaymentController, except: [:new, :edit]
     post "/payments/myphone", PaymentController, :by_msisdn
