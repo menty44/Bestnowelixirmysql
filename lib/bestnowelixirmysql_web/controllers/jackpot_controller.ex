@@ -3,11 +3,13 @@ defmodule BestnowelixirmysqlWeb.JackpotController do
 
   alias Bestnowelixirmysql.Jackpots
   alias Bestnowelixirmysql.Jackpots.Jackpot
+  alias Bestnowelixirmysql.Helpers
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
   def index(conn, _params) do
-    jackpots = Jackpots.list_jackpots()
+#    jackpots = Jackpots.list_jackpots()
+    jackpots = Jackpot.list_jackpots_descend()
     render(conn, "index.json", jackpots: jackpots)
   end
 
@@ -20,9 +22,19 @@ defmodule BestnowelixirmysqlWeb.JackpotController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show_preload(conn, %{"id" => id}) do
     jackpot = Jackpots.get_jackpot!(id)
     render(conn, "show.json", jackpot: jackpot)
+  end
+
+  def show(conn, %{"id" => id}) do
+#    jackpot = Jackpots.get_jackpot!(id)
+#    render(conn, "show.json", jackpot: jackpot)
+    jackpot = Jackpot.get_by_id_preload!(id)
+    |> Enum.map(&Helpers.map_from_schema/1)
+
+    conn
+    |> json(jackpot)
   end
 
   def update(conn, %{"id" => id, "jackpot" => jackpot_params}) do
