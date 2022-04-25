@@ -8,6 +8,7 @@ defmodule Bestnowelixirmysql.Bookmakers.Bookmaker do
     field :loadingdate, :string
     field :owner, :string
     field :shortcode, :string
+
     has_many :games, Bestnowelixirmysql.Games.Game
 
     timestamps()
