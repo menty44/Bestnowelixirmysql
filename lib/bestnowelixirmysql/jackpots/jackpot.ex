@@ -27,7 +27,7 @@ defmodule Bestnowelixirmysql.Jackpots.Jackpot do
     |> Repo.all()
   end
 
-  def get_by_id_preload!(id) do
+  def get_by_id_preload!(id, __MODULE__ \\ Bestnowelixirmysql.Jackpots.Jackpot) do
     from(
       j in Bestnowelixirmysql.Jackpots.Jackpot,
       select: j,
