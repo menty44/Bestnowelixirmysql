@@ -5,6 +5,8 @@ defmodule Bestnowelixirmysql.Jackpots.Jackpot do
   import Ecto.Query, warn: false
   alias Bestnowelixirmysql.Repo
 
+  @derive Jason.Encoder
+
   schema "jackpots" do
     field :name, :string
 

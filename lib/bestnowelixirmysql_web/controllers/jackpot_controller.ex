@@ -7,6 +7,8 @@ defmodule BestnowelixirmysqlWeb.JackpotController do
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
+  alias Bestnowelixirmysql.Repo
+
   def index(conn, _params) do
 #    jackpots = Jackpots.list_jackpots()
     jackpots = Jackpot.list_jackpots_descend()
@@ -14,11 +16,26 @@ defmodule BestnowelixirmysqlWeb.JackpotController do
   end
 
   def create(conn, %{"jackpot" => jackpot_params}) do
+    IO.inspect jackpot_params["games"], label: "games"
     with {:ok, %Jackpot{} = jackpot} <- Jackpots.create_jackpot(jackpot_params) do
+
+      Enum.each(Map.get(jackpot_params, "games"), fn g ->
+        Ecto.build_assoc(jackpot, :jackpotgames, %{
+          league: Map.get(g, "league"),
+          match: Map.get(g, "match"),
+          results: Map.get(g, "results"),
+          time: Map.get(g, "time"),
+          tip: Map.get(g, "tip")
+        })
+        |> Repo.insert!
+        |> IO.inspect
+      end)
+
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.jackpot_path(conn, :show, jackpot))
-      |> render("show.json", jackpot: jackpot)
+#      |> put_status(:created)
+      |> json jackpot |> Bestnowelixirmysql.Helpers.map_from_schema
+#      |> put_resp_header("location", Routes.jackpot_path(conn, :show, jackpot))
+#      |> render("show.json", jackpot: jackpot)
     end
   end
 
