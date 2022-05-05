@@ -20,4 +20,8 @@ defmodule Bestnowelixirmysql.Jackgames.Jackpotgame do
     |> cast(attrs, [:time, :league, :match, :tip, :results])
     |> validate_required([:time, :league, :match, :tip, :results])
   end
+
+  def list_jackpotgames do
+    Repo.all(__MODULE__)
+  end
 end
