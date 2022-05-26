@@ -66,8 +66,11 @@ defmodule BestnowelixirmysqlWeb.BookmakerController do
   def delete(conn, %{"id" => id}) do
     bookmaker = Bookmakers.get_bookmaker!(id)
 
-    with {:ok, %Bookmaker{}} <- Bookmakers.delete_bookmaker(bookmaker) do
-      send_resp(conn, :no_content, "")
-    end
+    Bookmakers.delete_bookmaker(bookmaker) |> IO.inspect label: "checki ii kitu"
+    json(conn, %{message: "data deleted"})
+#    cond do
+#      {:ok, %Bookmaker{}} <- Bookmakers.delete_bookmaker(bookmaker) -> json(conn, %{message: "data deleted"})
+#      {:error, :no_content} <- Bookmakers.delete_bookmaker(bookmaker) -> json(conn, %{message: "data delete error"})
+#    end
   end
 end

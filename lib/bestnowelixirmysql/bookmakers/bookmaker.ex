@@ -9,7 +9,7 @@ defmodule Bestnowelixirmysql.Bookmakers.Bookmaker do
     field :owner, :string
     field :shortcode, :string
 
-    has_many :games, Bestnowelixirmysql.Games.Game
+    has_many :games, Bestnowelixirmysql.Games.Game, on_delete: :delete_all
 
     timestamps()
   end
