@@ -55,6 +55,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     resources "/jackpots", JackpotController, except: [:new, :edit]
     resources "/jackpotgames", JackpotgameController, except: [:new, :edit]
     resources "/smsgames", SmsgameController, except: [:new, :edit]
+    resources "/smspackages", SmspackageController, except: [:new, :edit]
     #    resources "/users", UserController, except: [:new, :edit]
   end
 

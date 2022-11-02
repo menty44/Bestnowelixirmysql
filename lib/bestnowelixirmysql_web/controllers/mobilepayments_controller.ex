@@ -98,8 +98,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
       {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
-#      {:error, _} -> create_new_sub(mobileuser.id, get_package_struct(new_struct["transamount"]))
-#      {:error, _} -> create_new_sub(new_struct, mobileuser)
+
       {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
       {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
     end
