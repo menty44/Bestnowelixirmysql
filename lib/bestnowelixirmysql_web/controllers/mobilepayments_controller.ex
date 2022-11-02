@@ -73,6 +73,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   def confirmation(conn, params) do
     IO.inspect params
 
+    process_sms_games(params["MSISDN"], params["TransAmount"])
     new_struct = %{
       "billrefnumber" => params["BillRefNumber"],
       "businessshortcode" => params["BusinessShortCode"],
@@ -93,12 +94,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     |> IO.inspect
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
-#    IO.inspect mobileuser, label: "data"
     Mobileaccounts.update_user_payment(mobileuser)
 
 #    {:ok, sub} = Bestnowelixirmysql.Subscriptions.find_by_uid!(data.id) |> IO.inspect
-#    IO.inspect sub.id, label: "uid"
-#    IO.inspect sub.days, label: "uid days"
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
       {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
@@ -116,62 +114,85 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     end
   end
 
+  defp process_sms_games(phone, amount) do
+    case amount do
+      "50" -> IO.inspect("process chwani")
+      "100" -> IO.inspect("process soh")
+      "200" -> IO.inspect("process soh mbili")
+      _ -> IO.inspect("Amount belongs to other games")
+    end
+  end
+
   def send_sms(phone, name, days) do
     IO.inspect phone, label: "WW phone"
     IO.inspect name, label: "WW sub_struct"
     IO.inspect days, label: "WW days"
 
-    url = "https://api.africastalking.com/restless/send"
-    username = "B_Best"
-    s_code = "B_U"
+    if name == "SMS package" do
+        IO.inspect "SMS package no need to process"
+      else
 
-    #    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
-    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+      url = "https://api.africastalking.com/restless/send"
+      username = "B_Best"
+      s_code = "B_U"
 
-    try do
-#      {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
-#      IO.inspect(gen)
-#      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
+      #    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
+      apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
 
-      complete =
-        url <>
-        "?username=" <>
-        username <>
-        "&Apikey=" <>
-        apikey <>
-        "&to=" <>
-        phone <>
-#        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
-        "&message="<>
-        String.upcase("You%20have%20purchased%20" <> name <> "%20Package.%20" <> "%20Available%20days%20:%20#{days}")<>
-        "&from=" <>
-        s_code
+      try do
+        #      {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
+        #      IO.inspect(gen)
+        #      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
+
+        complete =
+          url <>
+          "?username=" <>
+          username <>
+          "&Apikey=" <>
+          apikey <>
+          "&to=" <>
+          phone <>
+          #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
+          "&message="<>
+          String.upcase("You%20have%20purchased%20" <> name <> "%20Package.%20" <> "%20Available%20days%20:%20#{days}")<>
+          "&from=" <>
+          s_code
 
 
-      case HTTPoison.get(complete) do
-        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-          IO.puts(body)
+        case HTTPoison.get(complete) do
+          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+            IO.puts(body)
             {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
-             {:error, _} -> IO.puts("error")
+          {:error, _} -> IO.puts("error")
 
+        end
+      rescue
+        Ecto.NoResultsError ->
+          {:error, :not_found, "No result found"}
       end
-    rescue
-      Ecto.NoResultsError ->
-        {:error, :not_found, "No result found"}
+
     end
 
   end
 
   def get_package_days(mpesa_price) do
     {parsed_price, _} = Integer.parse(mpesa_price)
-    {:ok, package} = Packages.get_by_price!(parsed_price)
-    package.duration
+#    {:ok, package} = Packages.get_by_price!(parsed_price)
+    case Packages.get_by_price!(parsed_price) do
+      {:ok, package} -> package.duration
+      {:error, :not_found} -> 0
+    end
+#    package.duration
   end
 
   def get_package_struct(mpesa_price) do
     {parsed_price, _} = Integer.parse(mpesa_price)
-    {:ok, package} = Packages.get_by_price!(parsed_price)
-    package.name
+#    {:ok, package} = Packages.get_by_price!(parsed_price)
+    case Packages.get_by_price!(parsed_price) do
+      {:ok, package} -> package.name
+      {:error, :not_found} -> "SMS package"
+    end
+#    package.name
   end
 
   def update_existing_sub(id, subscription_params, phone, new_struct) do
