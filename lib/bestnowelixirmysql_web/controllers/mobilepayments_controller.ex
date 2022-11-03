@@ -130,7 +130,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   defp process_current_game_amount_by_sms(phone, amount) do
-    game = Bestnowelixirmysql.Smsgames.get_current_game_by_sms amount
+    [game] = Bestnowelixirmysql.Smsgames.get_current_game_by_sms amount
     IO.inspect game, label: "checki"
 
     url = "https://api.africastalking.com/restless/send"
