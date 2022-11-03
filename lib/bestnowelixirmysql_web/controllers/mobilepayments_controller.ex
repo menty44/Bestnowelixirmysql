@@ -29,6 +29,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   @live_url "https://api.africastalking.com/version1"
   @sandbox_url "https://api.sandbox.africastalking.com/version1"
 
+  @base_url "http://localhost:3030/api/sms"
+  @headers [{"Content-Type", "application/json"}]
+
   def index(conn, _params) do
     mobile_payments = Payment.list_mobile_payments()
     render(conn, "index.json", mobile_payments: mobile_payments)
@@ -140,8 +143,16 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     games = URI.encode(game.games)
     IO.inspect games, label: "games fuck"
 
-    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
-    IO.inspect sms, label: "sms tuma fuck"
+    body = %{
+    "phone" => phone,
+    "games" => game.games
+    }
+
+    res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
+    IO.inspect(res, label: "SMS sent")
+
+#    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
+#    IO.inspect sms, label: "sms tuma fuck"
 #    try do
 #      complete =
 #        url <>
