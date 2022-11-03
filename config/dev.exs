@@ -9,6 +9,12 @@ config :bestnowelixirmysql, Bestnowelixirmysql.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+
+config :at_ex,
+       api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+       username: "B_Best",
+       from: "B_U",
+       sandbox: false
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -73,17 +79,17 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :at_ex,
-  api_key: "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd",
-  # When changed to "false" one will use the live endpoint url
-  sandbox: true,
-  username: "stimapap",
-  stk_product_name: "AtEx",
-  b2c_product_name: "AtEx",
-  b2b_product_name: "AtEx",
-  bank_checkout_product_name: "AtEx",
-  bank_transfer_product_name: "AtEx",
-  card_checkout_product_name: "AtEx"
+#config :at_ex,
+#  api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+#  # When changed to "false" one will use the live endpoint url
+#  sandbox: true,
+#  username: "stimapap",
+#  stk_product_name: "AtEx",
+#  b2c_product_name: "AtEx",
+#  b2b_product_name: "AtEx",
+#  bank_checkout_product_name: "AtEx",
+#  bank_transfer_product_name: "AtEx",
+#  card_checkout_product_name: "AtEx"
 
 #config :corsica, Corsica,
 #  log: [rejected: :warn, invalid: :debug, accepted: :debug],

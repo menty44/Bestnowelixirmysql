@@ -30,13 +30,8 @@ config :logger, level: :warn
 config :phoenix, :plug_init_mode, :runtime
 
 config :at_ex,
-  api_key: "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd",
-  # When changed to "false" one will use the live endpoint url
-  sandbox: true,
-  username: "stimapap",
-  stk_product_name: "AtEx",
-  b2c_product_name: "AtEx",
-  b2b_product_name: "AtEx",
-  bank_checkout_product_name: "AtEx",
-  bank_transfer_product_name: "AtEx",
-  card_checkout_product_name: "AtEx"
+       api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+       username: "B_Best",
+       from: "B_U",
+         # When changed to "false" one will use the live endpoint url
+       sandbox: false

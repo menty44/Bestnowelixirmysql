@@ -20,8 +20,14 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   alias Bestnowelixirmysql.Packages
   alias Bestnowelixirmysql.Packages.Package
 
+  import AtEx.Util
+
+  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
+
+  @live_url "https://api.africastalking.com/version1"
+  @sandbox_url "https://api.sandbox.africastalking.com/version1"
 
   def index(conn, _params) do
     mobile_payments = Payment.list_mobile_payments()
@@ -113,11 +119,57 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   defp process_sms_games(phone, amount) do
     case amount do
-      "50" -> IO.inspect("process chwani")
-      "100" -> IO.inspect("process soh")
-      "200" -> IO.inspect("process soh mbili")
+      "50.00" -> process_current_game_amount_by_sms(phone, amount)
+      "100.00"-> process_current_game_amount_by_sms(phone, amount)
+      "200.00"-> process_current_game_amount_by_sms(phone, amount)
       _ -> IO.inspect("Amount belongs to other games")
     end
+  end
+
+  defp process_current_game_amount_by_sms(phone, amount) do
+    game = Bestnowelixirmysql.Smsgames.get_current_game_by_sms amount
+    IO.inspect game, label: "checki"
+
+    url = "https://api.africastalking.com/restless/send"
+    username = "B_Best"
+    s_code = "B_U"
+
+    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+
+
+    games = URI.encode(game.games)
+    IO.inspect games, label: "games fuck"
+
+    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
+    IO.inspect sms, label: "sms tuma fuck"
+#    try do
+#      complete =
+#        url <>
+#        "?username=" <>
+#        username <>
+#        "&Apikey=" <>
+#        apikey <>
+#        "&to=" <>
+#        phone <>
+#        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
+#        "&message="<>
+#        "Sportpesa%203989#HTFT11%20AC%20Milan%203866#HTFT11%20Atletico%20Pr%201612#HTFT22%20Borussia%20Dortmund%203913#HTFT22%20Benfica%204912#HTFT11%20Burnley%20HELP:0792329299" <>
+#        "&from=" <>
+#        s_code
+#
+#
+#      case HTTPoison.get(complete) do
+#        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+#          IO.puts(body)
+#          {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
+#        {:error, _} -> IO.puts("error")
+#
+#      end
+#    rescue
+#      Ecto.NoResultsError ->
+#        {:error, :not_found, "No result found"}
+#    end
+
   end
 
   def send_sms(phone, name, days) do
