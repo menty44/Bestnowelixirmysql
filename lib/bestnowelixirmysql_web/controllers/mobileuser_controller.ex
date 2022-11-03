@@ -53,6 +53,7 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
            %{
              "code" => 0,
              "user" => %{
+               "id" => mobileuser.id,
                "firstname" => mobileuser.firstname,
                "lastname" => mobileuser.lastname,
                "phone" => mobileuser.phone,
