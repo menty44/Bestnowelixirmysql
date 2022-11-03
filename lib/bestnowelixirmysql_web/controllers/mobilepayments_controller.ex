@@ -22,7 +22,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   import AtEx.Util
 
-  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
+#  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
