@@ -19,7 +19,9 @@ defmodule Bestnowelixirmysql.Smsgames do
 
   """
   def list_smsgames do
-    Repo.all(Smsgame)
+    Smsgame
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
   end
 
   @doc """
