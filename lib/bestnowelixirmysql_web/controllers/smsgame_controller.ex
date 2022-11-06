@@ -12,6 +12,9 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
   end
 
   def create(conn, %{"smsgame" => smsgame_params}) do
+    smsgame_params
+    |> process_date
+
     with {:ok, %Smsgame{} = smsgame} <- Smsgames.create_smsgame(smsgame_params) do
       conn
       |> put_status(:created)
@@ -19,6 +22,13 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
       |> render("show.json", smsgame: smsgame)
     end
   end
+
+  def process_date(att) do
+    Map.put(%{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]}, "commence", att["commence"] <> " 00:00:00")
+    |> IO.inspect
+  end
+
+  defp convert_to
 
   def show(conn, %{"id" => id}) do
     smsgame = Smsgames.get_smsgame!(id)

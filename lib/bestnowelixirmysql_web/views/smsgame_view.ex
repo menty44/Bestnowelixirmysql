@@ -14,7 +14,8 @@ defmodule BestnowelixirmysqlWeb.SmsgameView do
     %{
       id: smsgame.id,
       amount: smsgame.amount,
-      games: smsgame.games
+      games: smsgame.games,
+     commence: smsgame.commence
     }
   end
 end

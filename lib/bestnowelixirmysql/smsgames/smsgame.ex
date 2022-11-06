@@ -5,6 +5,7 @@ defmodule Bestnowelixirmysql.Smsgames.Smsgame do
   schema "smsgames" do
     field :amount, :string
     field :games, :string
+    field :commence, :naive_datetime
 
     timestamps()
   end
@@ -12,7 +13,12 @@ defmodule Bestnowelixirmysql.Smsgames.Smsgame do
   @doc false
   def changeset(smsgame, attrs) do
     smsgame
-    |> cast(attrs, [:amount, :games])
+    |> cast(attrs, [:amount, :games, :commence])
     |> validate_required([:amount, :games])
+  end
+
+  defp process_date(att) do
+    att
+    |> IO.inspect
   end
 end
