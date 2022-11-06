@@ -12,10 +12,10 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
   end
 
   def create(conn, %{"smsgame" => smsgame_params}) do
-    smsgame_params
+    params = smsgame_params
     |> process_date
 
-    with {:ok, %Smsgame{} = smsgame} <- Smsgames.create_smsgame(smsgame_params) do
+    with {:ok, %Smsgame{} = smsgame} <- Smsgames.create_smsgame(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.smsgame_path(conn, :show, smsgame))
@@ -25,10 +25,13 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
 
   def process_date(att) do
     Map.put(%{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]}, "commence", att["commence"] <> " 00:00:00")
-    |> IO.inspect
+    |> convert_to_naive_date()
   end
 
-  defp convert_to
+  defp convert_to_naive_date(att) do
+    Map.put(%{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]}, "commence", NaiveDateTime.from_iso8601!(att["commence"]))
+    |> IO.inspect
+  end
 
   def show(conn, %{"id" => id}) do
     smsgame = Smsgames.get_smsgame!(id)
