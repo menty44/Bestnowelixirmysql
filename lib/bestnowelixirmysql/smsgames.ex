@@ -108,8 +108,8 @@ defmodule Bestnowelixirmysql.Smsgames do
   def get_current_game_by_sms(amount) do
     (from g in Smsgame,
     where: g.amount ==^ amount,
-    where: g.commence > ^ convert_to_string(Timex.beginning_of_day(Timex.now())),
-    where: g.commence < ^ convert_to_string(Timex.end_of_day(Timex.now())),
+    where: g.commence >= ^ convert_to_string(Timex.beginning_of_day(Timex.now())),
+    where: g.commence <= ^ convert_to_string(Timex.end_of_day(Timex.now())),
     order_by: [{:desc, g.commence}],
     limit: 1
     )
