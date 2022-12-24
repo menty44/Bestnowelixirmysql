@@ -120,13 +120,14 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     end
   end
 
-  defp process_sms_games(phone, amount) do
-    case amount do
+  def process_sms_games(phone, amount) do
+    amount = case amount do
       "50.00" -> process_current_game_amount_by_sms(phone, amount)
       "100.00"-> process_current_game_amount_by_sms(phone, amount)
       "200.00"-> process_current_game_amount_by_sms(phone, amount)
       _ -> IO.inspect("Amount belongs to other games kabisa")
     end
+    amount |> IO.inpsect(label: "update_user_payment check amount")
   end
 
   defp process_current_game_amount_by_sms(phone, amount) do
