@@ -103,7 +103,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     |> IO.inspect
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
-    Mobileaccounts.update_user_payment(mobileuser)
+    Mobileaccounts.update_user_payment(mobileuser) |> IO.inpsect(label: "update_user_payment")
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
       {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
