@@ -82,7 +82,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   def confirmation(conn, params) do
     IO.inspect params
 
-    process_sms_games(params["MSISDN"], params["TransAmount"])
+    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inpsect(label: "update_user_payment")
     new_struct = %{
       "billrefnumber" => params["BillRefNumber"],
       "businessshortcode" => params["BusinessShortCode"],
