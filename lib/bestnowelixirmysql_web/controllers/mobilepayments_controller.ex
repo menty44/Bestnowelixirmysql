@@ -125,7 +125,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "50.00" -> process_current_game_amount_by_sms(phone, amount)
       "100.00"-> process_current_game_amount_by_sms(phone, amount)
       "200.00"-> process_current_game_amount_by_sms(phone, amount)
-      _ -> IO.inspect("Amount belongs to other games")
+      _ -> IO.inspect("Amount belongs to other games kabisa")
     end
   end
 
@@ -141,7 +141,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
 
     games = URI.encode(game.games)
-    IO.inspect games, label: "games fuck"
+    IO.inspect games, label: "games fuck kabisa"
 
     body = %{
     "phone" => phone,
