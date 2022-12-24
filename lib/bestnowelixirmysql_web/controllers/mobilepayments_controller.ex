@@ -132,6 +132,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   defp process_current_game_amount_by_sms(phone, amount) do
+    phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone")
+    amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
+
     [game] = Bestnowelixirmysql.Smsgames.get_current_game_by_sms amount
     IO.inspect game, label: "checki"
 
