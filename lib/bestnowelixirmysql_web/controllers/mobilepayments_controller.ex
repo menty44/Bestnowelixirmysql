@@ -97,14 +97,14 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transtime" => params["TransTime"],
       "transactiontype" => params["TransactionType"]
     }
-    new_struct |> IO.inpsect(label: "new_struct")
+    new_struct |> IO.inspect(label: "new_struct")
     Map.get(new_struct, "msisdn")
     |> IO.inspect
 
-    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inpsect(label: "process_sms_games noma apa")
+    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
-    Mobileaccounts.update_user_payment(mobileuser) |> IO.inpsect(label: "update_user_payment")
+    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
       {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
@@ -128,7 +128,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "200.00"-> process_current_game_amount_by_sms(phone, amount)
       _ -> IO.inspect("Amount belongs to other games kabisa")
     end
-    amount |> IO.inpsect(label: "update_user_payment check amount")
+    amount |> IO.inspect(label: "update_user_payment check amount")
   end
 
   defp process_current_game_amount_by_sms(phone, amount) do
