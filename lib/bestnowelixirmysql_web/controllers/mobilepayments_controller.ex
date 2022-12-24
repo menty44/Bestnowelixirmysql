@@ -80,7 +80,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def confirmation(conn, params) do
-    IO.inspect params
+    IO.inspect(params, label: "params")
 
     process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inpsect(label: "update_user_payment")
     new_struct = %{
@@ -98,7 +98,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transtime" => params["TransTime"],
       "transactiontype" => params["TransactionType"]
     }
-
+    new_struct |> IO.inpsect(label: "new_struct")
     Map.get(new_struct, "msisdn")
     |> IO.inspect
 
