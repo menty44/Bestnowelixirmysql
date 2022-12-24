@@ -80,9 +80,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def confirmation(conn, params) do
-    IO.inspect(params, label: "params")
+    IO.inspect(params, label: "params 1234")
 
-    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inpsect(label: "update_user_payment")
     new_struct = %{
       "billrefnumber" => params["BillRefNumber"],
       "businessshortcode" => params["BusinessShortCode"],
@@ -101,6 +100,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     new_struct |> IO.inpsect(label: "new_struct")
     Map.get(new_struct, "msisdn")
     |> IO.inspect
+
+    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inpsect(label: "process_sms_games noma apa")
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
     Mobileaccounts.update_user_payment(mobileuser) |> IO.inpsect(label: "update_user_payment")
