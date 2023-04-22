@@ -3,7 +3,7 @@ defmodule Bestnowelixirmysql.Repo.Migrations.AddModeToMobileUsers do
 
   def change do
     alter table(:mobileusers) do
-      add :mode, :string
+      add_if_not_exists :mode, :string
     end
   end
 end
