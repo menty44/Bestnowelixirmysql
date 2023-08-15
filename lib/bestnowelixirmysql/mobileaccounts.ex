@@ -1,4 +1,4 @@
-defmodule Bestnowelixirmysql.Mobileaccounts do
+  defmodule Bestnowelixirmysql.Mobileaccounts do
   @moduledoc """
   The Mobileaccounts context.
   """

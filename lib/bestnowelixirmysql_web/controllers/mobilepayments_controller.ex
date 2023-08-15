@@ -79,7 +79,65 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     })
   end
 
+  def validation694949(conn, params) do
+    params
+#    |> Map.get("Body")
+#    |> Map.get("stkCallback")
+#    |> Map.get("CallbackMetadata")
+#    |> Map.get("Item")
+#    |> process_lipanampesa
+    |> IO.inspect
+
+    conn
+    |> put_status(:ok)
+    |> json(%{
+      data: "noma"
+    })
+  end
+
   def confirmation(conn, params) do
+    IO.inspect(params, label: "params 1234")
+
+    new_struct = %{
+      "billrefnumber" => params["BillRefNumber"],
+      "businessshortcode" => params["BusinessShortCode"],
+      "firstname" => params["FirstName"],
+      "invoicenumber" => params["InvoiceNumber"],
+      "lastname" => params["LastName"],
+      "msisdn" => params["MSISDN"],
+      "middlename" => params["MiddleName"],
+      "orgaccountbalance" => params["OrgAccountBalance"],
+      "thirdpartytransid" => params["ThirdPartyTransID"],
+      "transamount" => params["TransAmount"],
+      "transid" => params["TransID"],
+      "transtime" => params["TransTime"],
+      "transactiontype" => params["TransactionType"]
+    }
+    new_struct |> IO.inspect(label: "new_struct")
+    Map.get(new_struct, "msisdn")
+    |> IO.inspect
+
+    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
+
+    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
+
+    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
+      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+
+      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+    end
+
+    with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.payment_path(conn, :show, payment))
+      |> render("show.json", payment: payment)
+    end
+  end
+
+  def confirmation694949(conn, params) do
     IO.inspect(params, label: "params 1234")
 
     new_struct = %{
