@@ -13,7 +13,7 @@ defmodule Bestnowelixirmysql.Tillgames.Tillgame do
   @doc false
   def changeset(tillgame, attrs) do
     tillgame
-    |> cast(attrs, [:amount, :games])
-    |> validate_required([:amount, :games])
+    |> cast(attrs, [:amount, :games, :commence])
+    |> validate_required([:amount, :games, :commence])
   end
 end

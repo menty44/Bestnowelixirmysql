@@ -11,16 +11,22 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
     render(conn, "index.json", smsgames: smsgames)
   end
 
-  def tillcreate(conn, smsgame_till_params) do
+  def tillcreate(conn, %{"smsgame" => smsgame_till_params}) do
     params =
       smsgame_till_params
       |> process_date
-
-    with {:ok, %Smsgame{} = smsgame} <- Smsgames.create_smsgame(params) do
+    smsgame_till_params |> IO.inspect
+    with {:ok, %Bestnowelixirmysql.Tillgames.Tillgame{} = smssaved} <- Bestnowelixirmysql.Tillgames.create_tillgame(params) do
+      smssaved |> IO.inspect
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.smsgame_path(conn, :show, smsgame))
-      |> render("show.json", smsgame: smsgame)
+      |> put_resp_header("location", Routes.smsgame_path(conn, :show, smssaved))
+      |> render("show.json", smsgame: smssaved)
+#      conn
+#      |> put_status(:ok)
+#      |> json(%{
+#        data:  smssaved |> Bestnowelixirmysql.Helpers.map_from_schema()
+#      })
     end
   end
 

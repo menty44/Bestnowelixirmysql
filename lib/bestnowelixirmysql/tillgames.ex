@@ -50,9 +50,11 @@ defmodule Bestnowelixirmysql.Tillgames do
 
   """
   def create_tillgame(attrs \\ %{}) do
+    attrs |> IO.inspect(label: "kakakkak preee")
     %Tillgame{}
     |> Tillgame.changeset(attrs)
     |> Repo.insert()
+    |> IO.inspect(label: "kakakkak")
   end
 
   @doc """
