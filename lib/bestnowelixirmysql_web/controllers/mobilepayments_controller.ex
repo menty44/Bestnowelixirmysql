@@ -138,7 +138,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def confirmation694949(conn, params) do
-    IO.inspect(params, label: "params 1234")
+    IO.inspect(params, label: "params 694949")
 
     new_struct = %{
       "billrefnumber" => params["BillRefNumber"],
@@ -159,7 +159,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     Map.get(new_struct, "msisdn")
     |> IO.inspect
 
-    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
+    process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
 
     {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
     Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
@@ -180,6 +180,18 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def process_sms_games(phone, amount) do
+    amount = case amount do
+      "50.00" -> process_current_game_amount_by_sms(phone, amount)
+      "100.00"-> process_current_game_amount_by_sms(phone, amount)
+      "200.00"-> process_current_game_amount_by_sms(phone, amount)
+      "300.00"-> process_current_game_amount_by_sms(phone, amount)
+      _ -> IO.inspect("Amount belongs to other games kabisa")
+    end
+    amount |> IO.inspect(label: "update_user_payment check amount")
+  end
+
+  def process_sms_till_games(phone, amount) do
+    IO.inspect("till games process")
     amount = case amount do
       "50.00" -> process_current_game_amount_by_sms(phone, amount)
       "100.00"-> process_current_game_amount_by_sms(phone, amount)
@@ -244,6 +256,34 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 #      Ecto.NoResultsError ->
 #        {:error, :not_found, "No result found"}
 #    end
+
+  end
+
+  defp process_current_game_amount_by_till_sms(phone, amount) do
+    phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone")
+    amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
+#    Bestnowelixirmysql.Tillgames
+    [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms amount
+    IO.inspect game, label: "checki"
+
+    url = "https://api.africastalking.com/restless/send"
+    username = "B_Best"
+    s_code = "B_U"
+
+    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+
+
+    games = URI.encode(game.games)
+    IO.inspect games, label: "games fuck kabisa"
+
+    body = %{
+    "phone" => phone,
+    "games" => game.games
+    }
+
+    res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
+    IO.inspect(res, label: "SMS sent")
+
 
   end
 
