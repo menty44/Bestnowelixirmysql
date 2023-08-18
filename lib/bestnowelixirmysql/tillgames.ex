@@ -102,6 +102,10 @@ defmodule Bestnowelixirmysql.Tillgames do
     Tillgame.changeset(tillgame, attrs)
   end
 
+  def convert_to_string(param) do
+    DateTime.to_string(param)
+  end
+
   def get_current_game_by_sms(amount) do
     from(g in Tillgame,
       where: g.amount == ^amount,
