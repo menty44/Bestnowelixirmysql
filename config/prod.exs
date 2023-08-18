@@ -25,11 +25,11 @@ config :bestnowelixirmysql, Bestnowelixirmysql.Repo,
   pool_size: 10
 
 config :at_ex,
-       api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
-       username: "B_Best",
-       from: "B_U",
-         # When changed to "false" one will use the live endpoint url
-       sandbox: false
+  api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+  username: "B_Best",
+  from: "B_U",
+  # When changed to "false" one will use the live endpoint url
+  sandbox: false
 
 # ## SSL Support
 #

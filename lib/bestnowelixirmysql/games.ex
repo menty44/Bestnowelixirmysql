@@ -18,8 +18,9 @@ defmodule Bestnowelixirmysql.Games do
 
   """
   def list_games do
-    query = from(m in Game, order_by: [desc: m.id], limit: 200)
-            |> Repo.all
+    query =
+      from(m in Game, order_by: [desc: m.id], limit: 200)
+      |> Repo.all()
   end
 
   @doc """
@@ -107,6 +108,7 @@ defmodule Bestnowelixirmysql.Games do
     case Repo.all(archive_by_date_query) do
       nil ->
         {:error, :not_found}
+
       games ->
         {:ok, games}
     end
@@ -116,31 +118,38 @@ defmodule Bestnowelixirmysql.Games do
     case Repo.all(games_active_date_query) do
       nil ->
         {:error, :not_found}
+
       games ->
         {:ok, games}
     end
   end
 
   def games_active_date_query do
-    d = convert_to_string(Timex.beginning_of_day(Timex.now))
+    d = convert_to_string(Timex.beginning_of_day(Timex.now()))
     from g in Game, where: g.inserted_at > ^d, order_by: [desc: g.id], limit: 200
   end
 
   def archive_by_date_query do
-    d = convert_to_string(Timex.beginning_of_day(Timex.now))
-    from g in Game, where: (g.results == g.tip) and g.inserted_at < ^d, order_by: [desc: g.id], limit: 200
+    d = convert_to_string(Timex.beginning_of_day(Timex.now()))
+
+    from g in Game,
+      where: g.results == g.tip and g.inserted_at < ^d,
+      order_by: [desc: g.id],
+      limit: 200
   end
 
   def filter_by_date_query(from, to) do
     new_from = from <> " 00:00:00.000000Z"
     new_to = to <> " 00:00:00.000000Z"
-    mq = from g in Game,
-    where: g.inserted_at >= ^new_from and g.inserted_at <= ^new_to,
-    order_by: [desc: g.id],
-    limit: 200
+
+    mq =
+      from g in Game,
+        where: g.inserted_at >= ^new_from and g.inserted_at <= ^new_to,
+        order_by: [desc: g.id],
+        limit: 200
 
     mq
-    |> Repo.all
+    |> Repo.all()
   end
 
   def convert_to_string(param) do

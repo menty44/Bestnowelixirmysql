@@ -19,7 +19,7 @@ defmodule Bestnowelixirmysql.Payments do
   """
   def list_payments(page \\ 1, size \\ 3) do
     Payment
-    |> order_by( [{:desc, :updated_at}])
+    |> order_by([{:desc, :updated_at}])
     |> paginate(page, size)
     |> Repo.all()
   end
@@ -27,23 +27,21 @@ defmodule Bestnowelixirmysql.Payments do
   def phone_list_payments(phone, page \\ 1, size \\ 3) do
     Payment
     |> by_msisdn(phone)
-    |> order_by( [{:desc, :updated_at}])
+    |> order_by([{:desc, :updated_at}])
     |> paginate(page, size)
     |> Repo.all()
   end
 
   def by_msisdn(query, phone) do
     from p in query,
-         where: p.msisdn == ^phone
+      where: p.msisdn == ^phone
   end
 
   def paginate(query, page, size) do
     from query,
-         limit: ^size,
-         offset: ^((page-1) * size)
+      limit: ^size,
+      offset: ^((page - 1) * size)
   end
-
-
 
   @doc """
   Gets a single payment.
@@ -130,6 +128,7 @@ defmodule Bestnowelixirmysql.Payments do
     case Repo.all(Payment, msisdn: phone) do
       nil ->
         {:error, :not_found}
+
       payment ->
         {:ok, payment}
     end

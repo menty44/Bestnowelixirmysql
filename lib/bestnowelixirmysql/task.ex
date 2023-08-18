@@ -6,11 +6,11 @@ defmodule Bestnowelixirmysql.Task do
 
   def work do
     Subscriptions.bulk_update_subscriptions()
-    IO.inspect "Quantum.ExecutionBroadcaster #{Timex.now()} <> DEDUCT DAYS "
+    IO.inspect("Quantum.ExecutionBroadcaster #{Timex.now()} <> DEDUCT DAYS ")
   end
 
   def deactivate_subscriber do
     Subscriptions.bulk_deactivate_low_fund_subscriptions()
-    IO.inspect "Quantum.ExecutionBroadcaster #{Timex.now()} <> DEACTIVATE ACCOUNT"
+    IO.inspect("Quantum.ExecutionBroadcaster #{Timex.now()} <> DEACTIVATE ACCOUNT")
   end
 end

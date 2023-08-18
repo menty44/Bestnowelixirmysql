@@ -52,17 +52,16 @@ config :bestnowelixirmysql, BestnowelixirmysqlWeb.Auth.Guardian,
   issuer: "bestnowelixirmysql",
   secret_key: "xdV5TyibRS4PgSTe+fEu4XwatfEqZ3y1glywHsw9aivLCpehN9/5QCrXkpj+SISY"
 
-
 config :at_ex,
-       api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
-       username: "B_Best",
-       from: "B_U",
-         # When changed to "false" one will use the live endpoint url
-       sandbox: false
+  api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+  username: "B_Best",
+  from: "B_U",
+  # When changed to "false" one will use the live endpoint url
+  sandbox: false
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
-#import_config "#{Mix.env()}.exs"
+# import_config "#{Mix.env()}.exs"
 
 import_config "appsignal.exs"

@@ -8,7 +8,21 @@ defmodule Bestnowelixirmysql.PaymentsTest do
 
     import Bestnowelixirmysql.PaymentsFixtures
 
-    @invalid_attrs %{billrefnumber: nil, businessshortcode: nil, firstname: nil, invoicenumber: nil, lastname: nil, middlename: nil, msisdn: nil, orgaccountbalance: nil, thirdpartytransid: nil, transactiontype: nil, transamount: nil, transid: nil, transtime: nil}
+    @invalid_attrs %{
+      billrefnumber: nil,
+      businessshortcode: nil,
+      firstname: nil,
+      invoicenumber: nil,
+      lastname: nil,
+      middlename: nil,
+      msisdn: nil,
+      orgaccountbalance: nil,
+      thirdpartytransid: nil,
+      transactiontype: nil,
+      transamount: nil,
+      transid: nil,
+      transtime: nil
+    }
 
     test "list_payments/0 returns all payments" do
       payment = payment_fixture()
@@ -21,7 +35,21 @@ defmodule Bestnowelixirmysql.PaymentsTest do
     end
 
     test "create_payment/1 with valid data creates a payment" do
-      valid_attrs = %{billrefnumber: "some billrefnumber", businessshortcode: "some businessshortcode", firstname: "some firstname", invoicenumber: "some invoicenumber", lastname: "some lastname", middlename: "some middlename", msisdn: "some msisdn", orgaccountbalance: "some orgaccountbalance", thirdpartytransid: "some thirdpartytransid", transactiontype: "some transactiontype", transamount: "some transamount", transid: "some transid", transtime: "some transtime"}
+      valid_attrs = %{
+        billrefnumber: "some billrefnumber",
+        businessshortcode: "some businessshortcode",
+        firstname: "some firstname",
+        invoicenumber: "some invoicenumber",
+        lastname: "some lastname",
+        middlename: "some middlename",
+        msisdn: "some msisdn",
+        orgaccountbalance: "some orgaccountbalance",
+        thirdpartytransid: "some thirdpartytransid",
+        transactiontype: "some transactiontype",
+        transamount: "some transamount",
+        transid: "some transid",
+        transtime: "some transtime"
+      }
 
       assert {:ok, %Payment{} = payment} = Payments.create_payment(valid_attrs)
       assert payment.billrefnumber == "some billrefnumber"
@@ -45,7 +73,22 @@ defmodule Bestnowelixirmysql.PaymentsTest do
 
     test "update_payment/2 with valid data updates the payment" do
       payment = payment_fixture()
-      update_attrs = %{billrefnumber: "some updated billrefnumber", businessshortcode: "some updated businessshortcode", firstname: "some updated firstname", invoicenumber: "some updated invoicenumber", lastname: "some updated lastname", middlename: "some updated middlename", msisdn: "some updated msisdn", orgaccountbalance: "some updated orgaccountbalance", thirdpartytransid: "some updated thirdpartytransid", transactiontype: "some updated transactiontype", transamount: "some updated transamount", transid: "some updated transid", transtime: "some updated transtime"}
+
+      update_attrs = %{
+        billrefnumber: "some updated billrefnumber",
+        businessshortcode: "some updated businessshortcode",
+        firstname: "some updated firstname",
+        invoicenumber: "some updated invoicenumber",
+        lastname: "some updated lastname",
+        middlename: "some updated middlename",
+        msisdn: "some updated msisdn",
+        orgaccountbalance: "some updated orgaccountbalance",
+        thirdpartytransid: "some updated thirdpartytransid",
+        transactiontype: "some updated transactiontype",
+        transamount: "some updated transamount",
+        transid: "some updated transid",
+        transtime: "some updated transtime"
+      }
 
       assert {:ok, %Payment{} = payment} = Payments.update_payment(payment, update_attrs)
       assert payment.billrefnumber == "some updated billrefnumber"

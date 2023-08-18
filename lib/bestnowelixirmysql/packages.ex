@@ -18,9 +18,11 @@ defmodule Bestnowelixirmysql.Packages do
 
   """
   def list_packages do
-    query = from(m in Package, order_by: [desc: m.id], limit: 200)
-            |> Repo.all
-#    Repo.all(Package)
+    query =
+      from(m in Package, order_by: [desc: m.id], limit: 200)
+      |> Repo.all()
+
+    #    Repo.all(Package)
   end
 
   @doc """
@@ -114,6 +116,7 @@ defmodule Bestnowelixirmysql.Packages do
     case Repo.get_by(Package, price: price) do
       nil ->
         {:error, :not_found}
+
       package ->
         {:ok, package}
     end

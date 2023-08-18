@@ -21,7 +21,13 @@ defmodule Bestnowelixirmysql.GamesTest do
     end
 
     test "create_game/1 with valid data creates a game" do
-      valid_attrs = %{league: "some league", match: "some match", results: "some results", time: "some time", tip: "some tip"}
+      valid_attrs = %{
+        league: "some league",
+        match: "some match",
+        results: "some results",
+        time: "some time",
+        tip: "some tip"
+      }
 
       assert {:ok, %Game{} = game} = Games.create_game(valid_attrs)
       assert game.league == "some league"
@@ -37,7 +43,14 @@ defmodule Bestnowelixirmysql.GamesTest do
 
     test "update_game/2 with valid data updates the game" do
       game = game_fixture()
-      update_attrs = %{league: "some updated league", match: "some updated match", results: "some updated results", time: "some updated time", tip: "some updated tip"}
+
+      update_attrs = %{
+        league: "some updated league",
+        match: "some updated match",
+        results: "some updated results",
+        time: "some updated time",
+        tip: "some updated tip"
+      }
 
       assert {:ok, %Game{} = game} = Games.update_game(game, update_attrs)
       assert game.league == "some updated league"

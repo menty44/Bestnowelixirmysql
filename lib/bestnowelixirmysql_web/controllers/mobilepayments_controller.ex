@@ -22,7 +22,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   import AtEx.Util
 
-#  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
+  #  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
 
   action_fallback BestnowelixirmysqlWeb.FallbackController
 
@@ -37,40 +37,40 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     render(conn, "index.json", mobile_payments: mobile_payments)
   end
 
-#  defp process_lipanampesa(data) do
-#     Enum.each(data, fn x ->
-#
-#       if x["Name"] == "PhoneNumber" do
-#         IO.inspect(x)
-#         IO.inspect(x["Value"])
-#       end
-#
-#       if x["Name"] == "Amount" do
-#         IO.inspect(x)
-#         IO.inspect(x["Value"])
-#       end
-#
-#       if x["Name"] == "MpesaReceiptNumber" do
-#         IO.inspect(x)
-#         IO.inspect(x["Value"])
-#       end
-#
-#       if x["Name"] == "TransactionDate" do
-#         IO.inspect(x)
-#         IO.inspect(x["Value"])
-#       end
-##         Payment.process_mobile_payment(x)
-#     end)
-#  end
+  #  defp process_lipanampesa(data) do
+  #     Enum.each(data, fn x ->
+  #
+  #       if x["Name"] == "PhoneNumber" do
+  #         IO.inspect(x)
+  #         IO.inspect(x["Value"])
+  #       end
+  #
+  #       if x["Name"] == "Amount" do
+  #         IO.inspect(x)
+  #         IO.inspect(x["Value"])
+  #       end
+  #
+  #       if x["Name"] == "MpesaReceiptNumber" do
+  #         IO.inspect(x)
+  #         IO.inspect(x["Value"])
+  #       end
+  #
+  #       if x["Name"] == "TransactionDate" do
+  #         IO.inspect(x)
+  #         IO.inspect(x["Value"])
+  #       end
+  ##         Payment.process_mobile_payment(x)
+  #     end)
+  #  end
 
   def validation(conn, params) do
     params
-#    |> Map.get("Body")
-#    |> Map.get("stkCallback")
-#    |> Map.get("CallbackMetadata")
-#    |> Map.get("Item")
-#    |> process_lipanampesa
-    |> IO.inspect
+    #    |> Map.get("Body")
+    #    |> Map.get("stkCallback")
+    #    |> Map.get("CallbackMetadata")
+    #    |> Map.get("Item")
+    #    |> process_lipanampesa
+    |> IO.inspect()
 
     conn
     |> put_status(:ok)
@@ -81,12 +81,12 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   def validation694949(conn, params) do
     params
-#    |> Map.get("Body")
-#    |> Map.get("stkCallback")
-#    |> Map.get("CallbackMetadata")
-#    |> Map.get("Item")
-#    |> process_lipanampesa
-    |> IO.inspect
+    #    |> Map.get("Body")
+    #    |> Map.get("stkCallback")
+    #    |> Map.get("CallbackMetadata")
+    #    |> Map.get("Item")
+    #    |> process_lipanampesa
+    |> IO.inspect()
 
     conn
     |> put_status(:ok)
@@ -113,20 +113,53 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transtime" => params["TransTime"],
       "transactiontype" => params["TransactionType"]
     }
+
     new_struct |> IO.inspect(label: "new_struct")
+
     Map.get(new_struct, "msisdn")
-    |> IO.inspect
+    |> IO.inspect()
 
-    process_sms_games(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
+    process_sms_games(params["MSISDN"], params["TransAmount"])
+    |> IO.inspect(label: "process_sms_games noma apa")
 
-    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+    {:ok, mobileuser} =
+      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+
     Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
-      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:ok, subscription} ->
+        update_existing_sub(
+          subscription.id,
+          %{
+            "days" => subscription.days + get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
 
-      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
-      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, :not_found} ->
+        create_new_sub(
+          %{
+            "uid" => mobileuser.id,
+            "days" => get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
+
+      {:error, _} ->
+        create_new_sub(
+          %{
+            "uid" => mobileuser.id,
+            "days" => get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
     end
 
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
@@ -155,20 +188,53 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "transtime" => params["TransTime"],
       "transactiontype" => params["TransactionType"]
     }
+
     new_struct |> IO.inspect(label: "new_struct")
+
     Map.get(new_struct, "msisdn")
-    |> IO.inspect
+    |> IO.inspect()
 
-    process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"]) |> IO.inspect(label: "process_sms_games noma apa")
+    process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"])
+    |> IO.inspect(label: "process_sms_games noma apa")
 
-    {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+    {:ok, mobileuser} =
+      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+
     Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
 
     case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
-      {:ok, subscription} -> update_existing_sub(subscription.id, %{"days" => subscription.days + get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:ok, subscription} ->
+        update_existing_sub(
+          subscription.id,
+          %{
+            "days" => subscription.days + get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
 
-      {:error, :not_found} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
-      {:error, _} -> create_new_sub(%{"uid" => mobileuser.id, "days" => get_package_days(new_struct["transamount"]), "active" => true}, mobileuser.phone, get_package_struct(new_struct["transamount"]))
+      {:error, :not_found} ->
+        create_new_sub(
+          %{
+            "uid" => mobileuser.id,
+            "days" => get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
+
+      {:error, _} ->
+        create_new_sub(
+          %{
+            "uid" => mobileuser.id,
+            "days" => get_package_days(new_struct["transamount"]),
+            "active" => true
+          },
+          mobileuser.phone,
+          get_package_struct(new_struct["transamount"])
+        )
     end
 
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
@@ -180,25 +246,30 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def process_sms_games(phone, amount) do
-    amount = case amount do
-      "50.00" -> process_current_game_amount_by_sms(phone, amount)
-      "100.00"-> process_current_game_amount_by_sms(phone, amount)
-      "200.00"-> process_current_game_amount_by_sms(phone, amount)
-      "300.00"-> process_current_game_amount_by_sms(phone, amount)
-      _ -> IO.inspect("Amount belongs to other games kabisa")
-    end
+    amount =
+      case amount do
+        "50.00" -> process_current_game_amount_by_sms(phone, amount)
+        "100.00" -> process_current_game_amount_by_sms(phone, amount)
+        "200.00" -> process_current_game_amount_by_sms(phone, amount)
+        "300.00" -> process_current_game_amount_by_sms(phone, amount)
+        _ -> IO.inspect("Amount belongs to other games kabisa")
+      end
+
     amount |> IO.inspect(label: "update_user_payment check amount")
   end
 
   def process_sms_till_games(phone, amount) do
     IO.inspect("till games process")
-    amount = case amount do
-      "50.00" -> process_current_game_amount_by_sms(phone, amount)
-      "100.00"-> process_current_game_amount_by_sms(phone, amount)
-      "200.00"-> process_current_game_amount_by_sms(phone, amount)
-      "300.00"-> process_current_game_amount_by_sms(phone, amount)
-      _ -> IO.inspect("Amount belongs to other games kabisa")
-    end
+
+    amount =
+      case amount do
+        "50.00" -> process_current_game_amount_by_till_sms(phone, amount)
+        "100.00" -> process_current_game_amount_by_till_sms(phone, amount)
+        "200.00" -> process_current_game_amount_by_till_sms(phone, amount)
+        "300.00" -> process_current_game_amount_by_till_sms(phone, amount)
+        _ -> IO.inspect("Amount belongs to other games kabisa")
+      end
+
     amount |> IO.inspect(label: "update_user_payment check amount")
   end
 
@@ -206,8 +277,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone")
     amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
 
-    [game] = Bestnowelixirmysql.Smsgames.get_current_game_by_sms amount
-    IO.inspect game, label: "checki"
+    [game] = Bestnowelixirmysql.Smsgames.get_current_game_by_sms(amount)
+    IO.inspect(game, label: "checki")
 
     url = "https://api.africastalking.com/restless/send"
     username = "B_Best"
@@ -215,87 +286,88 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
 
-
     games = URI.encode(game.games)
-    IO.inspect games, label: "games fuck kabisa"
+    IO.inspect(games, label: "games fuck kabisa")
 
     body = %{
-    "phone" => phone,
-    "games" => game.games
+      "phone" => phone,
+      "games" => game.games
     }
 
     res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
     IO.inspect(res, label: "SMS sent")
 
-#    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
-#    IO.inspect sms, label: "sms tuma fuck"
-#    try do
-#      complete =
-#        url <>
-#        "?username=" <>
-#        username <>
-#        "&Apikey=" <>
-#        apikey <>
-#        "&to=" <>
-#        phone <>
-#        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
-#        "&message="<>
-#        "Sportpesa%203989#HTFT11%20AC%20Milan%203866#HTFT11%20Atletico%20Pr%201612#HTFT22%20Borussia%20Dortmund%203913#HTFT22%20Benfica%204912#HTFT11%20Burnley%20HELP:0792329299" <>
-#        "&from=" <>
-#        s_code
-#
-#
-#      case HTTPoison.get(complete) do
-#        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-#          IO.puts(body)
-#          {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
-#        {:error, _} -> IO.puts("error")
-#
-#      end
-#    rescue
-#      Ecto.NoResultsError ->
-#        {:error, :not_found, "No result found"}
-#    end
-
+    #    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
+    #    IO.inspect sms, label: "sms tuma fuck"
+    #    try do
+    #      complete =
+    #        url <>
+    #        "?username=" <>
+    #        username <>
+    #        "&Apikey=" <>
+    #        apikey <>
+    #        "&to=" <>
+    #        phone <>
+    #        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
+    #        "&message="<>
+    #        "Sportpesa%203989#HTFT11%20AC%20Milan%203866#HTFT11%20Atletico%20Pr%201612#HTFT22%20Borussia%20Dortmund%203913#HTFT22%20Benfica%204912#HTFT11%20Burnley%20HELP:0792329299" <>
+    #        "&from=" <>
+    #        s_code
+    #
+    #
+    #      case HTTPoison.get(complete) do
+    #        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+    #          IO.puts(body)
+    #          {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
+    #        {:error, _} -> IO.puts("error")
+    #
+    #      end
+    #    rescue
+    #      Ecto.NoResultsError ->
+    #        {:error, :not_found, "No result found"}
+    #    end
   end
 
   defp process_current_game_amount_by_till_sms(phone, amount) do
     phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone")
     amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
-#    Bestnowelixirmysql.Tillgames
-    [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms amount
-    IO.inspect game, label: "checki"
 
-    url = "https://api.africastalking.com/restless/send"
-    username = "B_Best"
-    s_code = "B_U"
+    [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms(amount)
+    IO.inspect(game, label: "checki")
 
-    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+    url = "https://api.onfonmedia.co.ke/v1/sms/SendBulkSMS"
+        username = "Bestnow"
+        s_code = "23984"
+        apikey = "GeCEO1iwVWnc7vKrMh04Fmso8jT5faZplHq2tJIxg9uy6Q3b"
 
-
-    games = URI.encode(game.games)
-    IO.inspect games, label: "games fuck kabisa"
 
     body = %{
-    "phone" => phone,
-    "games" => game.games
+      "SenderId" => s_code,
+      "IsUnicode" => true,
+      "IsFlash" => true,
+      "ScheduledateTime" => "0",
+      MessageParameters: [
+        %{
+          "Number" => "254720106420",
+          "Text" => "string"
+        }
+      ],
+      Apikey: apikey,
+      Clientid: username
     }
 
     res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
-    IO.inspect(res, label: "SMS sent")
-
-
+    IO.inspect(res, label: "SMS sent for till")
   end
 
   def send_sms(phone, name, days) do
-    IO.inspect phone, label: "WW phone"
-    IO.inspect name, label: "WW sub_struct"
-    IO.inspect days, label: "WW days"
+    IO.inspect(phone, label: "WW phone")
+    IO.inspect(name, label: "WW sub_struct")
+    IO.inspect(days, label: "WW days")
 
     if name == "SMS package" do
-        IO.inspect "SMS package no need to process"
-      else
-
+      IO.inspect("SMS package no need to process")
+    else
       url = "https://api.africastalking.com/restless/send"
       username = "B_Best"
       s_code = "B_U"
@@ -308,71 +380,73 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
         #      IO.inspect(gen)
         #      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
 
+        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
         complete =
           url <>
-          "?username=" <>
-          username <>
-          "&Apikey=" <>
-          apikey <>
-          "&to=" <>
-          phone <>
-          #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
-          "&message="<>
-          String.upcase("You%20have%20purchased%20" <> name <> "%20Package.%20" <> "%20Available%20days%20:%20#{days}")<>
-          "&from=" <>
-          s_code
-
+            "?username=" <>
+            username <>
+            "&Apikey=" <>
+            apikey <>
+            "&to=" <>
+            phone <>
+            "&message=" <>
+            String.upcase(
+              "You%20have%20purchased%20" <>
+                name <> "%20Package.%20" <> "%20Available%20days%20:%20#{days}"
+            ) <>
+            "&from=" <>
+            s_code
 
         case HTTPoison.get(complete) do
           {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
             IO.puts(body)
             {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
-          {:error, _} -> IO.puts("error")
 
+          {:error, _} ->
+            IO.puts("error")
         end
       rescue
         Ecto.NoResultsError ->
           {:error, :not_found, "No result found"}
       end
-
     end
-
   end
 
   def get_package_days(mpesa_price) do
     {parsed_price, _} = Integer.parse(mpesa_price)
-#    {:ok, package} = Packages.get_by_price!(parsed_price)
+    #    {:ok, package} = Packages.get_by_price!(parsed_price)
     case Packages.get_by_price!(parsed_price) do
       {:ok, package} -> package.duration
       {:error, :not_found} -> 0
     end
-#    package.duration
+
+    #    package.duration
   end
 
   def get_package_struct(mpesa_price) do
     {parsed_price, _} = Integer.parse(mpesa_price)
-#    {:ok, package} = Packages.get_by_price!(parsed_price)
+    #    {:ok, package} = Packages.get_by_price!(parsed_price)
     case Packages.get_by_price!(parsed_price) do
       {:ok, package} -> package.name
       {:error, :not_found} -> "SMS package"
     end
-#    package.name
+
+    #    package.name
   end
 
   def update_existing_sub(id, subscription_params, phone, new_struct) do
-    IO.inspect subscription_params, label: "subscription_params"
-    IO.inspect phone, label: "phone"
-    IO.inspect new_struct, label: "new_struct"
+    IO.inspect(subscription_params, label: "subscription_params")
+    IO.inspect(phone, label: "phone")
+    IO.inspect(new_struct, label: "new_struct")
     send_sms(phone, new_struct, subscription_params["days"])
     subscription = Subscriptions.get_subscription!(id)
     Subscriptions.update_subscription(subscription, subscription_params)
-
   end
 
-  def create_new_sub(subscription_params,phone, new_struct) do
+  def create_new_sub(subscription_params, phone, new_struct) do
     case Subscriptions.create_subscription(subscription_params) do
       {:ok, data} -> send_sms(phone, new_struct, subscription_params["days"])
-      {:error, _} -> IO.inspect "not created"
+      {:error, _} -> IO.inspect("not created")
     end
   end
 

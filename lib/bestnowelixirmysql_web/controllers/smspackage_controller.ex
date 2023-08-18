@@ -28,7 +28,8 @@ defmodule BestnowelixirmysqlWeb.SmspackageController do
   def update(conn, %{"id" => id, "smspackage" => smspackage_params}) do
     smspackage = Smspackages.get_smspackage!(id)
 
-    with {:ok, %Smspackage{} = smspackage} <- Smspackages.update_smspackage(smspackage, smspackage_params) do
+    with {:ok, %Smspackage{} = smspackage} <-
+           Smspackages.update_smspackage(smspackage, smspackage_params) do
       render(conn, "show.json", smspackage: smspackage)
     end
   end

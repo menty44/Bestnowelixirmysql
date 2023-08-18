@@ -9,12 +9,12 @@ config :bestnowelixirmysql, Bestnowelixirmysql.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-
 config :at_ex,
-       api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
-       username: "B_Best",
-       from: "B_U",
-       sandbox: false
+  api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
+  username: "B_Best",
+  from: "B_U",
+  sandbox: false
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -79,7 +79,7 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-#config :at_ex,
+# config :at_ex,
 #  api_key: "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d",
 #  # When changed to "false" one will use the live endpoint url
 #  sandbox: true,
@@ -91,22 +91,23 @@ config :phoenix, :plug_init_mode, :runtime
 #  bank_transfer_product_name: "AtEx",
 #  card_checkout_product_name: "AtEx"
 
-#config :corsica, Corsica,
+# config :corsica, Corsica,
 #  log: [rejected: :warn, invalid: :debug, accepted: :debug],
 #  origins: ["http://localhost:4200"]
 #  origins: ["api.forbetweb.com"]
 
 config :bestnowelixirmysql, Bestnowelixirmysql.Scheduler,
-       jobs: [
-         subscriber_deduction_job: [
-           schedule: "@midnight",
-#           schedule: "@minutely",
-           task: {Bestnowelixirmysql.Task, :work, []},
-         ],
-         deactivate_subscriber: [
-           schedule: "@midnight",
-#           schedule: "@minutely",
-           task: {Bestnowelixirmysql.Task, :deactivate_subscriber, []},
-         ],
-       ]
+  jobs: [
+    subscriber_deduction_job: [
+      schedule: "@midnight",
+      #           schedule: "@minutely",
+      task: {Bestnowelixirmysql.Task, :work, []}
+    ],
+    deactivate_subscriber: [
+      schedule: "@midnight",
+      #           schedule: "@minutely",
+      task: {Bestnowelixirmysql.Task, :deactivate_subscriber, []}
+    ]
+  ]
+
 config :appsignal, :config, active: true

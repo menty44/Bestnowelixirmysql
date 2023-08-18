@@ -1,4 +1,4 @@
-  defmodule Bestnowelixirmysql.Mobileaccounts do
+defmodule Bestnowelixirmysql.Mobileaccounts do
   @moduledoc """
   The Mobileaccounts context.
   """
@@ -18,9 +18,11 @@
 
   """
   def list_mobileusers do
-    query = from(m in Mobileuser, order_by: [desc: m.id], limit: 200)
-            |> Repo.all
-#    Repo.all(Mobileuser)
+    query =
+      from(m in Mobileuser, order_by: [desc: m.id], limit: 200)
+      |> Repo.all()
+
+    #    Repo.all(Mobileuser)
   end
 
   @doc """
@@ -110,6 +112,7 @@
     case Repo.get_by(Mobileuser, phone: phone) do
       nil ->
         {:error, :not_found}
+
       mobileuser ->
         {:ok, mobileuser}
     end
@@ -127,7 +130,7 @@
   #  end
 
   def update_user_payment(struct) do
-#    Mobileuser.update_mobileuser(struct, %{"mode" => "activated"})
+    #    Mobileuser.update_mobileuser(struct, %{"mode" => "activated"})
     struct
     |> Mobileuser.changeset(%{"mode" => "activated"})
     |> Repo.update()
@@ -137,7 +140,6 @@
     query = from(m in Mobileuser, order_by: [desc: m.id], limit: 200)
 
     query
-    |> Repo.all
-
+    |> Repo.all()
   end
 end

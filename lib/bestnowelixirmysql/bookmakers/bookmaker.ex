@@ -3,7 +3,7 @@ defmodule Bestnowelixirmysql.Bookmakers.Bookmaker do
   import Ecto.Changeset
 
   schema "bookmakers" do
-#    field :games, :string
+    #    field :games, :string
     field :keyword, :string
     field :loadingdate, :string
     field :owner, :string

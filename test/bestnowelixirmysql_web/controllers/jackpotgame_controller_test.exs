@@ -58,8 +58,13 @@ defmodule BestnowelixirmysqlWeb.JackpotgameControllerTest do
   describe "update jackpotgame" do
     setup [:create_jackpotgame]
 
-    test "renders jackpotgame when data is valid", %{conn: conn, jackpotgame: %Jackpotgame{id: id} = jackpotgame} do
-      conn = put(conn, Routes.jackpotgame_path(conn, :update, jackpotgame), jackpotgame: @update_attrs)
+    test "renders jackpotgame when data is valid", %{
+      conn: conn,
+      jackpotgame: %Jackpotgame{id: id} = jackpotgame
+    } do
+      conn =
+        put(conn, Routes.jackpotgame_path(conn, :update, jackpotgame), jackpotgame: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.jackpotgame_path(conn, :show, id))
@@ -75,7 +80,9 @@ defmodule BestnowelixirmysqlWeb.JackpotgameControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, jackpotgame: jackpotgame} do
-      conn = put(conn, Routes.jackpotgame_path(conn, :update, jackpotgame), jackpotgame: @invalid_attrs)
+      conn =
+        put(conn, Routes.jackpotgame_path(conn, :update, jackpotgame), jackpotgame: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

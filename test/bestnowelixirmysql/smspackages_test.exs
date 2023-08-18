@@ -36,14 +36,19 @@ defmodule Bestnowelixirmysql.SmspackagesTest do
       smspackage = smspackage_fixture()
       update_attrs = %{amount: "some updated amount", uid: "some updated uid"}
 
-      assert {:ok, %Smspackage{} = smspackage} = Smspackages.update_smspackage(smspackage, update_attrs)
+      assert {:ok, %Smspackage{} = smspackage} =
+               Smspackages.update_smspackage(smspackage, update_attrs)
+
       assert smspackage.amount == "some updated amount"
       assert smspackage.uid == "some updated uid"
     end
 
     test "update_smspackage/2 with invalid data returns error changeset" do
       smspackage = smspackage_fixture()
-      assert {:error, %Ecto.Changeset{}} = Smspackages.update_smspackage(smspackage, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Smspackages.update_smspackage(smspackage, @invalid_attrs)
+
       assert smspackage == Smspackages.get_smspackage!(smspackage.id)
     end
 

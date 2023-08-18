@@ -52,8 +52,15 @@ defmodule BestnowelixirmysqlWeb.SubscriptionControllerTest do
   describe "update subscription" do
     setup [:create_subscription]
 
-    test "renders subscription when data is valid", %{conn: conn, subscription: %Subscription{id: id} = subscription} do
-      conn = put(conn, Routes.subscription_path(conn, :update, subscription), subscription: @update_attrs)
+    test "renders subscription when data is valid", %{
+      conn: conn,
+      subscription: %Subscription{id: id} = subscription
+    } do
+      conn =
+        put(conn, Routes.subscription_path(conn, :update, subscription),
+          subscription: @update_attrs
+        )
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.subscription_path(conn, :show, id))
@@ -67,7 +74,11 @@ defmodule BestnowelixirmysqlWeb.SubscriptionControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, subscription: subscription} do
-      conn = put(conn, Routes.subscription_path(conn, :update, subscription), subscription: @invalid_attrs)
+      conn =
+        put(conn, Routes.subscription_path(conn, :update, subscription),
+          subscription: @invalid_attrs
+        )
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

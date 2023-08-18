@@ -6,8 +6,8 @@ defmodule BestnowelixirmysqlWeb.Router do
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, {BestnowelixirmysqlWeb.LayoutView, :root}
-#    plug :protect_from_forgery
-#    plug :put_secure_browser_headers
+    #    plug :protect_from_forgery
+    #    plug :put_secure_browser_headers
   end
 
   pipeline :api do
@@ -25,11 +25,11 @@ defmodule BestnowelixirmysqlWeb.Router do
     pipe_through :api
     resources "/info", InfosController, except: [:new, :edit]
     resources "/mobile_payments", MobilepaymentsController, except: [:new, :edit]
-    post      "/mobile_payments/confirmation", MobilepaymentsController, :confirmation
-    post      "/mobile_payments/validation", MobilepaymentsController, :validation
+    post "/mobile_payments/confirmation", MobilepaymentsController, :confirmation
+    post "/mobile_payments/validation", MobilepaymentsController, :validation
 
-    post      "/forebet694949/confirmation", MobilepaymentsController, :confirmation694949
-    post      "/forebet694949/validation", MobilepaymentsController, :validation694949
+    post "/forebet694949/confirmation", MobilepaymentsController, :confirmation694949
+    post "/forebet694949/validation", MobilepaymentsController, :validation694949
 
     resources "/tills", TillController, except: [:new, :edit]
     resources "/paybill", PaybillController, except: [:new, :edit]

@@ -19,7 +19,7 @@ defmodule Bestnowelixirmysql.Jackgames do
   """
   def list_jackpotgames do
     Jackpotgame
-    |> order_by([desc: :id])
+    |> order_by(desc: :id)
     |> limit(100)
     |> Repo.all()
   end

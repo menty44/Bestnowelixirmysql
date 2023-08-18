@@ -2,13 +2,15 @@ defmodule Bestnowelixirmysql.Smsgames do
   @moduledoc """
   The Smsgames context.
   """
-#  use Timex
+
+  #  use Timex
 
   import Ecto.Query, warn: false
   alias Bestnowelixirmysql.Repo
 
   alias Bestnowelixirmysql.Smsgames.Smsgame
   alias Timex
+
   @doc """
   Returns the list of smsgames.
 
@@ -106,18 +108,17 @@ defmodule Bestnowelixirmysql.Smsgames do
   end
 
   def get_current_game_by_sms(amount) do
-    (from g in Smsgame,
-    where: g.amount ==^ amount,
-    where: g.commence >= ^ convert_to_string(Timex.beginning_of_day(Timex.now())),
-    where: g.commence <= ^ convert_to_string(Timex.end_of_day(Timex.now())),
-    order_by: [{:desc, g.commence}],
-    limit: 1
+    from(g in Smsgame,
+      where: g.amount == ^amount,
+      where: g.commence >= ^convert_to_string(Timex.beginning_of_day(Timex.now())),
+      where: g.commence <= ^convert_to_string(Timex.end_of_day(Timex.now())),
+      order_by: [{:desc, g.commence}],
+      limit: 1
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def convert_to_string(param) do
     DateTime.to_string(param)
   end
-
 end

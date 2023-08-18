@@ -37,6 +37,6 @@ defmodule Bestnowelixirmysql.Jackpots.Jackpot do
     )
     |> preload(:jackpotgames)
     |> Repo.all()
-    |> IO.inspect
+    |> IO.inspect()
   end
 end

@@ -49,8 +49,13 @@ defmodule BestnowelixirmysqlWeb.SmspackageControllerTest do
   describe "update smspackage" do
     setup [:create_smspackage]
 
-    test "renders smspackage when data is valid", %{conn: conn, smspackage: %Smspackage{id: id} = smspackage} do
-      conn = put(conn, Routes.smspackage_path(conn, :update, smspackage), smspackage: @update_attrs)
+    test "renders smspackage when data is valid", %{
+      conn: conn,
+      smspackage: %Smspackage{id: id} = smspackage
+    } do
+      conn =
+        put(conn, Routes.smspackage_path(conn, :update, smspackage), smspackage: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.smspackage_path(conn, :show, id))
@@ -63,7 +68,9 @@ defmodule BestnowelixirmysqlWeb.SmspackageControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, smspackage: smspackage} do
-      conn = put(conn, Routes.smspackage_path(conn, :update, smspackage), smspackage: @invalid_attrs)
+      conn =
+        put(conn, Routes.smspackage_path(conn, :update, smspackage), smspackage: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

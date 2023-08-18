@@ -21,7 +21,13 @@ defmodule Bestnowelixirmysql.JackgamesTest do
     end
 
     test "create_jackpotgame/1 with valid data creates a jackpotgame" do
-      valid_attrs = %{league: "some league", match: "some match", results: "some results", time: "some time", tip: "some tip"}
+      valid_attrs = %{
+        league: "some league",
+        match: "some match",
+        results: "some results",
+        time: "some time",
+        tip: "some tip"
+      }
 
       assert {:ok, %Jackpotgame{} = jackpotgame} = Jackgames.create_jackpotgame(valid_attrs)
       assert jackpotgame.league == "some league"
@@ -37,9 +43,18 @@ defmodule Bestnowelixirmysql.JackgamesTest do
 
     test "update_jackpotgame/2 with valid data updates the jackpotgame" do
       jackpotgame = jackpotgame_fixture()
-      update_attrs = %{league: "some updated league", match: "some updated match", results: "some updated results", time: "some updated time", tip: "some updated tip"}
 
-      assert {:ok, %Jackpotgame{} = jackpotgame} = Jackgames.update_jackpotgame(jackpotgame, update_attrs)
+      update_attrs = %{
+        league: "some updated league",
+        match: "some updated match",
+        results: "some updated results",
+        time: "some updated time",
+        tip: "some updated tip"
+      }
+
+      assert {:ok, %Jackpotgame{} = jackpotgame} =
+               Jackgames.update_jackpotgame(jackpotgame, update_attrs)
+
       assert jackpotgame.league == "some updated league"
       assert jackpotgame.match == "some updated match"
       assert jackpotgame.results == "some updated results"
@@ -49,7 +64,10 @@ defmodule Bestnowelixirmysql.JackgamesTest do
 
     test "update_jackpotgame/2 with invalid data returns error changeset" do
       jackpotgame = jackpotgame_fixture()
-      assert {:error, %Ecto.Changeset{}} = Jackgames.update_jackpotgame(jackpotgame, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Jackgames.update_jackpotgame(jackpotgame, @invalid_attrs)
+
       assert jackpotgame == Jackgames.get_jackpotgame!(jackpotgame.id)
     end
 

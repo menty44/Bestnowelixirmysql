@@ -19,6 +19,6 @@ defmodule Bestnowelixirmysql.Smsgames.Smsgame do
 
   defp process_date(att) do
     att
-    |> IO.inspect
+    |> IO.inspect()
   end
 end

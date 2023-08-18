@@ -18,9 +18,11 @@ defmodule Bestnowelixirmysql.Subscriptions do
 
   """
   def list_subscriptions do
-    query = from(m in Subscription, order_by: [desc: m.id], limit: 200)
-            |> Repo.all
-#    Repo.all(Subscription)
+    query =
+      from(m in Subscription, order_by: [desc: m.id], limit: 200)
+      |> Repo.all()
+
+    #    Repo.all(Subscription)
   end
 
   @doc """
@@ -104,11 +106,11 @@ defmodule Bestnowelixirmysql.Subscriptions do
     Subscription.changeset(subscription, attrs)
   end
 
-
   def find_by_uid!(uid) do
     case Repo.get_by(Subscription, uid: uid) do
       nil ->
         {:error, :not_found}
+
       subscription ->
         {:ok, subscription}
     end
@@ -118,6 +120,7 @@ defmodule Bestnowelixirmysql.Subscriptions do
     query = """
     update subscriptions set days = days - 1 where active = true and days > 0
     """
+
     Ecto.Adapters.SQL.query!(Repo, query)
   end
 
@@ -125,8 +128,7 @@ defmodule Bestnowelixirmysql.Subscriptions do
     query = """
     update subscriptions set active = false where days = 0
     """
+
     Ecto.Adapters.SQL.query!(Repo, query)
   end
-
-
 end

@@ -23,7 +23,22 @@ defmodule Bestnowelixirmysql.Payments.Payment do
   @doc false
   def changeset(payment, attrs) do
     payment
-    |> cast(attrs, [:billrefnumber, :businessshortcode, :firstname, :middlename, :lastname, :invoicenumber, :msisdn, :orgaccountbalance, :thirdpartytransid, :transamount, :transid, :transtime, :transactiontype])
-#    |> validate_required([:billrefnumber, :businessshortcode, :firstname, :middlename, :lastname, :invoicenumber, :msisdn, :orgaccountbalance, :thirdpartytransid, :transamount, :transid, :transtime, :transactiontype])
+    |> cast(attrs, [
+      :billrefnumber,
+      :businessshortcode,
+      :firstname,
+      :middlename,
+      :lastname,
+      :invoicenumber,
+      :msisdn,
+      :orgaccountbalance,
+      :thirdpartytransid,
+      :transamount,
+      :transid,
+      :transtime,
+      :transactiontype
+    ])
+
+    #    |> validate_required([:billrefnumber, :businessshortcode, :firstname, :middlename, :lastname, :invoicenumber, :msisdn, :orgaccountbalance, :thirdpartytransid, :transamount, :transid, :transtime, :transactiontype])
   end
 end

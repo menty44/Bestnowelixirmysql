@@ -1,7 +1,6 @@
 defmodule Bestnowelixirmysql.Mobileaccounts.Mobileuser do
   use Ecto.Schema,
-
-  use Bestnowelixirmysql.RepoHelpers
+      use(Bestnowelixirmysql.RepoHelpers)
 
   import Ecto.Changeset
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]

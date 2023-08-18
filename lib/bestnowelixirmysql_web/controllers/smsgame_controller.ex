@@ -12,8 +12,9 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
   end
 
   def create(conn, %{"smsgame" => smsgame_params}) do
-    params = smsgame_params
-    |> process_date
+    params =
+      smsgame_params
+      |> process_date
 
     with {:ok, %Smsgame{} = smsgame} <- Smsgames.create_smsgame(params) do
       conn
@@ -24,13 +25,21 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
   end
 
   def process_date(att) do
-    Map.put(%{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]}, "commence", att["commence"] <> " 00:00:00")
+    Map.put(
+      %{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]},
+      "commence",
+      att["commence"] <> " 00:00:00"
+    )
     |> convert_to_naive_date()
   end
 
   defp convert_to_naive_date(att) do
-    Map.put(%{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]}, "commence", NaiveDateTime.from_iso8601!(att["commence"]))
-    |> IO.inspect
+    Map.put(
+      %{"amount" => att["amount"], "games" => att["games"], "commence" => att["commence"]},
+      "commence",
+      NaiveDateTime.from_iso8601!(att["commence"])
+    )
+    |> IO.inspect()
   end
 
   def show(conn, %{"id" => id}) do

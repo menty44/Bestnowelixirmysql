@@ -35,7 +35,21 @@ defmodule BestnowelixirmysqlWeb.PaymentControllerTest do
     transid: "some updated transid",
     transtime: "some updated transtime"
   }
-  @invalid_attrs %{billrefnumber: nil, businessshortcode: nil, firstname: nil, invoicenumber: nil, lastname: nil, middlename: nil, msisdn: nil, orgaccountbalance: nil, thirdpartytransid: nil, transactiontype: nil, transamount: nil, transid: nil, transtime: nil}
+  @invalid_attrs %{
+    billrefnumber: nil,
+    businessshortcode: nil,
+    firstname: nil,
+    invoicenumber: nil,
+    lastname: nil,
+    middlename: nil,
+    msisdn: nil,
+    orgaccountbalance: nil,
+    thirdpartytransid: nil,
+    transactiontype: nil,
+    transamount: nil,
+    transid: nil,
+    transtime: nil
+  }
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

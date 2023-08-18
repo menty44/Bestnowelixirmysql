@@ -28,7 +28,8 @@ defmodule BestnowelixirmysqlWeb.JackpotgameController do
   def update(conn, %{"id" => id, "jackpotgame" => jackpotgame_params}) do
     jackpotgame = Jackgames.get_jackpotgame!(id)
 
-    with {:ok, %Jackpotgame{} = jackpotgame} <- Jackgames.update_jackpotgame(jackpotgame, jackpotgame_params) do
+    with {:ok, %Jackpotgame{} = jackpotgame} <-
+           Jackgames.update_jackpotgame(jackpotgame, jackpotgame_params) do
       render(conn, "show.json", jackpotgame: jackpotgame)
     end
   end
