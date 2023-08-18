@@ -296,36 +296,6 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
     IO.inspect(res, label: "SMS sent")
-
-    #    {:ok, sms} = AtEx.Sms.send_sms(%{to: phone, message: game.games})
-    #    IO.inspect sms, label: "sms tuma fuck"
-    #    try do
-    #      complete =
-    #        url <>
-    #        "?username=" <>
-    #        username <>
-    #        "&Apikey=" <>
-    #        apikey <>
-    #        "&to=" <>
-    #        phone <>
-    #        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
-    #        "&message="<>
-    #        "Sportpesa%203989#HTFT11%20AC%20Milan%203866#HTFT11%20Atletico%20Pr%201612#HTFT22%20Borussia%20Dortmund%203913#HTFT22%20Benfica%204912#HTFT11%20Burnley%20HELP:0792329299" <>
-    #        "&from=" <>
-    #        s_code
-    #
-    #
-    #      case HTTPoison.get(complete) do
-    #        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-    #          IO.puts(body)
-    #          {:ok, _xml} = XmlJson.AwsApi.deserialize(body)
-    #        {:error, _} -> IO.puts("error")
-    #
-    #      end
-    #    rescue
-    #      Ecto.NoResultsError ->
-    #        {:error, :not_found, "No result found"}
-    #    end
   end
 
   defp process_current_game_amount_by_till_sms(phone, amount) do
@@ -349,14 +319,14 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       MessageParameters: [
         %{
           "Number" => "254720106420",
-          "Text" => "string"
+          "Text" => game.games
         }
       ],
       Apikey: apikey,
       Clientid: username
     }
 
-    res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
+    res = HTTPoison.post(url, Poison.encode!(body), @headers, [])
     IO.inspect(res, label: "SMS sent for till")
   end
 
