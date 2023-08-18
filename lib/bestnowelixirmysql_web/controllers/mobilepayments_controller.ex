@@ -184,6 +184,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "50.00" -> process_current_game_amount_by_sms(phone, amount)
       "100.00"-> process_current_game_amount_by_sms(phone, amount)
       "200.00"-> process_current_game_amount_by_sms(phone, amount)
+      "300.00"-> process_current_game_amount_by_sms(phone, amount)
       _ -> IO.inspect("Amount belongs to other games kabisa")
     end
     amount |> IO.inspect(label: "update_user_payment check amount")
