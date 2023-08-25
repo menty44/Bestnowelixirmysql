@@ -58,6 +58,7 @@ defmodule BestnowelixirmysqlWeb.Router do
     post "/subscriptions/manual", MobileuserController, :manual
     post "/smstill", SmsgameController, :tillcreate
     get "/smstill", SmsgameController, :gettillgames
+    delete "/smstill/:id", SmsgameController, :deletetillgames
     resources "/jackpots", JackpotController, except: [:new, :edit]
     resources "/jackpotgames", JackpotgameController, except: [:new, :edit]
     resources "/smsgames", SmsgameController, except: [:new, :edit]

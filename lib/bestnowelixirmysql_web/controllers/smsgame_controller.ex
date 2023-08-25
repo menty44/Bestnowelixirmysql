@@ -92,4 +92,12 @@ defmodule BestnowelixirmysqlWeb.SmsgameController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def deletetillgames(conn, %{"id" => id}) do
+    smsgame = Bestnowelixirmysql.Tillgames.get_tillgame!(id)
+
+    with {:ok, %Bestnowelixirmysql.Tillgames.Tillgame{}} <- Bestnowelixirmysql.Tillgames.delete_tillgame(smsgame) do
+      send_resp(conn, :no_content, "")
+    end
+  end
 end
