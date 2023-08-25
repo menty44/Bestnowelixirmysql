@@ -18,7 +18,10 @@ defmodule Bestnowelixirmysql.Tillgames do
 
   """
   def list_tillgames do
-    Repo.all(Tillgame)
+#    Repo.all(Tillgame)
+    query =
+      from(m in Tillgame, order_by: [desc: m.id], limit: 200)
+      |> Repo.all()
   end
 
   @doc """
