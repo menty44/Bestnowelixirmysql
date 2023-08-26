@@ -346,11 +346,6 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
 
       try do
-        #      {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
-        #      IO.inspect(gen)
-        #      Bestnowelixirmysql.Mobileaccounts.update_mobileuser(mobileuser, %{password: gen})
-
-        #        "&message=You%20have%20purchased%20" <> name <> "Package.%20" <> "Available%20days:%20"<> days <>
         complete =
           url <>
             "?username=" <>

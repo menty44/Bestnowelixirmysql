@@ -93,7 +93,6 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
 
   def reset_password(conn, %{"number" => phone}) do
     IO.inspect(phone)
-    #    _charlist = :io_lib.format("~6..0B", [:rand.uniform(10_000) - 1])
     gen = gen_reference()
     url = "https://api.africastalking.com/restless/send"
     username = "B_Best"
@@ -374,13 +373,11 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
   end
 
   def get_package_days(mpesa_price) do
-    #    {parsed_price, _} = Integer.parse(mpesa_price)
     {:ok, package} = Packages.get_by_price!(mpesa_price)
     package.duration
   end
 
   def get_package_struct(mpesa_price) do
-    #    {parsed_price, _} = Integer.parse(mpesa_price)
     {:ok, package} = Packages.get_by_price!(mpesa_price)
     package.name
   end
