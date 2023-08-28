@@ -197,46 +197,46 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"])
     |> IO.inspect(label: "process_sms_games noma apa")
 
-    {:ok, mobileuser} =
-      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+#    {:ok, mobileuser} =
+#      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
 
-    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
+#    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
 
-    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
-      {:ok, subscription} ->
-        update_existing_sub(
-          subscription.id,
-          %{
-            "days" => subscription.days + get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
-
-      {:error, :not_found} ->
-        create_new_sub(
-          %{
-            "uid" => mobileuser.id,
-            "days" => get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
-
-      {:error, _} ->
-        create_new_sub(
-          %{
-            "uid" => mobileuser.id,
-            "days" => get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
-    end
-
+#    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
+#      {:ok, subscription} ->
+#        update_existing_sub(
+#          subscription.id,
+#          %{
+#            "days" => subscription.days + get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#
+#      {:error, :not_found} ->
+#        create_new_sub(
+#          %{
+#            "uid" => mobileuser.id,
+#            "days" => get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#
+#      {:error, _} ->
+#        create_new_sub(
+#          %{
+#            "uid" => mobileuser.id,
+#            "days" => get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#    end
+#    get_package_struct(new_struct["transamount"])
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
       conn
       |> put_status(:created)
