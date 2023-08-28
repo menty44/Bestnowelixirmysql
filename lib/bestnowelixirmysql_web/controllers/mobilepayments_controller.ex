@@ -318,7 +318,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "ScheduledateTime" => "0",
       MessageParameters: [
         %{
-          "Number" => "254720106420",
+          "Number" => phone,
           "Text" => game.games
         }
       ],
