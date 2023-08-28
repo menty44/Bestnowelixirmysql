@@ -327,7 +327,17 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     }
 
     res = HTTPoison.post(url, Poison.encode!(body), @headers, [])
-    IO.inspect(res, label: "SMS sent for till")
+
+    case res do
+      {:ok, %HTTPoison.Response{body: body}} ->
+
+        IO.inspect(body, label: "XXXX body for 694949 XXXX")
+
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        IO.puts("Request failed: #{reason}")
+        nil
+    end
+
   end
 
   def send_sms(phone, name, days) do
