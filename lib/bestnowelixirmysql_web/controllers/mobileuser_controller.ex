@@ -99,7 +99,11 @@ defmodule BestnowelixirmysqlWeb.MobileuserController do
     s_code = "B_U"
 
     #    apikey = "f69a9ac7e25242e426da5b0f4401a33436aa9ec772a8d7b27050d98349f80fcd"
-    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+#    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+    apikey = "90e5b9a00c3d04d6d61f9eb2e8b86f089920d8eacd102eda1b5c76ce9e8e569d
+
+
+"
 
     try do
       {:ok, mobileuser} = Bestnowelixirmysql.Mobileaccounts.get_by_phone!(phone)
