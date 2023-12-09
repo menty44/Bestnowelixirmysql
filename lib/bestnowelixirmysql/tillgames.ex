@@ -112,10 +112,18 @@ defmodule Bestnowelixirmysql.Tillgames do
   end
 
   def get_current_game_by_sms(amount) do
+    # Add one day to the beginning of today
+    now = Timex.now()
+    beginning_of_today = Timex.beginning_of_day(now)
+
+    # Add one day to the beginning of today
+    tomorrow = Timex.shift(beginning_of_today, days: 1)
+    endtomorrow = Timex.end_of_day(Timex.now())
+
     from(g in Tillgame,
       where: g.amount == ^amount,
-      where: g.commence >= ^convert_to_string(Timex.beginning_of_day(Timex.now()) + 1),
-      where: g.commence <= ^convert_to_string(Timex.end_of_day(Timex.now()) + 1),
+      where: g.commence >= ^convert_to_string(tomorrow),
+      where: g.commence <= ^convert_to_string(endtomorrow),
       order_by: [{:desc, g.commence}],
       limit: 1
     )
