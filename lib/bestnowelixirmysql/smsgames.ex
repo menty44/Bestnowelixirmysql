@@ -116,6 +116,7 @@ defmodule Bestnowelixirmysql.Smsgames do
       limit: 1
     )
     |> Repo.all()
+    |> IO.inspect()
   end
 
   def convert_to_string(param) do
