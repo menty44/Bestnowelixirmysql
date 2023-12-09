@@ -115,10 +115,11 @@ defmodule Bestnowelixirmysql.Tillgames do
     # Add one day to the beginning of today
     now = Timex.now()
     beginning_of_today = Timex.beginning_of_day(now)
+    end_of_today = Timex.end_of_day(now)
 
     # Add one day to the beginning of today
     tomorrow = Timex.shift(beginning_of_today, days: 1)
-    endtomorrow = Timex.end_of_day(Timex.now())
+    endtomorrow = Timex.shift(end_of_today, days: 1)
 
     from(g in Tillgame,
       where: g.amount == ^amount,
