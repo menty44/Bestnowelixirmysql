@@ -178,10 +178,10 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       {"Authorization", "Basic YUtrcnF3ZkpBSnNnMUFzNlpwQlRTZXlBSlBPYmlMVXg6bGU1RFFMczF3OEZ0YkZQSw=="}
     ]
 
-    response = get(url, "", headers)
+    response = get(url, headers)
 
     case response do
-      {:ok, %{status_code: code, body: body}} -> body
+      {:ok, %{status_code: 200, body: body}} -> Poison.decode!(body)
       {:ok, %{status_code: code, body: body}} ->
         IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
       {:error, reason} ->
