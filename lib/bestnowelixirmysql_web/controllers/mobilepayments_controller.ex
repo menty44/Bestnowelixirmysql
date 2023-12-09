@@ -178,7 +178,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       {"Authorization", "Basic YUtrcnF3ZkpBSnNnMUFzNlpwQlRTZXlBSlBPYmlMVXg6bGU1RFFMczF3OEZ0YkZQSw=="}
     ]
 
-    response = post(url, "", headers)
+    response = get(url, "", headers)
 
     case response do
       {:ok, %{status_code: code, body: body}} -> body
