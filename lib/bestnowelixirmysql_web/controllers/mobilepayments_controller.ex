@@ -374,38 +374,70 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms(amount)
     IO.inspect(game, label: "checki")
 
-    url = "https://api.onfonmedia.co.ke/v1/sms/SendBulkSMS"
-        username = "Bestnow"
-        s_code = "23984"
-        apikey = "GeCEO1iwVWnc7vKrMh04Fmso8jT5faZplHq2tJIxg9uy6Q3b"
+    parsed_token = parse_json_string(get_jwt_onfone())
+    IO.inspect parsed_token["token"]
 
 
-    body = %{
-      "SenderId" => s_code,
-      "IsUnicode" => true,
-      "IsFlash" => true,
-      "ScheduledateTime" => "0",
-      MessageParameters: [
-        %{
-          "Number" => phone,
-          "Text" => game.games
-        }
-      ],
-      Apikey: apikey,
-      Clientid: username
+    #    start send sms onfone
+    url = "https://apis.onfonmedia.co.ke/v2_send"
+    headers = [
+      {"Content-Type", "application/json"},
+      {"Authorization", "Bearer " <> parsed_token["token"]},
+    ]
+
+    payload = %{
+      "to" => phone,
+      "from" => "BTNUMBER",
+      "content" => game.games,
+      "dlr" => "yes",
+      "dlr-url" => "http://192.168.202.54/dlr_receiver.php",
+      "dlr-level" => 1
     }
 
-    res = HTTPoison.post(url, Poison.encode!(body), @headers, [])
+    response = post(url, Poison.encode!(payload), headers)
 
-    case res do
-      {:ok, %HTTPoison.Response{body: body}} ->
-
-        IO.inspect(body, label: "XXXX body for 694949 XXXX")
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.puts("Request failed: #{reason}")
-        nil
+    case response do
+      {:ok, body} -> body
+      #        IO.puts "Message sent successfully. Response: #{body}"
+      {:ok, %{status_code: code, body: body}} ->
+        IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
+      {:error, reason} ->
+        IO.puts "Failed to send message. Reason: #{reason}"
     end
+    #    end send sms onfone
+
+#    url = "https://api.onfonmedia.co.ke/v1/sms/SendBulkSMS"
+#        username = "Bestnow"
+#        s_code = "23984"
+#        apikey = "GeCEO1iwVWnc7vKrMh04Fmso8jT5faZplHq2tJIxg9uy6Q3b"
+#
+#
+#    body = %{
+#      "SenderId" => s_code,
+#      "IsUnicode" => true,
+#      "IsFlash" => true,
+#      "ScheduledateTime" => "0",
+#      MessageParameters: [
+#        %{
+#          "Number" => phone,
+#          "Text" => game.games
+#        }
+#      ],
+#      Apikey: apikey,
+#      Clientid: username
+#    }
+#
+#    res = HTTPoison.post(url, Poison.encode!(body), @headers, [])
+#
+#    case res do
+#      {:ok, %HTTPoison.Response{body: body}} ->
+#
+#        IO.inspect(body, label: "XXXX body for 694949 XXXX")
+#
+#      {:error, %HTTPoison.Error{reason: reason}} ->
+#        IO.puts("Request failed: #{reason}")
+#        nil
+#    end
 
   end
 
