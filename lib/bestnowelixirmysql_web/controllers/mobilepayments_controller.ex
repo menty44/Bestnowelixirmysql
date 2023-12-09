@@ -1,5 +1,6 @@
 defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   use BestnowelixirmysqlWeb, :controller
+  use HTTPoison.Base
 
   alias Bestnowelixirmysql.Payment
   alias Bestnowelixirmysql.Payment.Mobilepayments
@@ -280,22 +281,90 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     [game] = Bestnowelixirmysql.Smsgames.get_current_game_by_sms(amount)
     IO.inspect(game, label: "checki")
 
-    url = "https://api.africastalking.com/restless/send"
-    username = "B_Best"
-    s_code = "B_U"
+    parsed_token = parse_json_string(get_jwt_onfone())
+    IO.inspect parsed_token["token"]
 
-    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
 
-    games = URI.encode(game.games)
-    IO.inspect(games, label: "games fuck kabisa")
+#    start send sms onfone
+    url = "https://apis.onfonmedia.co.ke/v2_send"
+    headers = [
+      {"Content-Type", "application/json"},
+      {"Authorization", "Bearer " <> parsed_token["token"]},
+    ]
 
-    body = %{
-      "phone" => phone,
-      "games" => game.games
+    payload = %{
+      "to" => phone,
+      "from" => "BTNUMBER",
+      "content" => game.games,
+      "dlr" => "yes",
+      "dlr-url" => "http://192.168.202.54/dlr_receiver.php",
+      "dlr-level" => 1
     }
 
-    res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
-    IO.inspect(res, label: "SMS sent")
+    response = post(url, Poison.encode!(payload), headers)
+
+    case response do
+      {:ok, body} -> body
+#        IO.puts "Message sent successfully. Response: #{body}"
+      {:ok, %{status_code: code, body: body}} ->
+        IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
+      {:error, reason} ->
+        IO.puts "Failed to send message. Reason: #{reason}"
+    end
+#    end send sms onfone
+
+
+
+
+#    url = "https://api.africastalking.com/restless/send"
+#    username = "B_Best"
+#    s_code = "B_U"
+#
+#    apikey = "415a70ee214ada0b735eb5220710732037345975777912560acc2237a5bfdc0d"
+#
+#    games = URI.encode(game.games)
+#    IO.inspect(games, label: "games fuck kabisa")
+#
+#    body = %{
+#      "phone" => phone,
+#      "games" => game.games
+#    }
+#
+#    res = HTTPoison.post(@base_url, Poison.encode!(body), @headers, [])
+#    IO.inspect(res, label: "SMS sent")
+  end
+
+  def get_jwt_onfone() do
+    url = "https://apis.onfonmedia.co.ke/v1/authorization"
+    headers = [
+      {"Content-Type", "application/json"}
+    ]
+
+    payload = %{
+      "apiUsername" => "bestnownumber",
+      "apiPassword" => "AazPvFXJW1x9byDBfYpoN5S8QViT24UH6qmhIs30lGEwe7Cd"
+    }
+
+    response = post(url, Poison.encode!(payload), headers)
+
+    case response do
+      {:ok, %{status_code: 200, body: body}} -> body
+#        IO.puts "Access token retrieved successfully. Response: #{body}"
+      {:ok, %{status_code: code, body: body}} ->
+        IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
+      {:error, reason} ->
+        IO.puts "Failed to retrieve access token. Reason: #{reason}"
+    end
+
+  end
+
+  def parse_json_string(json_string) do
+    case Poison.decode(json_string) do
+      {:ok, map} ->
+        IO.inspect(map)
+      {:error, reason} ->
+        IO.puts "Failed to parse JSON: #{reason}"
+    end
   end
 
   defp process_current_game_amount_by_till_sms(phone, amount) do
@@ -413,7 +482,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     IO.inspect(subscription_params, label: "subscription_params")
     IO.inspect(phone, label: "phone")
     IO.inspect(new_struct, label: "new_struct")
-    send_sms(phone, new_struct, subscription_params["days"])
+#    send_sms(phone, new_struct, subscription_params["days"])
     subscription = Subscriptions.get_subscription!(id)
     Subscriptions.update_subscription(subscription, subscription_params)
   end
