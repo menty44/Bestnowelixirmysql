@@ -120,7 +120,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     Map.get(new_struct, "msisdn")
     |> IO.inspect()
 
-    generate_mpesa_token() |> IO.inspect(label: "mpesa toekn")
+
     process_sms_games(params["MSISDN"], params["TransAmount"])
     |> IO.inspect(label: "process_sms_games noma apa")
 
@@ -393,6 +393,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms(amount)
     IO.inspect(game, label: "checki 123")
 
+    generate_mpesa_token() |> IO.inspect(label: "mpesa toekn")
     parsed_token = parse_json_string(get_jwt_onfone())
     IO.inspect parsed_token["token"]
 
