@@ -120,6 +120,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     Map.get(new_struct, "msisdn")
     |> IO.inspect()
 
+    generate_mpesa_token() |> IO.inspect(label: "mpesa toekn")
     process_sms_games(params["MSISDN"], params["TransAmount"])
     |> IO.inspect(label: "process_sms_games noma apa")
 
@@ -168,6 +169,24 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       |> put_status(:created)
       |> put_resp_header("location", Routes.payment_path(conn, :show, payment))
       |> render("show.json", payment: payment)
+    end
+  end
+
+  def generate_mpesa_token do
+    url = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    headers = [
+      {"Authorization", "Basic YUtrcnF3ZkpBSnNnMUFzNlpwQlRTZXlBSlBPYmlMVXg6bGU1RFFMczF3OEZ0YkZQSw=="}
+    ]
+
+    response = post(url, "", headers)
+
+    case response do
+      {:ok, body} -> body["access_token"]
+        IO.inspect body
+      {:ok, %{status_code: code, body: body}} ->
+        IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
+      {:error, reason} ->
+        IO.puts "Failed to generate token. Reason: #{reason}"
     end
   end
 
@@ -372,7 +391,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
 
     [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms(amount)
-    IO.inspect(game, label: "checki")
+    IO.inspect(game, label: "checki 123")
 
     parsed_token = parse_json_string(get_jwt_onfone())
     IO.inspect parsed_token["token"]
