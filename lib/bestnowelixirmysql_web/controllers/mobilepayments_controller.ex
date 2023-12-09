@@ -181,8 +181,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     response = post(url, "", headers)
 
     case response do
-      {:ok, body} -> body["access_token"]
-        IO.inspect body
+      {:ok, body} -> body
       {:ok, %{status_code: code, body: body}} ->
         IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
       {:error, reason} ->
@@ -191,6 +190,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def confirmation694949(conn, params) do
+    generate_mpesa_token() |> IO.inspect(label: "mpesa token")
+
     IO.inspect(params, label: "params 694949")
 
     new_struct = %{
@@ -211,7 +212,6 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     new_struct |> IO.inspect(label: "new_struct")
 
-    generate_mpesa_token() |> IO.inspect(label: "mpesa toekn")
 
     Map.get(new_struct, "msisdn")
     |> IO.inspect()
