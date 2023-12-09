@@ -181,7 +181,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     response = post(url, "", headers)
 
     case response do
-      {:ok, body} -> body
+      {:ok, %{status_code: code, body: body}} -> body
       {:ok, %{status_code: code, body: body}} ->
         IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
       {:error, reason} ->
