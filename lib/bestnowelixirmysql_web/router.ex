@@ -31,6 +31,8 @@ defmodule BestnowelixirmysqlWeb.Router do
     post "/forebet694949/confirmation", MobilepaymentsController, :confirmation694949
     post "/forebet694949/validation", MobilepaymentsController, :validation694949
 
+    post "/getphone", MobilepaymentsController, :getphone
+
     resources "/tills", TillController, except: [:new, :edit]
     resources "/paybill", PaybillController, except: [:new, :edit]
     resources "/keyword", KeywordController, except: [:new, :edit]

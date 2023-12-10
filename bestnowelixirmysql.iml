@@ -216,5 +216,6 @@
     <orderEntry type="library" name="libring" level="project" />
     <orderEntry type="library" name="gen_state_machine" level="project" />
     <orderEntry type="library" name="appsignal" level="project" />
+    <orderEntry type="library" name="ex_pesa" level="project" />
   </component>
 </module>

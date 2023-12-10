@@ -181,12 +181,26 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     response = get(url, headers)
 
     case response do
-      {:ok, %{status_code: 200, body: body}} -> Poison.decode!(body)
+      {:ok, %{status_code: 200, body: body}} -> get_phone_number_from_callback(Poison.decode!(body))
       {:ok, %{status_code: code, body: body}} ->
         IO.puts "Unexpected response. Status code: #{code}, Body: #{body}"
       {:error, reason} ->
         IO.puts "Failed to generate token. Reason: #{reason}"
     end
+  end
+
+  def get_phone_number_from_callback(token) do
+    IO.inspect(token)
+  end
+
+  def getphone(conn, params) do
+    IO.inspect(params, label: "mpesa get PHONE")
+    conn
+    |> put_status(500)
+    |> json(%{
+      "code" => 3,
+      "message" => "error occured"
+    })
   end
 
   def confirmation694949(conn, params) do
