@@ -101,4 +101,15 @@
   def change_confirmation(%Confirmation{} = confirmation, attrs \\ %{}) do
     Confirmation.changeset(confirmation, attrs)
   end
+
+
+  def filter_by_code!(code) do
+    case Repo.get_by(Confirmation, mpesacode: code) do
+      nil ->
+        {:error, :not_found}
+
+      conf ->
+        {:ok, conf}
+    end
+  end
 end
