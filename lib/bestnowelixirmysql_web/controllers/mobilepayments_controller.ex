@@ -197,7 +197,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     IO.inspect(params, label: "mpesa get PHONE")
 
     IO.inspect(myuser, label: "get my phone before")
-    [phone,fullname] = value |> String.trim |> String.split "-"
+    [phone,fullname] = myuser |> String.trim |> String.split "-"
 
     finalphone = phone |> String.trim
     IO.inspect(finalphone, label: "get my phone after")
