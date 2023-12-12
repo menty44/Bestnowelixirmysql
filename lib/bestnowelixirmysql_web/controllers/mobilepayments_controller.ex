@@ -227,7 +227,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
           mpesacode: mpesacode
         }
 
-        new_record = Bestnowelixirmysql.Confirmations.changeset(%Bestnowelixirmysql.Confirmations{}, new_record_params)
+        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
 
         case Repo.insert(new_record) do
           {:ok, inserted_record} ->
