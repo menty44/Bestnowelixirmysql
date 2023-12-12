@@ -195,7 +195,13 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   def getphone(conn,  params = %{"Result" => %{"ConversationID" => conversationid, "OriginatorConversationID" => originatorid, "ReferenceData" => %{"ReferenceItem" => %{"Key" => ocasionkey, "Value" => refvalue}}, "ResultCode" => resultcode, "ResultDesc" => resdescription, "ResultParameters" => %{"ResultParameter" => [%{"Key" => debitpartyname, "Value" => myuser}, %{"Key" => _, "Value" => _}, %{"Key" => "OriginatorConversationID"}, %{"Key" => "InitiatedTime", "Value" => _}, %{"Key" => "CreditPartyCharges"}, %{"Key" => "DebitAccountType", "Value" => _}, %{"Key" => "TransactionReason"}, %{"Key" => "ReasonType", "Value" => "Pay Merchant"}, %{"Key" => "TransactionStatus", "Value" => "Completed"}, %{"Key" => "FinalisedTime", "Value" => _}, %{"Key" => "Amount", "Value" => useramount}, %{"Key" => "ConversationID"}, %{"Key" => "ReceiptNo", "Value" => mpesacode}]}, "ResultType" => 0, "TransactionID" => transid}}) do
     IO.inspect(params, label: "mpesa get PHONE")
-    IO.inspect(myuser, label: "get my phone")
+
+    IO.inspect(myuser, label: "get my phone before")
+    [phone,fullname] = value |> String.trim |> String.split "-"
+
+    finalphone = phone |> String.trim
+    IO.inspect(finalphone, label: "get my phone after")
+
     IO.inspect(useramount, label: "get my amount")
     conn
     |> put_status(500)
