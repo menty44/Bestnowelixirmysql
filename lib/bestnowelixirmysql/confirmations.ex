@@ -1,4 +1,4 @@
-defmodule Bestnowelixirmysql.Confirmations do
+  defmodule Bestnowelixirmysql.Confirmations do
   @moduledoc """
   The Confirmations context.
   """

@@ -219,7 +219,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 #    })
   end
 
-  def latest_preprocess_mpesa(conn, %{"phone" => phone, "mpesacode" => mpesacode, "amount" => amount}) do
+  def latest_preprocess_mpesa(conn, checker = %{"phone" => phone, "mpesacode" => mpesacode, "amount" => amount}) do
+    "checker +++++++++++++++++++++++++++++++++++++++++++++++++=" |> IO.inspect
+    checker |> IO.inspect
     # Check if the record already exists
     existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
 
