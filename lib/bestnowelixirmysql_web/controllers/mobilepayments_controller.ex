@@ -203,6 +203,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     IO.inspect(finalphone, label: "get my phone after")
 
     IO.inspect(useramount, label: "get my amount")
+    IO.inspect(mpesacode, label: "get my mpesacode")
     conn
     |> put_status(500)
     |> json(%{
