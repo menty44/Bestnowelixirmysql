@@ -26,8 +26,8 @@ jobs:
         with:
           host: 144.91.101.98
           username: root
-          password: simon2030
-          script: cd /root/project/Bestnowelixirmysql && git pull && mix phx.server
+          password: menty2030
+          script: cd /root/project/Bestnowelixirmysql && git stash && git pull && mix phx.server
 
 #    steps:
 #    - uses: actions/checkout@v3
