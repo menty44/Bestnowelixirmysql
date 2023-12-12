@@ -236,7 +236,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
         }
 
 #        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
-        new_record_params |> IO.inspect label: "new_record_params"
+        new_record_params |> IO.inspect label: "new_record_params ####################################"
         Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) |> IO.inspect
 #        case Repo.insert(new_record) do
 #          {:ok, inserted_record} ->
@@ -257,6 +257,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 #        end
 
       _ ->
+      IO.inspect "niko nil"
       nil
 #        conn
 #        |> put_status(200)
