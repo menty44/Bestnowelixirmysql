@@ -204,12 +204,57 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     IO.inspect(useramount, label: "get my amount")
     IO.inspect(mpesacode, label: "get my mpesacode")
-    conn
-    |> put_status(500)
-    |> json(%{
-      "code" => 3,
-      "message" => "error occured"
-    })
+
+    latest_preprocess_mpesa(conn, %{"phone" => finalphone, "mpesacode" => mpesacode, "amount" => useramount}) |> IO.inspect
+
+#    conn
+#    |> put_status(200)
+#    |> json(%{
+#      "message" => "processed"
+#    })
+  end
+
+  def latest_preprocess_mpesa(conn, %{"phone" => phone, "mpesacode" => mpesacode, "amount" => amount}) do
+    # Check if the record already exists
+    existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
+
+    case existing_record do
+      nil ->
+        # Record doesn't exist, so save it
+        new_record_params = %{
+          amount: amount,  # replace with the actual amount
+          phone: phone,
+          mpesacode: mpesacode
+        }
+
+        new_record = Bestnowelixirmysql.Confirmations.changeset(%Bestnowelixirmysql.Confirmations{}, new_record_params)
+
+        case Repo.insert(new_record) do
+          {:ok, inserted_record} ->
+            conn
+            |> put_status(200)
+            |> json(%{
+              "code" => 3,
+              "message" => "inserted_record"
+            })
+
+          {:error, changeset} ->
+            conn
+            |> put_status(400)
+            |> json(%{
+              "code" => 3,
+              "message" => :unprocessable_entity
+            })
+        end
+
+      _ ->
+        conn
+        |> put_status(200)
+        |> json(%{
+          "code" => 3,
+          "message" => "Record already exists"
+        })
+    end
   end
 
   def confirmation694949(conn, params) do
