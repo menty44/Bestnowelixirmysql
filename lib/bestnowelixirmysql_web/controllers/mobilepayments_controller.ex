@@ -212,11 +212,11 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     latest_preprocess_mpesa(conn, %{"phone" => finalphone, "mpesacode" => mpesacode, "amount" => useramount}) |> IO.inspect
 
-#    conn
-#    |> put_status(200)
-#    |> json(%{
-#      "message" => "processed"
-#    })
+    conn
+    |> put_status(200)
+    |> json(%{
+      "message" => "processed"
+    })
   end
 
   def latest_preprocess_mpesa(conn, checker = %{"phone" => phone, "mpesacode" => mpesacode, "amount" => amount}) do
@@ -256,12 +256,13 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 #        end
 
       _ ->
-        conn
-        |> put_status(200)
-        |> json(%{
-          "code" => 3,
-          "message" => "Record already exists"
-        })
+      nil
+#        conn
+#        |> put_status(200)
+#        |> json(%{
+#          "code" => 3,
+#          "message" => "Record already exists"
+#        })
     end
   end
 
