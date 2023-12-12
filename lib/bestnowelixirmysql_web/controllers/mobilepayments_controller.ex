@@ -232,25 +232,26 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
           mpesacode: mpesacode
         }
 
-        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
+#        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
 
-        case Repo.insert(new_record) do
-          {:ok, inserted_record} ->
-            conn
-            |> put_status(200)
-            |> json(%{
-              "code" => 3,
-              "message" => "inserted_record"
-            })
-
-          {:error, changeset} ->
-            conn
-            |> put_status(400)
-            |> json(%{
-              "code" => 3,
-              "message" => :unprocessable_entity
-            })
-        end
+        Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) |> IO.inspect
+#        case Repo.insert(new_record) do
+#          {:ok, inserted_record} ->
+#            conn
+#            |> put_status(200)
+#            |> json(%{
+#              "code" => 3,
+#              "message" => "inserted_record"
+#            })
+#
+#          {:error, changeset} ->
+#            conn
+#            |> put_status(400)
+#            |> json(%{
+#              "code" => 3,
+#              "message" => :unprocessable_entity
+#            })
+#        end
 
       _ ->
         conn
