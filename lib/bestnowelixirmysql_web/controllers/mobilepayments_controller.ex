@@ -221,6 +221,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
   def latest_preprocess_mpesa(conn, checker = %{"phone" => phone, "mpesacode" => mpesacode, "amount" => amount}) do
     "checker +++++++++++++++++++++++++++++++++++++++++++++++++=" |> IO.inspect
+
     checker |> IO.inspect
     # Check if the record already exists
     existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
@@ -229,13 +230,13 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       nil ->
         # Record doesn't exist, so save it
         new_record_params = %{
-          amount: amount,  # replace with the actual amount
+          amount: Float.to_string(amount) <> "0",  # replace with the actual amount
           phone: phone,
           mpesacode: mpesacode
         }
 
 #        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
-
+        new_record_params |> IO.inspect label: "new_record_params"
         Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) |> IO.inspect
 #        case Repo.insert(new_record) do
 #          {:ok, inserted_record} ->
