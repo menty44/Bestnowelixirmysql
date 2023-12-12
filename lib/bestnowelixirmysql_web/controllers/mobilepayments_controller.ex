@@ -21,6 +21,11 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   alias Bestnowelixirmysql.Packages
   alias Bestnowelixirmysql.Packages.Package
 
+  import Ecto.Query, warn: false
+  alias Bestnowelixirmysql.Repo
+
+  alias Bestnowelixirmysql.Confirmations.Confirmation
+
   import AtEx.Util
 
   #  use AtEx.Gateway.Base, url: get_url(@live_url, @sandbox_url)
