@@ -236,7 +236,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
         }
 
 #        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
-        new_record_params |> IO.inspect label: "new_record_params ####################################"
+        new_record_params |> IO.inspect label: "new_record_params ######## before save"
         newphone = if StringCheck.starts_with_zero?(phone) do
               Regex.replace(~r/^0/, phone, "254")
             else
