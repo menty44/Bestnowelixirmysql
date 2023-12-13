@@ -224,7 +224,6 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     checker |> IO.inspect
     # Check if the record already exists
-#    existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
     existing_record = Bestnowelixirmysql.Confirmations.filter_by_code!(mpesacode)
     existing_record |> IO.inspect label: "------------- existing_record -------------------"
     case existing_record do
@@ -244,33 +243,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
           {:error, changeset} -> changeset |> IO.inspect
           _ -> nil
         end
-#        case Repo.insert(new_record) do
-#          {:ok, inserted_record} ->
-#            conn
-#            |> put_status(200)
-#            |> json(%{
-#              "code" => 3,
-#              "message" => "inserted_record"
-#            })
-#
-#          {:error, changeset} ->
-#            conn
-#            |> put_status(400)
-#            |> json(%{
-#              "code" => 3,
-#              "message" => :unprocessable_entity
-#            })
-#        end
-
       _ ->
       IO.inspect "niko nil"
-#      nil
-#        conn
-#        |> put_status(200)
-#        |> json(%{
-#          "code" => 3,
-#          "message" => "Record already exists"
-#        })
+      nil
     end
   end
 
