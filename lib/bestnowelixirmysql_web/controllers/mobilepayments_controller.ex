@@ -250,7 +250,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   def confirmation694949(conn, params) do
-    generate_mpesa_token() |> IO.inspect(label: "mpesa token")
+    %{"access_token" => access_token, "expires_in" => _} = generate_mpesa_token()
+    access_token |> IO.inspect(label: "mpesa token")
 
     IO.inspect(params, label: "params 694949")
 
@@ -276,48 +277,74 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     Map.get(new_struct, "msisdn")
     |> IO.inspect()
 
-    process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"])
-    |> IO.inspect(label: "process_sms_games noma apa")
+    @mpesa_url "https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query"
+    @mpesa_result_url "https://api.forebetweb.com/api/getphone"
+    @headers [
+      {"Content-Type", "application/json"},
+      {"Authorization", "Bearer " <> access_token}
+    ]
 
-    {:ok, mobileuser} =
-      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+    body = %{
+      "Initiator" => "webapi",
+      "SecurityCredential" => "IC4GTxwfA+Dodw5icCGRYrzXhCDu0Jp2CPhEG7mL/Yvbfo6jCsS04MJGAo5G7M+nR7FDoZjuPy4PI5wWE0/tJD1HsKxCahx9OeHod04RRATvyZDkz3sRj0aFF9gcullAzzSaBxyeSom7kd3CN5EHetv60HhwSlJ9vEdqRir0yhxB5caDJ30X3hDCUmtn6hMFVkPATxQmVM8bvXSEWl49kCFitoxqVWT9PuIv7tW1ae6c7cctqTibjiGbSnHCObpx4YygucE5s0XercIZulFduYoyxvlrCcBRuhwfpAyRr6oFdFz9z8VnpGhaI5jU6F0CnCChTX/AeNeGozYiJRnN8Q==",
+      "CommandID" => "TransactionStatusQuery",
+      "TransactionID" => params["TransID"],
+      "OriginalConcersationID" => "",
+      "PartyA" => "893422",
+      "IdentifierType" => "4",
+      "ResultURL" => @mpesa_result_url,
+      "QueueTimeOutURL" => "https://paybill.forebetweb.com/api/v1/users/callback/validation",
+      "Remarks" => "Check Payment Status",
+      "Occasion" => "OK"
+    }
 
-    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
+    response = post!(@mpesa_url, Poison.encode!(body), @headers)
 
-    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
-      {:ok, subscription} ->
-        update_existing_sub(
-          subscription.id,
-          %{
-            "days" => subscription.days + get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
+    # Handle the response accordingly
+    IO.inspect response
 
-      {:error, :not_found} ->
-        create_new_sub(
-          %{
-            "uid" => mobileuser.id,
-            "days" => get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
+#    process_current_game_amount_by_till_sms(params["MSISDN"], params["TransAmount"])
+#    |> IO.inspect(label: "process_sms_games noma apa")
+#
+#    {:ok, mobileuser} =
+#      Bestnowelixirmysql.Mobileaccounts.get_by_phone!(Map.get(new_struct, "msisdn"))
+#
+#    Mobileaccounts.update_user_payment(mobileuser) |> IO.inspect(label: "update_user_payment")
 
-      {:error, _} ->
-        create_new_sub(
-          %{
-            "uid" => mobileuser.id,
-            "days" => get_package_days(new_struct["transamount"]),
-            "active" => true
-          },
-          mobileuser.phone,
-          get_package_struct(new_struct["transamount"])
-        )
-    end
+#    case Bestnowelixirmysql.Subscriptions.find_by_uid!(mobileuser.id) do
+#      {:ok, subscription} ->
+#        update_existing_sub(
+#          subscription.id,
+#          %{
+#            "days" => subscription.days + get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#
+#      {:error, :not_found} ->
+#        create_new_sub(
+#          %{
+#            "uid" => mobileuser.id,
+#            "days" => get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#
+#      {:error, _} ->
+#        create_new_sub(
+#          %{
+#            "uid" => mobileuser.id,
+#            "days" => get_package_days(new_struct["transamount"]),
+#            "active" => true
+#          },
+#          mobileuser.phone,
+#          get_package_struct(new_struct["transamount"])
+#        )
+#    end
 #    get_package_struct(new_struct["transamount"])
     with {:ok, %Payment{} = payment} <- Payments.create_payment(new_struct) do
       conn
