@@ -224,8 +224,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
     checker |> IO.inspect
     # Check if the record already exists
-    existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
-
+#    existing_record = Repo.get_by(Bestnowelixirmysql.Confirmations, phone: phone, mpesacode: mpesacode)
+    existing_record = Bestnowelixirmysql.Confirmations.filter_by_code!(mpesacode)
     case existing_record do
       nil ->
         # Record doesn't exist, so save it
