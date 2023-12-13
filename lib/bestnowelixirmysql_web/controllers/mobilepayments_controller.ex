@@ -277,9 +277,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     Map.get(new_struct, "msisdn")
     |> IO.inspect()
 
-    @mpesa_url "https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query"
-    @mpesa_result_url "https://api.forebetweb.com/api/getphone"
-    @headers [
+    mpesa_url = "https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query"
+    mpesa_result_url = "https://api.forebetweb.com/api/getphone"
+    headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Bearer " <> access_token}
     ]
@@ -292,13 +292,13 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
       "OriginalConcersationID" => "",
       "PartyA" => "893422",
       "IdentifierType" => "4",
-      "ResultURL" => @mpesa_result_url,
+      "ResultURL" => mpesa_result_url,
       "QueueTimeOutURL" => "https://paybill.forebetweb.com/api/v1/users/callback/validation",
       "Remarks" => "Check Payment Status",
       "Occasion" => "OK"
     }
 
-    response = post!(@mpesa_url, Poison.encode!(body), @headers)
+    response = post!(mpesa_url, Poison.encode!(body), headers)
 
     # Handle the response accordingly
     IO.inspect response
