@@ -228,7 +228,7 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
     existing_record = Bestnowelixirmysql.Confirmations.filter_by_code!(mpesacode)
     existing_record |> IO.inspect label: "------------- existing_record -------------------"
     case existing_record do
-      nil ->
+      "not found" ->
         # Record doesn't exist, so save it
         new_record_params = %{
           amount: Float.to_string(amount) <> "0",  # replace with the actual amount
@@ -261,8 +261,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 #            })
 #        end
 
-#      _ ->
-#      IO.inspect "niko nil"
+      _ ->
+      IO.inspect "niko nil"
 #      nil
 #        conn
 #        |> put_status(200)

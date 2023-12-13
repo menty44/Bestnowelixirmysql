@@ -106,10 +106,10 @@
   def filter_by_code!(code) do
     case Repo.get_by(Confirmation, mpesacode: code) do
       nil ->
-        {:error, :not_found}
+        "not found"
 
       conf ->
-        {:ok, conf}
+        conf
     end
   end
 end
