@@ -237,7 +237,12 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
 
 #        new_record = Bestnowelixirmysql.Confirmations.Confirmation.changeset(%Bestnowelixirmysql.Confirmations.Confirmation{}, new_record_params)
         new_record_params |> IO.inspect label: "new_record_params ####################################"
-        process_sms_games(phone, Float.to_string(amount) <> "0")
+        newphone = if StringCheck.starts_with_zero?(phone) do
+              Regex.replace(~r/^0/, phone, "254")
+            else
+              phone
+            end
+        process_sms_games(newphone, Float.to_string(amount) <> "0")
         case Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) do
           {:ok, inserted_record} -> inserted_record |> IO.inspect
           {:error, changeset} -> changeset |> IO.inspect
