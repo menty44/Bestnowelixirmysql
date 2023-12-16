@@ -243,7 +243,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
               phone
             end
             newphone |> IO.inspect label: "newphnumber"
-        process_sms_games(newphone, Float.to_string(amount) <> "0")
+#        process_sms_games(newphone, Float.to_string(amount) <> "0")
+        process_sms_till_games(newphone, Float.to_string(amount) <> "0")
         case Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) do
           {:ok, inserted_record} -> inserted_record |> IO.inspect
           {:error, changeset} -> changeset |> IO.inspect
