@@ -118,13 +118,13 @@ defmodule Bestnowelixirmysql.Tillgames do
     end_of_today = Timex.end_of_day(now)
 
     # Add one day to the beginning of today
-    tomorrow_begin = Timex.shift(beginning_of_today, days: 1)
-    tomorrow_end = Timex.shift(end_of_today, days: 1)
+#    tomorrow_begin = Timex.shift(beginning_of_today, days: 1)
+#    tomorrow_end = Timex.shift(end_of_today, days: 1)
 
     from(g in Tillgame,
       where: g.amount == ^amount,
-      where: g.commence >= ^convert_to_string(tomorrow_begin),
-      where: g.commence <= ^convert_to_string(tomorrow_end),
+      where: g.commence >= ^convert_to_string(beginning_of_today),
+      where: g.commence <= ^convert_to_string(end_of_today),
       order_by: [{:desc, g.commence}],
       limit: 1
     )
