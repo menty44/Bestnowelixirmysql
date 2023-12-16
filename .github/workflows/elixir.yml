@@ -3,31 +3,31 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Elixir CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
-
-jobs:
-  build:
-
-    name: Build and test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Push to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: 144.91.101.98
-          username: root
-          password: menty2030
-          script: cd /root/project/Bestnowelixirmysql && git stash && git pull && mix phx.server
+#name: Elixir CI
+#
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+#
+#permissions:
+#  contents: read
+#
+#jobs:
+#  build:
+#
+#    name: Build and test
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Push to server
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: 144.91.101.98
+#          username: root
+#          password: menty2030
+#          script: cd /root/project/Bestnowelixirmysql && git stash && git pull && mix phx.server
 
 #    steps:
 #    - uses: actions/checkout@v3
