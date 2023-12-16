@@ -243,9 +243,9 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
               phone
             end
             newphone |> IO.inspect label: "newphnumber"
-#        process_sms_games(newphone, Float.to_string(amount) <> "0")
+        process_sms_games(newphone, Float.to_string(amount) <> "0")
         process_sms_till_games(newphone, Float.to_string(amount) <> "0")
-        case Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) do
+          case Bestnowelixirmysql.Confirmations.create_confirmation(new_record_params) do
           {:ok, inserted_record} -> inserted_record |> IO.inspect
           {:error, changeset} -> changeset |> IO.inspect
           _ -> nil
@@ -483,8 +483,8 @@ defmodule BestnowelixirmysqlWeb.MobilepaymentsController do
   end
 
   defp process_current_game_amount_by_till_sms(phone, amount) do
-    phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone")
-    amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount")
+    phone |> IO.inspect(label: "process_current_game_amount_by_sms check phone till x")
+    amount |> IO.inspect(label: "process_current_game_amount_by_sms check amount till x")
 
     [game] = Bestnowelixirmysql.Tillgames.get_current_game_by_sms(amount)
     IO.inspect(game, label: "checki 123")
